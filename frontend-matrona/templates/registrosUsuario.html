@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Usuario</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-orange-100">
+    <div class="bg-orange-200 p-8 rounded-lg shadow-md w-96">
+        <h2 class="text-2xl font-bold mb-6 text-center">Registrate en Matrona</h2>
+        <form>
+            <div class="mb-4">
+                <label for="nombre" class="block text-gray-700 font-medium">Nombre</label>
+                <input type="text" id="nombre" name="nombre" title="sololetras" required pattern="[a-zA-Z]"  class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Ingresa tu nombre">
+            </div>
+            <div class="mb-4">
+                <label for="apellidos" class="block text-gray-700 font-medium">Apellidos</label>
+                <input type="text" id="apellidos" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Ingresa tus apellidos">
+            </div>
+            <div class="mb-4">
+                <label for="telefono" class="block text-gray-700 font-medium">Telefono</label>
+                <input type="number" id="telefono"   class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Ingresa tu telefono">
+            </div>
+            <div class="mb-4">
+                <label for="fecha_nacimiento" class="block text-gray-700 font-medium">Correo</label>
+                <input type="text" id="correo" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Ingresa tu correo">
+            </div>
+            <div class="mb-4">
+                <label for="direccion" class="block text-gray-700 font-medium">Dirección</label>
+                <input type="text" id="direccion" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Ingresa tu dirección">
+            </div>
+            <div class="mb-4">
+                <label for="contraseña" class="block text-gray-700 font-medium">Contraseña</label>
+                <input type="text" id="contraseña"class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" placeholder="Ingresa la contraseña">
+            </div>
+            <div class="mb-4">
+                <label for="rol" class="block text-gray-700 font-medium">Ingrese su Rol</label>
+                <select id="rol" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <option value="administrador">Administrador</option>
+                    <option value="cliente">Cliente</option>
+                    <option value="empleado">Empleado</option>
+                </select>
+            </div>
+            <div class="flex justify-between">
+                <button type="submit" class="w-1/2 bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600 mr-2"><a href="menu.html">Registrarse</a></button>
+                <button type="button" class="w-1/2 bg-orange-500 text-white py-2 rounded-md hover:bg-red-600 ml-2"><a href="inicioSesion.html">Salir</a></button>
+            </div>
+        </form>
+    </div>
+    <script>
+
+    </script>
+</body>
+</html>
+
+

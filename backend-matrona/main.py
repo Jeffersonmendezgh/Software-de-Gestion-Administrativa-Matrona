@@ -1,0 +1,61 @@
+from fastapi import FastAPI, HTTPException, Request
+from routers import usuario_router, inventario_router
+from routers.catalogo_router import router as catalogo_router
+from models import Usuario, Rol, Inventario
+from db import engine, Base
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
+
+
+
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title="API Matrona")
+
+@app.get("/funcionamiento")
+def root():
+    return {"ok": True, "mensaje": "API conectada a MySQL ✅"}
+
+# 📂 Ruta absoluta de la carpeta frontend
+frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend-matrona")
+
+# Servir la carpeta frontend como "static"
+
+#ruta correcta
+# 📂 Base del proyecto
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# 📂 Ruta a la carpeta "static" dentro de frontend-matrona
+static_path = os.path.join(BASE_DIR, "..", "frontend-matrona", "static")
+
+# Montar la carpeta estática
+app.mount("/static", StaticFiles(directory="../frontend-matrona/static"), name="static")
+#templates HTML
+templates = Jinja2Templates(directory="../frontend-matrona/templates")
+
+#ruta para mostrar el formulario
+@app.get("/agregar-inventario", response_class=HTMLResponse)
+async def agregar_inventario(request: Request):
+    return templates.TemplateResponse("agregarInventario.html", {"request": request})
+
+# Ruta para abrir inventario.html
+@app.get("/inventario", response_class=HTMLResponse)
+async def mostrar_inventario(request: Request):
+    return templates.TemplateResponse("inventario.html", {"request":request})
+
+#ruta para put modificar mediante el formulari
+@app.get("/editar-inventario/{id_catalogo}", response_class=HTMLResponse)
+async def editar_inventario(request: Request, id_catalogo: int):
+    return templates.TemplateResponse("agregarInventario.html", {
+        "request": request,
+        "id_catalogo": id_catalogo
+    })
+
+app.include_router(usuario_router)
+app.include_router(inventario_router)
+app.include_router(catalogo_router)
+
+#.\venv\Scripts\activate activar entorno virtual
