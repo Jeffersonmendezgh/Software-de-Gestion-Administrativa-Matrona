@@ -1,10 +1,10 @@
 # schemas.py
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 from typing import Optional
 
 class UsuarioBase(BaseModel):
     id_usuarios: int
-    id_rol: Optional[int]
+    id_rol: Optional[int] = None
     nombre: str
     apellido: str
     correo: str
@@ -18,7 +18,7 @@ class UsuarioCreate(BaseModel):
     nombre: str
     apellido: str
     correo: str
-    contrasena: str   # ⚠️ nombre en Python (mapeará a "contraseña" en MySQL)
+    contrasena: str   # 
     direccion: Optional[str]
 
 #PUT
@@ -32,3 +32,27 @@ class UsuarioPut(BaseModel):
 
     class Config:
         orm_mode = True
+
+class UsuarioOut(BaseModel):
+    id_usuarios: int
+    nombre: str
+    apellido: Optional[str]
+    correo: EmailStr 
+    direccion: Optional[str] = None
+    id_rol: Optional[int]
+
+    class Config:
+        orm_mode = True
+
+class UsuarioLogin(BaseModel):
+    correo: EmailStr
+    contrasena: str
+
+class Token(BaseModel):
+    acces_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    sub: Optional[str] = None
+    role: Optional[str] = None
+

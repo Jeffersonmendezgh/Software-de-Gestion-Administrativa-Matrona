@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException, Request
-from routers import usuario_router, inventario_router
+from routers.inventario import router as inventario_router
 from routers.catalogo_router import router as catalogo_router
+from routers.usuario import router as usuario_router
+from routers import usuario_auth
 from models import Usuario, Rol, Inventario
 from db import engine, Base
 from fastapi.staticfiles import StaticFiles
@@ -57,5 +59,7 @@ async def editar_inventario(request: Request, id_catalogo: int):
 app.include_router(usuario_router)
 app.include_router(inventario_router)
 app.include_router(catalogo_router)
+
+app.include_router(usuario_auth.router)
 
 #.\venv\Scripts\activate activar entorno virtual
