@@ -55,6 +55,15 @@ async def editar_inventario(request: Request, id_catalogo: int):
         "request": request,
         "id_catalogo": id_catalogo
     })
+#ruta para mostrar el formulario
+@app.get("/auth/registro", response_class=HTMLResponse)
+def mostrar_registro(request: Request):
+    return templates.TemplateResponse("registrosUsuario.html", {"request": request})
+
+#ruta para redirigir al login
+@app.get("/auth/login", response_class=HTMLResponse)
+def mostrar_login(request: Request):
+    return templates.TemplateResponse("inicioSesion.html", {"request": request})
 
 app.include_router(usuario_router)
 app.include_router(inventario_router)

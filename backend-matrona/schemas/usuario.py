@@ -49,7 +49,7 @@ class UsuarioLogin(BaseModel):
     contrasena: str
 
 class Token(BaseModel):
-    acces_token: str
+    access_token: str
     token_type: str
 
 class TokenData(BaseModel):

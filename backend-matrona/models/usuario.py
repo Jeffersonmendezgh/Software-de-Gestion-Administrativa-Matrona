@@ -11,6 +11,6 @@ class Usuario(Base):
     nombre = Column(String(80), nullable=False)
     apellido = Column(String(80), nullable=False)
     correo = Column(String(150), nullable=False)
-    contrasena = Column("contraseña", String(45), nullable=False)  
+    contrasena = Column("contraseña", String(255), nullable=False)  
     direccion = Column(String(200), nullable=True)
     rol = relationship("Rol")
