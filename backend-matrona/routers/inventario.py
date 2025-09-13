@@ -5,7 +5,7 @@ from typing import List
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
 from db import get_db
-from models import Inventario
+from models import Inventario, Catalogo
 from schemas.inventario import InventarioBase, InventarioCreate, InventarioUpdate, StockUpdate
 
 router = APIRouter(prefix="/inventario", tags=["Inventario"])
@@ -14,12 +14,34 @@ router = APIRouter(prefix="/inventario", tags=["Inventario"])
 def listar_inventario(db: Session = Depends(get_db)):
     return db.query(Inventario).all()
 
-@router.get("/{id_inventario}", response_model=InventarioBase)
+@router.get("/{id_inventario}")
 def obtener_item(id_inventario: int, db: Session = Depends(get_db)):
-    item = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()
-    if not item:
+    inventario = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()
+
+    if not inventario:
         raise HTTPException(status_code=404, detail="Item no encontrado")
-    return item
+
+    catalogo = db.query(Catalogo).filter(Catalogo.id_inventario == id_inventario).all()
+
+    return {
+        "id_inventario": inventario.id_inventario,
+        "nombre_bebida": inventario.nombre_bebida,
+        "cantidad_disponible": inventario.cantidad_disponible,
+        "ultimo_movimiento": inventario.ultimo_movimiento,
+        "unidades_agregadas": inventario.unidades_agregadas,
+        "catalogo": [
+            {
+                "id_catalogo": c.id_catalogo,
+                "alcohol": c.alcohol,
+                "contenido": c.contenido,
+                "precio_unidad": c.precio_unidad,
+                "precio_sixpack": c.precio_sixpack,
+                "precio_caja": c.precio_caja,
+                "descripcion": c.descripcion
+            }
+            for c in catalogo
+        ]
+    }
 
 @router.post("/", response_model=InventarioBase, status_code=status.HTTP_201_CREATED)
 def crear_item(payload: InventarioCreate, db: Session = Depends(get_db)):

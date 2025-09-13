@@ -22,13 +22,15 @@ async function cargarInventario() {
                         </div>
                         <div class="flex gap-2">
                             <input type="number" class="w-16 border px-2 py-1 rounded hidden" min="1" placeholder="0">
-                            <button class="text-orange-600 hover:text-orange-800 px-3 py-1 rounded">
-                                <i class="fas fa-plus mr-1"></i> Detalles
-                            </button>
+                            
                             <a href="/editar-inventario/${item.id_catalogo}" 
                        class="text-orange-600 hover:text-orange-800 px-3 py-1 rounded inline-block">
                        <i class="fas fa-edit mr-1"></i> Modificar
                     </a>
+                    <button class="btn-detalles text-orange-600 hover:text-orange-800 px-3 py-1 rounded" 
+                            data-id="${item.id_inventario}">
+                    <i class="fas fa-plus mr-1"></i> Detalles
+                    </button>
                     <button onclick="abrirModal(${item.id_inventario})"
                         class="text-green-600 hover:text-green-800 px-3 py-1 rounded">
                         <i class="fas fa-plus mr-1"></i> Agregar stock
@@ -99,5 +101,39 @@ async function confirmarStock() {
         alert("Ingrese una cantidad válida");
     }
 }
+
+//bloque para agregar la funcion de detalles al bloque de codigo
+// Detectar click en los botones de "Detalles"
+document.getElementById("productosInventario").addEventListener("click", async (e) => {
+  const btn = e.target.closest(".btn-detalles"); // busca el botón con clase
+  if (!btn) return;
+
+  const id = btn.dataset.id; // toma el data-id del botón
+  console.log("🔎 Click en Detalles de ID:", id);
+
+  try {
+    const res = await fetch(`/inventario/${id}`);
+    if (!res.ok) throw new Error("Error al obtener detalles");
+    const item = await res.json();
+
+    // Actualizar el bloque de detalles
+    document.getElementById("detalles").innerText = `Detalles ${item.nombre_bebida}`;
+    document.getElementById("stock").innerText = `${item.cantidad_disponible} Unidades disponibles`;
+    document.getElementById("alcohol").innerText = `${item.catalogo[0].alcohol} Vol Alcohol`;
+    document.getElementById("contendio").innerText = `${item.catalogo[0].contenido} Ml de Contenido`;
+
+    document.getElementById("costoUnidad").innerText = item.catalogo[0].precio_unidad ?? '--';
+    document.getElementById("costoSixpack").innerText = item.catalogo[0].precio_sixpack ?? '--';
+    document.getElementById("costoCaja").innerText = item.catalogo[0].precio_caja ?? '--';
+
+    // opcional: hacer scroll al bloque de detalles
+    
+    console.log("📦 Detalles recibidos:", item);
+  } catch (err) {
+    console.error(err);
+    alert("No se pudieron cargar los detalles.");
+  }
+});
+
 cargarInventario();
 

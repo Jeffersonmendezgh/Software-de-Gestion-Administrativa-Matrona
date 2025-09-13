@@ -71,6 +71,9 @@ def ruta_protegida(current_user=Depends(get_current_user)):
 # ---------------------------
 # Solo admin puede borrar usuarios
 # ---------------------------
+
+
+
 @router.delete("/{id}", dependencies=[Depends(require_role(1))])  # 1 = administrador
 def borrar_usuario(id: int):
     # Solo admin puede borrar
