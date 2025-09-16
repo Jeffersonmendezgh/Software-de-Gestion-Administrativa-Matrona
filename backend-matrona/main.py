@@ -48,6 +48,11 @@ async def agregar_inventario(request: Request):
 async def mostrar_inventario(request: Request):
     return templates.TemplateResponse("inventario.html", {"request":request})
 
+#ruta para abrir catalogo
+@app.get("/catalogo", response_class=HTMLResponse)
+async def mostrar_catalogo(request: Request):
+    return templates.TemplateResponse("catalogo.html", {"request":request})
+
 #ruta para put modificar mediante el formulari
 @app.get("/editar-inventario/{id_catalogo}", response_class=HTMLResponse)
 async def editar_inventario(request: Request, id_catalogo: int):
