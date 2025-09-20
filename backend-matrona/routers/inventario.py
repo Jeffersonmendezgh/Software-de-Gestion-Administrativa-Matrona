@@ -13,7 +13,7 @@ router = APIRouter(prefix="/inventario", tags=["Inventario"])
 @router.get("/", response_model=List[InventarioBase])
 def listar_inventario(db: Session = Depends(get_db)):
     return db.query(Inventario).all()
-
+#router para traer enviar los datos al bloque de detalles
 @router.get("/{id_inventario}")
 def obtener_item(id_inventario: int, db: Session = Depends(get_db)):
     inventario = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()
@@ -92,7 +92,7 @@ def actualizar_parcial(id_inventario: int, payload: InventarioUpdate, db: Sessio
     if not item:
         raise HTTPException(status_code=404, detail="Item no encontrado")
 
-    datos = payload.dict(exclude_unset=True)
+    datos = payload.model_dump(exclude_unset=True)
     if "nombre_bebida" in datos:
         # verificar unicidad si cambia nombre
         if datos["nombre_bebida"] != item.nombre_bebida:
@@ -113,9 +113,8 @@ def agregar_stock(id_inventario: int, payload: StockUpdate, db:Session = Depends
     item = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()
     if not item:
         raise HTTPException(status_code=404, detail="Item no encontrado")
-    #sumar unidades con un metodo de una clase
     try:
-        item.agregar_stock(payload.unidades)  # ✅ Usamos el método del modelo
+        item.agregar_stock(payload.unidades)  #  metodo definido en el modelo para agregar unidades
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     db.commit()

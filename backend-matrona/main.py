@@ -3,6 +3,9 @@ from routers.inventario import router as inventario_router
 from routers.catalogo_router import router as catalogo_router
 from routers.usuario import router as usuario_router
 from routers import usuario_auth
+from routers import cliente
+from routers.pedido_router import router as pedido_router
+from routers.ws_router import router as ws_router
 from models import Usuario, Rol, Inventario
 from db import engine, Base
 from fastapi.staticfiles import StaticFiles
@@ -10,6 +13,9 @@ from fastapi.responses import FileResponse
 import os
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from fastapi import WebSocket
+from utils.websoket import manager
+import models
 
 
 
@@ -70,10 +76,20 @@ def mostrar_registro(request: Request):
 def mostrar_login(request: Request):
     return templates.TemplateResponse("inicioSesion.html", {"request": request})
 
+
+
+#ruta menu
+@app.get("/menu")
+def mostrar_menu(request: Request):
+    return templates.TemplateResponse("menu.html", {"request": request})
+
+
 app.include_router(usuario_router)
 app.include_router(inventario_router)
 app.include_router(catalogo_router)
-
+app.include_router(cliente.router)
+app.include_router(ws_router)
 app.include_router(usuario_auth.router)
+app.include_router(pedido_router)
 
 #.\venv\Scripts\activate activar entorno virtual

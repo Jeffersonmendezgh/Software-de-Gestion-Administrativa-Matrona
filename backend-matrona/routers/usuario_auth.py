@@ -8,12 +8,10 @@ from schemas.usuario import UsuarioCreate, UsuarioOut, UsuarioLogin, Token
 from utils.auth import get_password_hash, verify_password, create_access_token
 from utils.deps import get_current_user, require_role
 
-# 🔹 Solo UN router con prefix /auth
+
 router = APIRouter(prefix="/auth", tags=["Usuarios"])
 
-# ---------------------------
 # Registro
-# ---------------------------
 @router.post("/registro", response_model=UsuarioOut)
 def registro(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     # Validar correo único
@@ -44,9 +42,7 @@ def registro(usuario: UsuarioCreate, db: Session = Depends(get_db)):
 
     return db_usuario
 
-# ---------------------------
 # Login
-# ---------------------------
 @router.post("/login", response_model=Token)
 def login(data: UsuarioLogin, db: Session = Depends(get_db)):
     user = db.query(Usuario).filter(Usuario.correo == data.correo).first()
@@ -61,20 +57,14 @@ def login(data: UsuarioLogin, db: Session = Depends(get_db)):
 
     return {"access_token": access_token, "token_type": "bearer"}
 
-# ---------------------------
 # Ruta protegida
-# ---------------------------
 @router.get("/protegido")
 def ruta_protegida(current_user=Depends(get_current_user)):
     return {"msg": f"Hola {current_user.nombre}, estás autenticado"}
-
-# ---------------------------
-# Solo admin puede borrar usuarios
-# ---------------------------
 
 
 
 @router.delete("/{id}", dependencies=[Depends(require_role(1))])  # 1 = administrador
 def borrar_usuario(id: int):
-    # Solo admin puede borrar
+
     return {"msg": f"Usuario con id {id} eliminado (simulación)"}

@@ -33,7 +33,7 @@ class CatalogoBase(BaseModel):
 # Esquema para crear catálogo + inventario juntos
 class CatalogoCreate(BaseModel):
     nombre_bebida: str
-    cantidad_disponible: int  # viene del form
+    cantidad_disponible: int 
     descripcion: Optional[str]
     alcohol: Optional[str]
     contenido: Optional[int] 

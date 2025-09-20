@@ -14,3 +14,7 @@ class Usuario(Base):
     contrasena = Column("contraseña", String(255), nullable=False)  
     direccion = Column(String(200), nullable=True)
     rol = relationship("Rol")
+
+    #relacion con cliente
+    cliente = relationship("Cliente", back_populates="usuario", uselist=False)
+

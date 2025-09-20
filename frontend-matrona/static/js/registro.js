@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formRegistro");
     
     form.addEventListener("submit", async (e) => {
-        e.preventDefault(); // Evita que el navegador haga un POST "normal"
+        e.preventDefault(); 
 
         // Capturar valores de los inputs
         const nombre = document.getElementById("nombre").value;
@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
             nombre: nombre,
             apellido: apellido,
             correo: correo,
-            direccion: direccion,   // 👈 añadido
+            direccion: direccion,  
             contrasena: contrasena,
-            id_rol: parseInt(rol)             // aquí depende: ¿guardas rol como string o id en la BD?
+            id_rol: parseInt(rol)             
         };
 
         try {
@@ -38,11 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const data = await response.json();
-            alert("✅ Usuario registrado con éxito");
+            alert(" Usuario registrado con éxito");
             console.log(data);
 
             // Redirigir después de registrar
-            window.location.href = "index.html"; 
+            window.location.href = "/menu"; 
         } catch (err) {
             console.error("Error en la solicitud:", err);
             alert("Error al conectar con el servidor");

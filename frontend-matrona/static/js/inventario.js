@@ -1,18 +1,18 @@
 // inventario.js
-console.log("✅ inventario.js cargado correctamente");
+console.log(" inventario.js cargadondo correctamente");
 
 async function cargarInventario() {
     try {
         const response = await fetch("http://127.0.0.1:8000/catalogo/");
         const inventario = await response.json();
 
-        console.log("📦 Inventario recibido desde FastAPI:", inventario);
+        console.log(" Inventario recibido desde FastAPI:", inventario);
 
         const contenedor = document.getElementById("productosInventario");
         contenedor.innerHTML = ""; // Limpiar el contenedor antes de llenarlo
 
         inventario.forEach(item => {
-            console.log("🔎 Item recibido:", item);
+            console.log("Item recibido:", item);
             const productoHTML = `
                 <div class="border-b p-4 hover:bg-gray-50">
                     <div class="flex items-center justify-between">
@@ -47,7 +47,7 @@ async function cargarInventario() {
         });
 
     } catch (error) {
-        console.error("❌ Error al cargar inventario:", error);
+        console.error(" Error al cargar inventario:", error);
     }
 }
 
@@ -69,7 +69,7 @@ async function eliminarProducto(id_catalogo) {
         cargarInventario();
 
     } catch (error) {
-        console.error("❌ Error al eliminar producto:", error);
+        console.error(" Error al eliminar producto:", error);
     }
 }
 //logica con modal para agregar nuevas cervezas
@@ -126,9 +126,8 @@ document.getElementById("productosInventario").addEventListener("click", async (
     document.getElementById("costoSixpack").innerText = item.catalogo[0].precio_sixpack ?? '--';
     document.getElementById("costoCaja").innerText = item.catalogo[0].precio_caja ?? '--';
 
-    // opcional: hacer scroll al bloque de detalles
     
-    console.log("📦 Detalles recibidos:", item);
+    console.log(" Detalles recibidos:", item);
   } catch (err) {
     console.error(err);
     alert("No se pudieron cargar los detalles.");

@@ -10,10 +10,11 @@ class Catalogo(Base):
     descripcion = Column(String(300))
     alcohol = Column(String(20))
     contenido = Column(Integer, nullable=True)
-    precio_unidad = Column(DECIMAL(10, 2))
+    precio_unidad = Column(DECIMAL(10, 2), nullable=False)
     precio_sixpack = Column(DECIMAL(10, 2))
     precio_caja = Column(DECIMAL(10, 2))
     
 
     # relación con inventario
     inventario = relationship("Inventario", back_populates="catalogo")
+    detalles = relationship("DetallePedido", back_populates="catalogo")#relacion con pedidos

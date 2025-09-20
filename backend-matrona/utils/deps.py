@@ -32,10 +32,9 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     return user
 
 def get_current_active_user(current_user: Usuario = Depends(get_current_user)):
-    # si tu modelo tuviera `is_active`, lo checamos aquí
     return current_user
 
-# Rol-based dependency (ejemplo: admin only)
+# verificar aca q tenga rol valido
 def require_role(role_id: int):
     def role_checker(current_user: Usuario = Depends(get_current_user)):
         if current_user.id_rol != role_id:

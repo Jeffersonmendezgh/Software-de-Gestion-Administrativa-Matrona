@@ -11,16 +11,16 @@ router = APIRouter(prefix="/usuarios", tags=["Usuarios"])
 def obtener_usuarios(db: Session = Depends(get_db)):
     return db.query(Usuario).all()
 
-@router.post("/", response_model=UsuarioBase)# response indica que la respuesta debe ser igual q la estructura del modelo base q tenemos en schemas
-def crear_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):#recibe parametro usuario que debe seguir la estructura del modelo usuariocreate
-    rol = db.query(Rol).filter(Rol.id_rol == usuario.id_rol).first()#busca en la table rol un id_rol que coinciada con el que viene de id usuario
+@router.post("/", response_model=UsuarioBase)
+def crear_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
+    rol = db.query(Rol).filter(Rol.id_rol == usuario.id_rol).first()
     if not rol:
         raise HTTPException(status_code=400, detail="Rol no válido")
 
-    db_usuario = Usuario(**usuario.dict())# convierte los datos a formato dict los toma y los pasa como parametros
+    db_usuario = Usuario(**usuario.model_dump())
     db.add(db_usuario)#se prepara para save new user
-    db.commit()#guarda en la db
-    db.refresh(db_usuario) #actualiza
+    db.commit()
+    db.refresh(db_usuario) 
     return db_usuario #retorna datos creados
 
 @router.put("/{id_usuarios}", response_model=UsuarioPut)
