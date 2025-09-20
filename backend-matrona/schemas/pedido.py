@@ -2,9 +2,7 @@ from pydantic import BaseModel
 from typing import List, Optional
 from datetime import date
 
-# =========================
-# Usuario (para mostrar datos de cliente)
-# =========================
+
 class UsuarioInfo(BaseModel):
     nombre: str
     apellido: str
@@ -12,9 +10,7 @@ class UsuarioInfo(BaseModel):
     class Config:
         orm_mode = True
 
-# =========================
-# Cliente
-# =========================
+
 class ClienteInfo(BaseModel):
     id_cliente: int
     usuario: UsuarioInfo   # 👈 accedemos a la relación con Usuario
@@ -22,9 +18,7 @@ class ClienteInfo(BaseModel):
     class Config:
         orm_mode = True
 
-# =========================
-# Detalle del pedido
-# =========================
+
 class DetallePedidoCreate(BaseModel):
     id_catalogo: int
     cantidad_pedido_uds: int
@@ -44,9 +38,7 @@ class DetallePedidoOut(BaseModel):
     class Config:
         orm_mode = True
 
-# =========================
-# Pedido
-# =========================
+
 class PedidoCreate(BaseModel):
     id_cliente: int
     items: List[DetallePedidoCreate]

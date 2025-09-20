@@ -1,17 +1,14 @@
 // auth.js
 async function login(event) {
-  event.preventDefault(); // evita que el form haga submit normal
+  event.preventDefault(); 
 
   const body = {
     correo: document.getElementById("correoLogin").value,
     contrasena: document.getElementById("contrasenaLogin").value
   };
 
-  // --- URL del endpoint de login: revisa en tu /docs cuál es ---
-  // si tu router de auth usa prefix "/auth" usa "/auth/login"
-  // si lo dejaste en "/usuarios" usa "/usuarios/login"
-  // ejemplo:
-  const LOGIN_URL = "http://127.0.0.1:8000/auth/login"; // <- ajustar si tu ruta es /usuarios/login
+
+  const LOGIN_URL = "http://127.0.0.1:8000/auth/login"; // concentamos a esta ruta q esta en routers/auth 
 
   try {
     const res = await fetch(LOGIN_URL, {
@@ -27,9 +24,9 @@ async function login(event) {
     }
 
     const data = await res.json();
-    // guarda token (para pruebas está bien localStorage)
+    // guarda token ahora en la memoria local tengo q ver despues como lo guardo
     localStorage.setItem("token", data.access_token);
-    // redirigir al panel (ajusta ruta si tu template difiere)
+    // redirigir al panel ajusta ruta si tu template difiere q no olvide cambiar la ruta a menu
     window.location.href = "/inventario";
   } catch (error) {
     console.error("Error fetch login:", error);

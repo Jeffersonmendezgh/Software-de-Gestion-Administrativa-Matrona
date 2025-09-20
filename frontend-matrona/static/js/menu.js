@@ -1,6 +1,4 @@
-// =============================
 // 📦 Función para enviar pedidos
-// =============================
 async function enviarPedido(clienteId, items) {
     // items = [{ id_catalogo: 1, cantidad: 2 }, ...] 
     const body = { id_cliente: clienteId, items };
@@ -80,14 +78,14 @@ function renderPedido(pedido) {
 const ws = new WebSocket("ws://" + location.host + "/ws/pedidos");
 
 // Cuando se conecta
-ws.onopen = () => console.log("✅ WebSocket conectado");
+ws.onopen = () => console.log(" WebSocket conectado");
 
 // Cuando llega un mensaje
 ws.onmessage = ev => {
     const msg = JSON.parse(ev.data);
 
     if (msg.type === "new_order") {
-        console.log("🔔 Nuevo pedido recibido:", msg.data);
+        console.log(" Nuevo pedido recibido:", msg.data);
         renderPedido(msg.data);
     }
 };

@@ -9,7 +9,7 @@ async function cargarInventario() {
         console.log(" Inventario recibido desde FastAPI:", inventario);
 
         const contenedor = document.getElementById("productosInventario");
-        contenedor.innerHTML = ""; // Limpiar el contenedor antes de llenarlo
+        contenedor.innerHTML = ""; 
 
         inventario.forEach(item => {
             console.log("Item recibido:", item);
@@ -53,7 +53,7 @@ async function cargarInventario() {
 
 // Llamar la función al cargar la página
 async function eliminarProducto(id_catalogo) {
-    if (!confirm("⚠️ ¿Estás seguro de eliminar este producto?")) {
+    if (!confirm("¿Estás seguro de eliminar este producto?")) {
         return; // si el usuario cancela, no hace nada
     }
 
@@ -63,7 +63,7 @@ async function eliminarProducto(id_catalogo) {
         });
 
         const data = await response.json();
-        console.log("✅ Eliminado:", data);
+        console.log("Eliminado:", data);
 
         // Recargar inventario después de eliminar
         cargarInventario();

@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 
-# Mini esquema de Inventario (solo info necesaria)
+# Mini esquema de Inventario para manejar datos extras 
 class InventarioMini(BaseModel):
     id_inventario: int
     nombre_bebida: str
@@ -12,7 +12,7 @@ class InventarioMini(BaseModel):
         orm_mode = True
 
 
-# Esquema base de Catálogo (lo que se devuelve al frontend)
+# Esquema base de Catálogo atencion importante la idea es devolver esto al frontend al actualizar div
 class CatalogoBase(BaseModel):
     id_catalogo: int
     id_inventario: int

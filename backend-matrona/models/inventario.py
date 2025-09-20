@@ -14,7 +14,7 @@ class Inventario(Base):
     unidades_agregadas = Column(Integer, nullable=True)
     catalogo = relationship("Catalogo", back_populates="inventario", uselist=False, cascade="all, delete")
 
-     # 🟢 Método para manejar stock
+     #  Método para manejar stock
     def agregar_stock(self, unidades: int):
         if unidades <= 0:
             raise ValueError("La cantidad a agregar debe ser mayor a 0")

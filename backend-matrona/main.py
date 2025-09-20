@@ -23,20 +23,15 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="API Matrona")
 
-@app.get("/funcionamiento")
-def root():
-    return {"ok": True, "mensaje": "API conectada a MySQL ✅"}
-
-# 📂 Ruta absoluta de la carpeta frontend
+#  Ruta absoluta de la carpeta frontend
 frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend-matrona")
 
 # Servir la carpeta frontend como "static"
 
-#ruta correcta
-# 📂 Base del proyecto
+#  Base del proyecto
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 📂 Ruta a la carpeta "static" dentro de frontend-matrona
+# Ruta a la carpeta "static" dentro de frontend-matrona
 static_path = os.path.join(BASE_DIR, "..", "frontend-matrona", "static")
 
 # Montar la carpeta estática
@@ -76,8 +71,6 @@ def mostrar_registro(request: Request):
 def mostrar_login(request: Request):
     return templates.TemplateResponse("inicioSesion.html", {"request": request})
 
-
-
 #ruta menu
 @app.get("/menu")
 def mostrar_menu(request: Request):
@@ -92,4 +85,3 @@ app.include_router(ws_router)
 app.include_router(usuario_auth.router)
 app.include_router(pedido_router)
 
-#.\venv\Scripts\activate activar entorno virtual

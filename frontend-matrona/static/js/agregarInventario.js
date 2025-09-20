@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const btnGuardar = document.getElementById("btnGuardarProducto");
 
-    // 👀 Detectar si es edición (la ruta trae id_catalogo en la URL)
+    // Detectar si es edición la ruta trae id_catalogo en la URL
     const urlParams = window.location.pathname.split("/"); //devuelve el otro pedazito de url es decir el numero para acceder al id
     const isEditing = urlParams.includes("editar-inventario");
     const editId = isEditing ? urlParams[urlParams.length - 1] : null;
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
             precio_caja: parseFloat(document.getElementById("precio_caja").value)
         };
 
-        console.log("📤 Enviando:", data);
+        console.log(" Enviando:", data);
 
         try {
             const response = await fetch(
@@ -52,13 +52,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!response.ok) throw new Error(`Error ${response.status}`);
 
             const result = await response.json();
-            console.log("✅ Guardado:", result);
+            console.log("Guardado:", result);
 
             alert(isEditing ? "Cerveza actualizada 🎉" : "Cerveza agregada 🎉");
 
             window.location.href = "/inventario.html"; // volver al inventario
         } catch (error) {
-            console.error("❌ Error:", error);
+            console.error(" Error:", error);
             alert("Hubo un error. Revisa la consola.");
         }
     });
