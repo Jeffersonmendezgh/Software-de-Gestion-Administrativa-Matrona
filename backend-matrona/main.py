@@ -14,7 +14,7 @@ import os
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi import WebSocket
-from utils.websoket import manager
+from utils.websocket import manager
 import models
 
 
@@ -76,6 +76,18 @@ def mostrar_login(request: Request):
 def mostrar_menu(request: Request):
     return templates.TemplateResponse("menu.html", {"request": request})
 
+@app.get("/ws-test")
+def ws_test():
+    from utils.websocket import manager
+    manager.broadcast_json_sync({"type": "new_order", "data": {"msg": "Prueba desde backend"}})
+    return {"ok": True}
+
+@app.on_event("startup")
+async def startup_event():
+    # Guardar el loop principal en el manager
+    import asyncio
+    from utils.websocket import manager
+    manager.loop = asyncio.get_running_loop()
 
 app.include_router(usuario_router)
 app.include_router(inventario_router)

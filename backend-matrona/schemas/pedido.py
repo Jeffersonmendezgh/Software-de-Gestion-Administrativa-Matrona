@@ -8,7 +8,7 @@ class UsuarioInfo(BaseModel):
     apellido: str
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class ClienteInfo(BaseModel):
@@ -16,7 +16,7 @@ class ClienteInfo(BaseModel):
     usuario: UsuarioInfo   # 👈 accedemos a la relación con Usuario
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class DetallePedidoCreate(BaseModel):
@@ -36,7 +36,7 @@ class DetallePedidoOut(BaseModel):
     catalogo_nombre: Optional[str] = None 
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class PedidoCreate(BaseModel):
@@ -52,4 +52,4 @@ class PedidoOut(BaseModel):
     detalles: List[DetallePedidoOut]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
