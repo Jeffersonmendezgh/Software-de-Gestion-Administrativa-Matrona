@@ -81,17 +81,17 @@
         <h4 class="font-semibold text-gray-800 mb-2">Realizar pedido</h4>
         <div class="flex flex-col md:flex-row gap-4">
           <div class="flex-1 space-y-2">
-            <select name="seleccionar_presentacion" id="seleccionar_presentacion"
-              class="w-full p-2 border border-gray-300 rounded text-gray-700 bg-white">
+            <select class="presentacion w-full p-2 border border-gray-300 rounded text-gray-700 bg-white">
               <option selected disabled>Seleccionar presentación</option>
               <option value="unidad">Unidad</option>
               <option value="sixpack">Sixpack</option>
               <option value="caja">Caja</option>
             </select>
-            <input type="number" class="w-full p-2 border border-gray-300 rounded" placeholder="Cantidad">
+            <input type="number" class="cantidad w-full p-2 border border-gray-300 rounded" placeholder="Cantidad">
           </div>
           <div class="flex items-end gap-2">
-            <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg">
+            <button class="btn-reservar bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg"
+            data-id="1">
               Reservar pedido
             </button>
             <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg">
@@ -118,33 +118,5 @@
     </div>
     </div>
    <script src="/static/js/catalogo.js"></script> 
-  <script> // funcion para mostrar al cliente el valor de cada presentacion de cervezas en unidades
-  const select = document.getElementById('seleccionar_presentacion');
-  const cantidadInput = document.querySelector('input[type="number"]');
-  
-  const resultadoTexto = document.createElement('p');
-  resultadoTexto.className = "mt-2 text-sm text-gray-600";
-  cantidadInput.parentElement.appendChild(resultadoTexto);
-
-  // aca para el texto
-  function actualizarTexto() {
-    const tipo = select.value;
-    const cantidad = parseInt(cantidadInput.value) || 0;
-    let multiplicador = 1;
-
-    if (tipo === "sixpack") multiplicador = 6;
-    else if (tipo === "caja") multiplicador = 24;
-
-    const total = cantidad * multiplicador;
-    if (tipo) {
-      resultadoTexto.textContent = `la presentacion de ${cantidad} ${tipo} contiene = ${total} unidades`;
-    } else {
-      resultadoTexto.textContent = "";
-    }
-  }
-
-  select.addEventListener("change", actualizarTexto);
-  cantidadInput.addEventListener("input", actualizarTexto);
-</script>
 </body>
 </html>

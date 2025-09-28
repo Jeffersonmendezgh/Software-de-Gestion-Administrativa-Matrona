@@ -1,17 +1,15 @@
-from fastapi import WebSocket, WebSocketDisconnect
-from fastapi import APIRouter
+# routers/ws_router.py
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from utils.websocket import manager   # coincide con el nombre del fichero arriba
 
 router = APIRouter()
 
-# Lista de conexiones activas
-conexiones: list[WebSocket] = []
-
 @router.websocket("/ws/pedidos")
-async def websocket_pedidos(ws: WebSocket):
-    await ws.accept()
-    conexiones.append(ws)
+async def websocket_endpoint(websocket: WebSocket):
+    await manager.connect(websocket)
     try:
         while True:
-            await ws.receive_text()  #no lo usamos pero evita cerrar la conexión por ahora
+            # opcional: si no quieres procesar mensajes entrantes, esto mantiene viva la conexión
+            await websocket.receive_text()
     except WebSocketDisconnect:
-        conexiones.remove(ws)
+        manager.disconnect(websocket)

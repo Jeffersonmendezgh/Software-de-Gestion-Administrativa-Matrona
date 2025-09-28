@@ -8,13 +8,19 @@ from models.detalle_pedido import DetallePedido
 from models.catalogo import Catalogo
 from models.inventario import Inventario
 from schemas.pedido import PedidoCreate, PedidoOut
-from utils.websoket import manager
+from utils.websocket import manager
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import joinedload
+#from routers.ws_router import broadcast
 
 router = APIRouter(prefix="/pedidos", tags=["pedidos"])
 #postpara crear el pedido nuevo al hacer click en catalogo
 @router.post("/", response_model=PedidoOut, status_code=status.HTTP_201_CREATED)
-def crear_pedido(data: PedidoCreate, db: Session = Depends(get_db), bg: BackgroundTasks = None):
+def crear_pedido(
+    data: PedidoCreate,
+    db: Session = Depends(get_db),
+    bg: BackgroundTasks = None
+):
     try:
         with db.begin():  # transacción
             # crear pedido base
@@ -27,14 +33,18 @@ def crear_pedido(data: PedidoCreate, db: Session = Depends(get_db), bg: Backgrou
             db.flush()  # obtener id_pedidos
 
             total = Decimal("0.00")
+
             # procesar items
             for it in data.items:
-                catalogo = db.query(Catalogo).filter(Catalogo.id_catalogo == it.id_catalogo).first()
+                catalogo = db.query(Catalogo).filter(
+                    Catalogo.id_catalogo == it.id_catalogo
+                ).first()
                 if not catalogo:
                     raise HTTPException(status_code=404, detail=f"Catalogo {it.id_catalogo} no existe")
 
-                # obtener inventario y bloquear la fila para evitar sobreventa (simple)
-                inventario = db.query(Inventario).filter(Inventario.id_inventario == catalogo.id_inventario).with_for_update().first()
+                inventario = db.query(Inventario).filter(
+                    Inventario.id_inventario == catalogo.id_inventario
+                ).with_for_update().first()
                 if not inventario:
                     raise HTTPException(status_code=404, detail="Inventario no encontrado")
                 if inventario.cantidad_disponible < it.cantidad_pedido_uds:
@@ -42,10 +52,6 @@ def crear_pedido(data: PedidoCreate, db: Session = Depends(get_db), bg: Backgrou
 
                 precio = catalogo.precio_unidad or Decimal("0.00")
                 subtotal = Decimal(precio) * int(it.cantidad_pedido_uds)
-
-                # decrementar stock
-                #inventario.cantidad_disponible -= it.cantidad_pedido_uds
-                #db.add(inventario)
 
                 detalle = DetallePedido(
                     id_pedidos=pedido.id_pedidos,
@@ -61,23 +67,31 @@ def crear_pedido(data: PedidoCreate, db: Session = Depends(get_db), bg: Backgrou
             # actualizar total
             pedido.total_pedido = total
             db.add(pedido)
-            # commit por with db.begin()
+            # commit automático por with db.begin()
 
-        # notificar a admins vía websocket (programar tarea no-bloqueante)
+        # recargar el pedido con cliente y detalles antes de enviar por websocket
+        pedido_full = db.query(Pedido).options(
+            joinedload(Pedido.cliente),
+            joinedload(Pedido.detalles).joinedload(DetallePedido.catalogo)
+        ).filter(Pedido.id_pedidos == pedido.id_pedidos).first()
+
+        from schemas.pedido import PedidoOut
+        pedido_schema = PedidoOut.model_validate(pedido_full, from_attributes=True)
+
+        # notificar a admins vía websocket
         if bg is not None:
+            pedido_out = PedidoOut.from_orm(pedido)
             bg.add_task(manager.broadcast_json_sync, {
                 "type": "new_order",
-                "id_pedidos": pedido.id_pedidos,
-                "summary": f"Pedido {pedido.id_pedidos} - {len(data.items)} items - total {float(total)}"
+                "data": pedido_out.model_dump(mode="json")  # ✅ serializable
             })
 
-        db.refresh(pedido)
-        return pedido
+        return PedidoOut.from_orm(pedido)
 
-    except SQLAlchemyError as e:
+    except Exception as e:
         db.rollback()
-        raise HTTPException(status_code=500, detail=f"Error al crear pedido: {str(e)}")
-    
+        raise
+
 #  Endpoint para entregar pedido es decir cambiar el estado de pediente a entregado
 @router.put("/{pedido_id}/estado")
 def entregar_pedido(pedido_id: int, db: Session = Depends(get_db)):
@@ -90,10 +104,7 @@ def entregar_pedido(pedido_id: int, db: Session = Depends(get_db)):
     if pedido.estado == "entregado":
         raise HTTPException(status_code=400, detail="El pedido ya fue entregado")
 
-    # 3. Cambiar estado a entregado
-    pedido.estado = "entregado"
-
-    # 4. Restar inventario en cada detalle del pedido
+    # 3. Verificar inventario antes de entregar
     detalles = db.query(DetallePedido).filter(DetallePedido.id_pedidos == pedido_id).all()
     for detalle in detalles:
         catalogo = db.query(Catalogo).filter(Catalogo.id_catalogo == detalle.id_catalogo).first()
@@ -105,18 +116,37 @@ def entregar_pedido(pedido_id: int, db: Session = Depends(get_db)):
             raise HTTPException(status_code=404, detail="Inventario no encontrado")
 
         if inventario.cantidad_disponible < detalle.cantidad_pedido_uds:
-            raise HTTPException(status_code=400, detail="Inventario insuficiente para entregar pedido")
+            raise HTTPException(status_code=400, detail=f"Inventario insuficiente para {catalogo.id_catalogo}")
 
+    # 4. Si todo OK, aplicar cambios
+    pedido.estado = "entregado"
+    for detalle in detalles:
+        catalogo = db.query(Catalogo).filter(Catalogo.id_catalogo == detalle.id_catalogo).first()
+        inventario = db.query(Inventario).filter(Inventario.id_inventario == catalogo.id_inventario).first()
         inventario.cantidad_disponible -= detalle.cantidad_pedido_uds
         db.add(inventario)
 
+    db.add(pedido)
     db.commit()
     db.refresh(pedido)
 
-    return {"message": f"Pedido {pedido_id} entregado con éxito", "estado": pedido.estado}
+    return {
+        "message": f"Pedido {pedido_id} entregado con éxito",
+        "estado": pedido.estado
+    }
 
 # get para llevar los pedios al fronted
 @router.get("/", response_model=list[PedidoOut])
 def listar_pedidos(db: Session = Depends(get_db)):
     pedidos = db.query(Pedido).all()
     return pedidos
+
+@router.delete("/{id_pedidos}")
+def eliminar_pedido(id_pedidos: int, db: Session = Depends(get_db)):
+    db_pedidos = db.query(Pedido).filter(Pedido.id_pedidos == id_pedidos).first()
+    if not db_pedidos:
+        raise HTTPException(status_code=404, detail="Pedido no encontrado")
+
+    db.delete(db_pedidos)
+    db.commit()
+    return {"mensaje": f"Pedido con id {id_pedidos} eliminado"}
