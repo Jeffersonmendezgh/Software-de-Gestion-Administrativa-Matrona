@@ -1,6 +1,6 @@
-// 📦 Función para enviar pedidos
+//  Función para enviar pedidos
 async function enviarPedido(clienteId, items) {
-    // items = [{ id_catalogo: 1, cantidad_pedido_uds: 2, presentacion: "Botella 1L" }, ...] 
+    // items = [{ id_catalogo: 1, cantidad_pedido_uds: 2, presentacion:  }, ...] 
     const body = { id_cliente: clienteId, items };
 
     try {
@@ -17,7 +17,7 @@ async function enviarPedido(clienteId, items) {
         }
 
         const data = await res.json();
-        alert("✅ Pedido creado con ID: " + data.id_pedidos);
+        alert(" Pedido creado con ID: " + data.id_pedidos);
 
     } catch (e) {
         console.error("Error enviando pedido:", e);
@@ -25,7 +25,7 @@ async function enviarPedido(clienteId, items) {
     }
 }
 
-// 🖼️ Renderizar pedido en pantalla
+//  Renderizar pedido en pantalla
 function renderPedido(pedido) {
     const cont = document.querySelector(".contenedor_pedidos");
 
@@ -45,7 +45,7 @@ function renderPedido(pedido) {
 
     cont.prepend(div);
 
-    // 👉 Enganchar botón "Entregar" si existe
+    //  Enganchar botón "Entregar" si existe
     const btn = div.querySelector(`#btn-pedido-${pedido.id_pedidos}`);
     if (btn) {
         btn.addEventListener("click", async () => {
@@ -66,12 +66,12 @@ function renderPedido(pedido) {
     }
 }
 
-// 🔌 WebSocket para notificaciones en tiempo real
+// WebSocket para notificaciones en tiempo real
 const ws = new WebSocket(
     (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/ws/pedidos"
 );
 
-ws.onopen = () => console.log("✅ WebSocket conectado");
+ws.onopen = () => console.log(" WebSocket conectado");
 
 ws.onmessage = ev => {
     const msg = JSON.parse(ev.data);
@@ -81,10 +81,10 @@ ws.onmessage = ev => {
     }
 };
 
-ws.onclose = () => console.warn("⚠️ WebSocket cerrado");
-ws.onerror = err => console.error("❌ WebSocket error:", err);
+ws.onclose = () => console.warn(" WebSocket cerrado");
+ws.onerror = err => console.error(" WebSocket error:", err);
 
-// 📥 Cargar pedidos existentes al iniciar
+//  Cargar pedidos existentes al iniciar
 async function cargarPedidos() {
     try {
         const res = await fetch("/pedidos");
