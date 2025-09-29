@@ -12,7 +12,7 @@ async function enviarPedido(clienteId, items) {
 
         if (!res.ok) {
             const err = await res.json();
-            alert("❌ Error: " + (err.detail || "Error al crear pedido"));
+            alert(" Error: " + (err.detail || "Error al crear pedido"));
             return;
         }
 
@@ -21,7 +21,7 @@ async function enviarPedido(clienteId, items) {
 
     } catch (e) {
         console.error("Error enviando pedido:", e);
-        alert("⚠️ Error de red");
+        alert(" Error de red");
     }
 }
 
@@ -76,7 +76,7 @@ ws.onopen = () => console.log(" WebSocket conectado");
 ws.onmessage = ev => {
     const msg = JSON.parse(ev.data);
     if (msg.type === "new_order") {
-        console.log("🔔 Nuevo pedido recibido:", msg.data);
+        console.log(" Nuevo pedido recibido:", msg.data);
         renderPedido(msg.data);
     }
 };
