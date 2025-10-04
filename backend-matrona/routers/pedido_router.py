@@ -79,7 +79,7 @@ def crear_pedido(
 
         # recargar el pedido completo
         pedido_full = db.query(Pedido).options(
-            joinedload(Pedido.cliente),
+            joinedload(Pedido.cliente).joinedload(Cliente.usuario),
             joinedload(Pedido.detalles).joinedload(DetallePedido.catalogo)
         ).filter(Pedido.id_pedidos == pedido.id_pedidos).first()
 
