@@ -2,8 +2,10 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from db import get_db
+from datetime import date
 from models.usuario import Usuario
 from models.rol import Rol
+from models.cliente import Cliente
 from schemas.usuario import UsuarioCreate, UsuarioOut, UsuarioLogin, Token
 from utils.auth import get_password_hash, verify_password, create_access_token
 from utils.deps import get_current_user, require_role
@@ -40,6 +42,15 @@ def registro(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(db_usuario)
 
+#creamos la vinculacion con la tabla cliente
+    if db_usuario.id_rol == 3:
+        nuevo_cliente = Cliente(
+            id_usuarios=db_usuario.id_usuarios,
+            fecha_registro=date.today()
+        )
+        db.add(nuevo_cliente)
+        db.commit()
+        db.refresh(nuevo_cliente)
     return db_usuario
 
 # Login

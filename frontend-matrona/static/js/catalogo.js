@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const productoHTML = `
         <div class="bg-orange-100 p-6 rounded-xl shadow-lg border border-gray-200 mb-8" data-id="${item.id_catalogo}">
           <div class="flex flex-col md:flex-row gap-6">
+            <!-- Imagen -->
             <div class="md:w-1/3 flex justify-center items-center bg-gray-50 rounded-lg p-4">
               <img src="https://res.cloudinary.com/dgrj6myiy/image/upload/v1757984968/beers_u44het.jpg" class="h-60 object-contain">
             </div>
@@ -18,8 +19,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             <div class="md:w-2/3 flex flex-col justify-between">
               <h3 class="text-2xl font-bold text-orange-700 mb-2">${item.inventario.nombre_bebida}</h3>
               <div class="grid grid-cols-2 gap-y-2 mb-4 text-gray-700">
-                <div><span class="font-semibold">${item.precio_unidad}</div>
-                <div><span class="font-semibold">${item.descripcion}</div>
+                <div><span class="font-semibold">${item.precio_unidad}</span></div>
+                <div><span class="font-semibold">${item.descripcion}</span></div>
                 <div><span class="font-semibold">${item.alcohol}</span></div>
                 <div><span class="font-semibold">${item.contenido}</span> ML</div>
                 <div><span class="font-semibold">Vencimiento:</span> 20 - 09 - 2026</div>
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       contenedor.insertAdjacentHTML("beforeend", productoHTML);
     });
   } catch (error) {
-    console.log("Error cargando el catalogo: ", error);
+    console.error("Error cargando el catalogo: ", error);
   }
 });
 
@@ -78,42 +79,47 @@ contenedor.addEventListener("click", async (e) => {
       return;
     }
 
-    //  Conversión de presentaciones a unidades desde aca
+    // Conversión de presentaciones a unidades
     let unidadesTotales = 0;
     if (presentacion === "unidad") unidadesTotales = cantidad;
     if (presentacion === "sixpack") unidadesTotales = cantidad * 6;
     if (presentacion === "caja") unidadesTotales = cantidad * 24;
 
-    //  Construcción del pedido aca me toca ajustado al schema PedidoCreate
+    // Construcción del pedido (conforme a PedidoCreate)
     const pedido = {
-      id_cliente: 1, //  luego cambi0 por el cliente logueado
       items: [
         {
           id_catalogo: parseInt(productoId),
-          cantidad_pedido_uds: unidadesTotales,
-          presentacion: presentacion
+          cantidad_pedido_uds: parseInt(unidadesTotales),
+          presentacion: String(presentacion)
         }
       ]
     };
 
-    console.log("Pedido a enviar:", pedido);
+    console.log("Pedido JSON:", JSON.stringify(pedido, null, 2));
 
     try {
       const res = await fetch("/pedidos/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("token")
+        },
         body: JSON.stringify(pedido)
       });
 
       if (res.ok) {
+        const data = await res.json();
         alert(` Pedido realizado: ${cantidad} ${presentacion}(s) = ${unidadesTotales} cervezas`);
+        console.log("Respuesta backend:", data);
       } else {
         const errorData = await res.json();
         console.error("Error en respuesta:", errorData);
-        alert("❌ Error al realizar pedido");
+        alert(" Error al realizar pedido: " + (errorData.detail || JSON.stringify(errorData)));
       }
     } catch (err) {
       console.error("Error enviando pedido:", err);
+      alert(" Error al enviar el pedido");
     }
   }
 });

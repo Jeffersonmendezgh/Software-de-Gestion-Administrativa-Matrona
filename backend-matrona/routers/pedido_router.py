@@ -3,6 +3,9 @@ from sqlalchemy.orm import Session
 from db import get_db
 from decimal import Decimal
 from datetime import date
+from utils.deps import get_current_user
+from models.usuario import Usuario
+from models.cliente import Cliente
 from models.pedidos import Pedido
 from models.detalle_pedido import DetallePedido
 from models.catalogo import Catalogo
@@ -19,78 +22,75 @@ router = APIRouter(prefix="/pedidos", tags=["pedidos"])
 def crear_pedido(
     data: PedidoCreate,
     db: Session = Depends(get_db),
-    bg: BackgroundTasks = None
+    bg: BackgroundTasks = None,
+    current_user: Usuario = Depends(get_current_user)
 ):
     try:
-        with db.begin():  # transacción
-            # crear pedido base
-            pedido = Pedido(
-                id_cliente=data.id_cliente,
-                fecha_pedido=date.today(),
-                total_pedido=Decimal("0.00")
+        # buscar cliente vinculado al usuario logeado
+        cliente = db.query(Cliente).filter(Cliente.id_usuarios == current_user.id_usuarios).first()
+        if not cliente:
+            raise HTTPException(status_code=400, detail="El usuario no está registrado como cliente")
+
+        # crear pedido base
+        pedido = Pedido(
+            id_cliente=cliente.id_cliente,
+            fecha_pedido=date.today(),
+            total_pedido=Decimal("0.00")
+        )
+        db.add(pedido)
+        db.flush()  # para obtener id_pedidos
+
+        total = Decimal("0.00")
+
+        # procesar items
+        for it in data.items:
+            catalogo = db.query(Catalogo).filter(
+                Catalogo.id_catalogo == it.id_catalogo
+            ).first()
+            if not catalogo:
+                raise HTTPException(status_code=404, detail=f"Catalogo {it.id_catalogo} no existe")
+
+            inventario = db.query(Inventario).filter(
+                Inventario.id_inventario == catalogo.id_inventario
+            ).with_for_update().first()
+            if not inventario:
+                raise HTTPException(status_code=404, detail="Inventario no encontrado")
+            if inventario.cantidad_disponible < it.cantidad_pedido_uds:
+                raise HTTPException(status_code=400, detail=f"Stock insuficiente para {catalogo.id_catalogo}")
+
+            precio = catalogo.precio_unidad or Decimal("0.00")
+            subtotal = Decimal(precio) * int(it.cantidad_pedido_uds)
+
+            detalle = DetallePedido(
+                id_pedidos=pedido.id_pedidos,
+                id_catalogo=catalogo.id_catalogo,
+                precio_unitario=precio,
+                subtotal=subtotal,
+                cantidad_pedido_uds=it.cantidad_pedido_uds,
+                presentacion=it.presentacion
             )
-            db.add(pedido)
-            db.flush()  # obtener id_pedidos
+            db.add(detalle)
+            total += subtotal
 
-            total = Decimal("0.00")
+        # actualizar total
+        pedido.total_pedido = total
+        db.add(pedido)
+        db.commit()  #  aquí confirmamos todo
 
-            # procesar items
-            for it in data.items:
-                catalogo = db.query(Catalogo).filter(
-                    Catalogo.id_catalogo == it.id_catalogo
-                ).first()
-                if not catalogo:
-                    raise HTTPException(status_code=404, detail=f"Catalogo {it.id_catalogo} no existe")
-
-                inventario = db.query(Inventario).filter(
-                    Inventario.id_inventario == catalogo.id_inventario
-                ).with_for_update().first()
-                if not inventario:
-                    raise HTTPException(status_code=404, detail="Inventario no encontrado")
-                if inventario.cantidad_disponible < it.cantidad_pedido_uds:
-                    raise HTTPException(status_code=400, detail=f"Stock insuficiente para {catalogo.id_catalogo}")
-
-                precio = catalogo.precio_unidad or Decimal("0.00")
-                subtotal = Decimal(precio) * int(it.cantidad_pedido_uds)
-
-                detalle = DetallePedido(
-                    id_pedidos=pedido.id_pedidos,
-                    id_catalogo=catalogo.id_catalogo,
-                    precio_unitario=precio,
-                    subtotal=subtotal,
-                    cantidad_pedido_uds=it.cantidad_pedido_uds,
-                    presentacion=it.presentacion
-                )
-                db.add(detalle)
-                total += subtotal
-
-            # actualizar total
-            pedido.total_pedido = total
-            db.add(pedido)
-            # commit automático por with db.begin()
-
-        # recargar el pedido con cliente y detalles antes de enviar por websocket
+        # recargar el pedido completo
         pedido_full = db.query(Pedido).options(
             joinedload(Pedido.cliente),
             joinedload(Pedido.detalles).joinedload(DetallePedido.catalogo)
         ).filter(Pedido.id_pedidos == pedido.id_pedidos).first()
 
         from schemas.pedido import PedidoOut
-        pedido_schema = PedidoOut.model_validate(pedido_full, from_attributes=True)
-
-        # notificar a admins vía websocket
-        if bg is not None:
-            pedido_out = PedidoOut.from_orm(pedido)
-            bg.add_task(manager.broadcast_json_sync, {
-                "type": "new_order",
-                "data": pedido_out.model_dump(mode="json")  # ✅ serializable
-            })
-
-        return PedidoOut.from_orm(pedido)
+        return PedidoOut.model_validate(pedido_full, from_attributes=True)
 
     except Exception as e:
         db.rollback()
-        raise
+        print(" ERROR CREANDO PEDIDO:", e)#necesito este print para realizar seguimiento al error
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 #  Endpoint para entregar pedido es decir cambiar el estado de pediente a entregado
 @router.put("/{pedido_id}/estado")

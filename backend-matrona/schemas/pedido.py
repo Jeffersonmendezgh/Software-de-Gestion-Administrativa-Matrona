@@ -13,7 +13,7 @@ class UsuarioInfo(BaseModel):
 
 class ClienteInfo(BaseModel):
     id_cliente: int
-    usuario: UsuarioInfo   # 👈 accedemos a la relación con Usuario
+    usuario: UsuarioInfo   #  accedemos a la relación con Usuario
 
     class Config:
         from_attributes = True
@@ -40,7 +40,7 @@ class DetallePedidoOut(BaseModel):
 
 
 class PedidoCreate(BaseModel):
-    id_cliente: int
+    #id_cliente: int
     items: List[DetallePedidoCreate]
 
 class PedidoOut(BaseModel):

@@ -1,20 +1,41 @@
-// auth.js
+// =========================
+// Helper: decodificar JWT
+// =========================
+function parseJwt(token) {
+  try {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    console.error("Error parseando JWT:", e);
+    return null;
+  }
+}
+
+// =========================
+// Login
+// =========================
 async function login(event) {
-  event.preventDefault(); 
+  event.preventDefault();
 
   const body = {
     correo: document.getElementById("correoLogin").value,
-    contrasena: document.getElementById("contrasenaLogin").value
+    contrasena: document.getElementById("contrasenaLogin").value,
   };
 
-
-  const LOGIN_URL = "http://127.0.0.1:8000/auth/login"; // concentamos a esta ruta q esta en routers/auth 
+  const LOGIN_URL = "http://127.0.0.1:8000/auth/login";
 
   try {
     const res = await fetch(LOGIN_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     });
 
     if (!res.ok) {
@@ -24,22 +45,43 @@ async function login(event) {
     }
 
     const data = await res.json();
-    // guarda token ahora en la memoria local tengo q ver despues como lo guardo
+    // Guardar token en localStorage
     localStorage.setItem("token", data.access_token);
-    // redirigir al panel ajusta ruta si tu template difiere q no olvide cambiar la ruta a menu
-    window.location.href = "/inventario";
+
+    // Decodificar token
+    const decoded = parseJwt(data.access_token);
+    console.log("Token decodificado:", decoded);
+
+    if (decoded && decoded.role) {
+      switch (decoded.role) {
+        case "1": // Administrador
+          window.location.href = "/menu";
+          break;
+        case "2": // Empleado
+          window.location.href = "/inventario";
+          break;
+        case "3": // Cliente
+          window.location.href = "/catalogo";
+          break;
+        default:
+          alert("Rol desconocido, no se pudo redirigir.");
+      }
+    } else {
+      alert("Error: no se pudo obtener el rol del token");
+    }
   } catch (error) {
     console.error("Error fetch login:", error);
     alert("No se pudo conectar con el servidor");
   }
 }
 
-// helper para llamadas protegidas
+// =========================
+// Helper para llamadas protegidas
+// =========================
 async function fetchWithAuth(path, options = {}) {
   const token = localStorage.getItem("token");
   if (!options.headers) options.headers = {};
   options.headers["Authorization"] = `Bearer ${token}`;
-  // asegúrate de usar URL completa o concatenar con tu host
   const base = "http://127.0.0.1:8000";
   return fetch(base + path, options);
 }
