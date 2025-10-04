@@ -110,7 +110,7 @@ contenedor.addEventListener("click", async (e) => {
 
       if (res.ok) {
         const data = await res.json();
-        alert(` Pedido realizado: ${cantidad} ${presentacion}(s) = ${unidadesTotales} cervezas`);
+        alert(` Pedido reservado: ${cantidad} ${presentacion}(s) = ${unidadesTotales} cervezas`);
         console.log("Respuesta backend:", data);
       } else {
         const errorData = await res.json();

@@ -38,11 +38,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const data = await response.json();
-            alert(" Usuario registrado con éxito");
+            alert("Te has registrado exitosamente Bienvenido a nuestro sistema ¡Matrona!");
             console.log(data);
 
             // Redirigir después de registrar
-            window.location.href = "/menu"; 
+            
         } catch (err) {
             console.error("Error en la solicitud:", err);
             alert("Error al conectar con el servidor");
