@@ -40,12 +40,14 @@
             <i class="fas fa-beer text-2xl text-orange-800 mb-2"></i> 
           </h2>
 
-          <div class="absolute top-2 right-4">
-              <button class="flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
-                    <i class="fas fa-user"></i>
-                    <span>Camilo Suarez</span>
-              </button>
+          <div class="absolute top-2 right-4" id="userInfo">
+              <div class="flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
+                <i class="fas fa-user"></i>
+                <span id="nombreUsuario">Usuari</span>
+                <span id="rolUsuario" class="text-sm text-orange-200"></span>
+              </div>
           </div>
+
           <div class="flex items-start justify-start  pt-4 ml-5 space-x-4">
             <div class="flex flex-col items-start m-0">
               <img src="https://res.cloudinary.com/dgrj6myiy/image/upload/logo_matrona_okhnsu" class="h-28 rounded-xl " alt="Logo Matrona">
@@ -108,11 +110,8 @@
         </main>
         <footer class="bg-white border-t p-4 flex justify-between items-center">
             <p class="text-sm text-gray-500">© 2025 Matrona Cervezas - Todos los derechos reservados</p>
-            <button class="flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
-                <a href="inicioSesion.html" class="flex items-center">
-                    <i class="fas fa-right-from-bracket mr-2"></i>
-                    <span>Cerrar sesión</span>
-                </a>
+            <button id="logoutBtn" class="mt-2 bg-gray-200 text-orange-700 px-3 py-1 rounded-lg hover:bg-gray-300 transition">
+              Cerrar sesión
             </button>
         </footer>
     </div>

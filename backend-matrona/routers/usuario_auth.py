@@ -79,3 +79,13 @@ def ruta_protegida(current_user=Depends(get_current_user)):
 def borrar_usuario(id: int):
 
     return {"msg": f"Usuario con id {id} eliminado (simulación)"}
+
+#router para obtener en el fronted mediante el token el usuario logeado
+@router.get("/me")
+def get_me(current_user: Usuario = Depends(get_current_user)):
+    return {
+        "id_usuarios": current_user.id_usuarios,
+        "nombre": current_user.nombre,
+        "apellido": current_user.apellido,
+        "rol": current_user.id_rol
+    }

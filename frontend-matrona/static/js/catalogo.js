@@ -1,6 +1,11 @@
 const contenedor = document.getElementById("catalogoProductos");
 
 document.addEventListener("DOMContentLoaded", async () => {
+  
+// usuario.js — versión sin módulos
+
+
+
   try {
     const response = await fetch("/catalogo/");
     const catalogo = await response.json();
@@ -121,5 +126,43 @@ contenedor.addEventListener("click", async (e) => {
       console.error("Error enviando pedido:", err);
       alert(" Error al enviar el pedido");
     }
+  }
+});
+
+function mostrarUsuarioActual() {
+  const nombre = localStorage.getItem("nombreUsuario");
+  const apellido = localStorage.getItem("apellidoUsuario");
+  const rol = localStorage.getItem("rolUsuario");
+
+  const nombreSpan = document.getElementById("nombreUsuario");
+  const rolSpan = document.getElementById("rolUsuario");
+
+  if (!nombreSpan || !rolSpan) {
+    console.warn("⚠️ Elementos del usuario no encontrados en el HTML.");
+    return;
+  }
+
+  if (nombre && apellido) {
+    nombreSpan.textContent = `${nombre} ${apellido}`;
+  } else {
+    nombreSpan.textContent = "Invitado";
+  }
+
+  if (rol) {
+    rolSpan.textContent = `(${rol})`;
+  } else {
+    rolSpan.textContent = "";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  mostrarUsuarioActual();
+
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.clear();
+      window.location.href = "/";
+    });
   }
 });
