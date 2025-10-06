@@ -67,7 +67,8 @@
                 <div class="flex items-center space-x-4">
                     <button class="btn-admin flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
                         <i class="fas fa-user"></i>
-                        <span>Administrador</span>
+                        <span id="nombreUsuario">Administrador</span>
+                        <span id="rolUsuario" class="text-sm text-orange-200"></span>
                     </button>
                 </div>
             </div>
@@ -93,6 +94,7 @@
          <div class="flex  items-center bg-orange-100 text-orange-600 font-bold p-3">
          <div class="w-1/4">Cliente</div>
          <div class="w-1/4">Unidades</div>
+         <div class="w-1/4">Tipo de Cerveza</div>
          <div class="w-1/4">Presentación</div>
          <div class="w-1/4 text-right">Estado</div>
          </div>
@@ -104,6 +106,7 @@
          <div class="flex bg-orange-200 shadow-xl p-3 rounded border-l-4 border-orange-500">
             <div class="w-1/4">Camilo Suarez</div>
             <div class="w-1/4">48</div>
+            <div class="w-1/4">matrona Classica</div>
             <div class="w-1/4">Sixpack</div>
             <div class="w-1/4 text-right text-red-600 font-semibold"> <button id="btn-pedido" class=" bg-orange-400 text-black rounded-xl p-1">Entregar</button> Pendiente</div>
          </div>
@@ -119,10 +122,10 @@
 
  </main>
         <footer class="bg-orange-100 border-t p-4 flex justify-end">
-            <button class="flex  space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
+            <button id="logoutBtn" class="flex  space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
                 <a href="inicioSesion.html" class="flex items-center">
                     <i class="fas fa-right-from-bracket mr-2"></i>
-                    <span>Salir</span>
+                    <span >Salir</span>
                 </a>
             </button>
         </footer>

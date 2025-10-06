@@ -15,7 +15,7 @@ class DetallePedido(Base):
     #relaciones con pedido y catalogo
     pedido = relationship("Pedido", back_populates="detalles")
     catalogo = relationship("Catalogo", back_populates="detalles")
-    # 👇 propiedad que expone el string
+    #  propiedad que expone el string
     @property
     def catalogo_nombre(self):
         return self.catalogo.descripcion if self.catalogo else None

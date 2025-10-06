@@ -77,14 +77,18 @@ def crear_pedido(
         db.add(pedido)
         db.commit()  #  aquí confirmamos todo
 
-        # recargar el pedido completo
+        # recargar el pedido completo con catálogo e inventario
         pedido_full = db.query(Pedido).options(
             joinedload(Pedido.cliente).joinedload(Cliente.usuario),
-            joinedload(Pedido.detalles).joinedload(DetallePedido.catalogo)
+            joinedload(Pedido.detalles)
+                .joinedload(DetallePedido.catalogo)
+                .joinedload(Catalogo.inventario)  #  importante: cargar inventario
         ).filter(Pedido.id_pedidos == pedido.id_pedidos).first()
 
+        
         from schemas.pedido import PedidoOut
         return PedidoOut.model_validate(pedido_full, from_attributes=True)
+
 
     except Exception as e:
         db.rollback()
@@ -138,7 +142,20 @@ def entregar_pedido(pedido_id: int, db: Session = Depends(get_db)):
 # get para llevar los pedios al fronted
 @router.get("/", response_model=list[PedidoOut])
 def listar_pedidos(db: Session = Depends(get_db)):
-    pedidos = db.query(Pedido).all()
+    pedidos = db.query(Pedido).options(
+        joinedload(Pedido.detalles)
+        .joinedload(DetallePedido.catalogo)
+        .joinedload(Catalogo.inventario),
+        joinedload(Pedido.cliente).joinedload(Cliente.usuario)
+    ).all()
+
+    # añadimos manualmente nombre_bebida para cada detalle
+    for pedido in pedidos:
+        for detalle in pedido.detalles:
+            if detalle.catalogo and detalle.catalogo.inventario:
+                detalle.nombre_bebida = detalle.catalogo.inventario.nombre_bebida
+
+
     return pedidos
 
 @router.delete("/{id_pedidos}")

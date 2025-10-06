@@ -31,6 +31,7 @@ class DetallePedidoOut(BaseModel):
     precio_unitario: Optional[float]
     subtotal: Optional[float]
     presentacion: str
+    nombre_bebida: Optional[str] = None
 
     # Aquí usamos descripcion en lugar de nombre
     catalogo_nombre: Optional[str] = None 

@@ -128,7 +128,7 @@ contenedor.addEventListener("click", async (e) => {
     }
   }
 });
-
+//funciona para traer los datos del usuario logeado y mostrarlos en pantalla
 function mostrarUsuarioActual() {
   const nombre = localStorage.getItem("nombreUsuario");
   const apellido = localStorage.getItem("apellidoUsuario");
@@ -138,7 +138,7 @@ function mostrarUsuarioActual() {
   const rolSpan = document.getElementById("rolUsuario");
 
   if (!nombreSpan || !rolSpan) {
-    console.warn("⚠️ Elementos del usuario no encontrados en el HTML.");
+    console.warn(" Elementos del usuario no encontrados en el HTML.");
     return;
   }
 
@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (logoutBtn) {
     logoutBtn.addEventListener("click", () => {
       localStorage.clear();
-      window.location.href = "/";
+      window.location.href = "/auth/login/";
     });
   }
 });

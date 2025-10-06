@@ -35,6 +35,7 @@ function renderPedido(pedido) {
     div.innerHTML = `
         <div class="w-1/4">${pedido.cliente?.usuario.nombre || "Cliente desconocido"} ${pedido.cliente?.usuario.apellido || ""}</div>
         <div class="w-1/4">${pedido.detalles?.[0]?.cantidad_pedido_uds || 0}</div>
+        <div class="w-1/4">${pedido.detalles?.[0]?.nombre_bebida || "Sin nombre"}</div>
         <div class="w-1/4">${pedido.detalles?.[0]?.presentacion || "N/A"}</div>
         <div class="w-1/4 text-right font-semibold ${pedido.estado === "entregado" ? "text-green-600" : "text-red-600"}">
             ${pedido.estado === "pendiente" 
@@ -98,3 +99,41 @@ async function cargarPedidos() {
 }
 
 document.addEventListener("DOMContentLoaded", cargarPedidos);
+
+//funcion para mostrar infoadmin
+function mostrarUsuarioActual() {
+  const nombre = localStorage.getItem("nombreUsuario");
+  const apellido = localStorage.getItem("apellidoUsuario");
+  const rol = localStorage.getItem("rolUsuario");
+
+  const nombreSpan = document.getElementById("nombreUsuario");
+  const rolSpan = document.getElementById("rolUsuario");
+
+  if (!nombreSpan || !rolSpan) {
+    console.warn(" Elementos del usuario no encontrados en el HTML.");
+    return;
+  }
+
+  if (nombre && apellido) {
+    nombreSpan.textContent = `${nombre} ${apellido}`;
+  } else {
+    nombreSpan.textContent = "Invitado";
+  }
+
+  if (rol) {
+    rolSpan.textContent = `(Admin${rol})`;
+  } else {
+    rolSpan.textContent = "";
+  }
+}
+mostrarUsuarioActual()
+
+//funciona para cerrar sesion
+const logoutBtn = document.getElementById("logoutBtn")
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+      localStorage.clear();
+      window.location.href = "/auth/login/";
+    });
+  }

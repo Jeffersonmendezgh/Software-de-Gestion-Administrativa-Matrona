@@ -60,8 +60,8 @@ async function login(event) {
     localStorage.setItem("idUsuario", userData.id_usuarios);
 
     console.log("usuario logeado", userData);
-    // Decodificar token
-    // Redirigir según rol
+  
+    // Redirigir según rol de user
 switch (userData.rol) {
   case 1: // Administrador
     window.location.href = "/menu";
@@ -81,11 +81,11 @@ switch (userData.rol) {
   }
 }
 
-// Helper para llamadas protegidas
+// fun para simplificar las peticiones al backend que necesitan auth con JWT token
 async function fetchWithAuth(path, options = {}) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");//obtiene el token gardado al hacer login
   if (!options.headers) options.headers = {};
   options.headers["Authorization"] = `Bearer ${token}`;
   const base = "http://127.0.0.1:8000";
-  return fetch(base + path, options);
+  return fetch(base + path, options);//ejecuta el fetch normal
 }
