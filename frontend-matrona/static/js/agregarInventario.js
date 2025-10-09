@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
             console.log("Guardado:", result);
 
-            alert(isEditing ? "Cerveza actualizada 🎉" : "Cerveza agregada 🎉");
+            alert(isEditing ? "Cerveza actualizada " : "Cerveza agregada ");
 
             window.location.href = "/inventario.html"; // volver al inventario
         } catch (error) {

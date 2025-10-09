@@ -9,12 +9,12 @@ router = APIRouter(prefix="/clientes", tags=["Clientes"])
 
 @router.post("/", response_model=ClienteOut)
 def crear_cliente(cliente: ClienteCreate, db: Session = Depends(get_db)):
-    # 1. Validamos que exista el usuario
+    # Validamos que exista el usuario
     usuario = db.query(Usuario).filter(Usuario.id_usuarios == cliente.id_usuarios).first()
     if not usuario:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    # 2. Creamos el cliente
+    #  Creamos el cliente
     nuevo_cliente = Cliente(
         id_usuarios=cliente.id_usuarios,
         fecha_registro=cliente.fecha_registro

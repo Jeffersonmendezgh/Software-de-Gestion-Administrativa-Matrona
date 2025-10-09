@@ -6,6 +6,7 @@ from routers import usuario_auth
 from routers import cliente
 from routers.pedido_router import router as pedido_router
 from routers.ws_router import router as ws_router
+from routers.proveedor_router import router as proveedor_router
 from models import Usuario, Rol, Inventario
 from db import engine, Base
 from fastapi.staticfiles import StaticFiles
@@ -16,6 +17,7 @@ from fastapi.responses import HTMLResponse
 from fastapi import WebSocket
 from utils.websocket import manager
 import models
+
 
 
 
@@ -76,6 +78,11 @@ def mostrar_login(request: Request):
 def mostrar_menu(request: Request):
     return templates.TemplateResponse("menu.html", {"request": request})
 
+#ruta para mostrar proveedor
+@app.get("/proveedor", response_class=HTMLResponse)
+async def mostrar_proveedor(request: Request):
+    return templates.TemplateResponse("proveedores.html", {"request": request})
+
 @app.get("/ws-test")
 def ws_test():
     from utils.websocket import manager
@@ -96,4 +103,5 @@ app.include_router(cliente.router)
 app.include_router(ws_router)
 app.include_router(usuario_auth.router)
 app.include_router(pedido_router)
+app.include_router(proveedor_router)
 

@@ -109,7 +109,7 @@ document.getElementById("productosInventario").addEventListener("click", async (
   if (!btn) return;
 
   const id = btn.dataset.id; // toma el data-id del botón
-  console.log("🔎 Click en Detalles de ID:", id);
+  console.log(" Click en Detalles de ID:", id);
 
   try {
     const res = await fetch(`/inventario/${id}`);
