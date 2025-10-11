@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contabilidad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans flex h-screen">
+    <aside class="w-64 bg-orange-400 text-black font-bold border-r-2 rounded-r-xl border-orange-600 shadow-2xl shadow-black/70 z-50">
+        <div class="p-4 flex items-center justify-center border-b-2 border-orange-700">
+            <h1 class="text-xl font-bold mx-1"><i class="fa-solid fa-bars mr-3 ml-3 text-red-800"></i> <a href="menu.html">Menu Principal</a></h1>
+        </div>
+        <nav class="p-4">
+            <ul class="space-y-2">
+                <li>
+                    <a href="inventario.html" class="flex items-center  p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-box mr-3 text-red-800"></i> Inventario
+                    </a>
+                </li>
+                <li>
+                    <a href="Materiales.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-boxes mr-3 text-red-800"></i> Materiales
+                    </a>
+                </li>
+                <li>
+                    <a href="contabilidad.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-calculator mr-3 text-red-800"></i> Contabilidad
+                    </a>
+                </li>
+                <li>
+                    <a href="catalogo.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-wine-bottle mr-3 text-red-800"></i> Catálogo de Productos
+                    </a>
+                </li>
+                <li>
+                    <a href="cotizaciones.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-file-invoice-dollar mr-3  text-red-800"></i> Cotizaciones
+                    </a>
+                </li>
+                <li>
+                    <a href="gestionEmpleados.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-users mr-3 text-red-800"></i> Empleados
+                    </a>
+                </li>
+                <li>
+                    <a href="gestionClientes.html" class="flex items-center p-2  rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-user-tie mr-3 text-red-800"></i> Clientes
+                    </a>
+                </li>
+                <li>
+                    <a href="Proveedores.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-truck mr-3 text-red-800"></i> Proveedores
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div class="flex-1 flex flex-col overflow-hidden">
+        <header class="bg-white shadow-sm">
+            <div class="flex justify-between items-center p-4">
+                <h2 class="text-lg font-semibold text-orange-600">Panel de Administración Contabilidad</h2>
+                <div class="flex items-center space-x-4">
+                    <button class="btn-admin flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
+                        <i class="fas fa-user"></i>
+                        <span>Administrador</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-auto p-6 bg-white">
+            <div class="max-w-6xl mx-auto">
+                <!-- Tabla desde el div -->
+                <div class="bg-white">
+                    <div class="p-4 bg-orange-100">
+                        <h3 class="text-lg font-bold text-orange-800">Historial de Ventas</h3>
+                    </div>
+                    <div class="overflow-y-auto max-h-64 border border-gray-200 rounded-lg shadow-sm">
+                        <table class="min-w-full divide-y divide-gray-900">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-orange-600 uppercase tracking-wider">Id pedido</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-orange-600 uppercase tracking-wider">Bebida</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-orange-600 uppercase tracking-wider">Cantidad</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-orange-600 uppercase tracking-wider">Fecha de Pedido</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-orange-600 uppercase tracking-wider">Nombre de cliente</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-orange-600 uppercase tracking-wider">Total de venta</th>
+                                </tr>
+                            </thead>
+                            <tbody id="filaContable" class="bg-white divide-y divide-gray-200">
+                                <!-- producto 1 -->
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">03</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Matrona Trigo</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">10 unidades</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">15/03/2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Francisco Orduz</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-green-600">$50.000</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">02</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Matrona Clasica</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">500 unidades</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">16/03/2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Hector Hernandez</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-green-600">$2.500.000</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">01</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Matrona Durazno</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">60 unidades</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">17/03/2025</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Juan Beltran</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-green-600">$240.000</td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- info contable  -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h4 class="text-lg font-semibold text-orange-600 mb-3 border-b pb-2">
+                            <i class="fas fa-chart-line mr-2"></i>Total presupuesto</h4>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>Unidades Vendidas:</span>
+                                <span id="totalUnidades" class="font-semibold">0</span>
+                            </div>
+        
+                            <div class="flex justify-between border-t pt-2">
+                                <span class="font-semibold">Ingresos Totales:</span>
+                                <span id="totalIngresos" class="font-semibold text-green-600">$0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow">
+                        <h4 class="text-lg font-semibold text-orange-600 mb-3 border-b pb-2">
+                            <i class="fas fa-wallet mr-2"></i>Ingresos por producto</h4>
+                        <div id="ingresosPorProducto" class="space-y-2">
+                            <div class="flex justify-between">
+                                <span>Matrona Trigo:</span>
+                                <span class="text-green-600">$50.000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Matrona Clasica:</span>
+                                <span class="text-green-600">$2.500.000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Matrona Durazno:</span>
+                                <span class="text-green-600">$240.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow mt-0 ">
+                    <h4 class="text-lg font-semibold text-orange-600 mb-4 border-b pb-2">
+                        <i class="fas fa-chart-bar mr-2"></i>Porcentaje de ventas por producto
+                    </h4>
+                    <canvas id="graficoCervezas" class="w-full h-64"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <div class="flex justify-end items-end h-20 w-full bg-white p-4"> 
+            <button class="flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
+               <a href="menu.html">
+                <i class="fas fa-right-from-bracket"></i><span>Salir</span></a>
+            </button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/js/contabilidad.js"></script>
+</body>
+</html>

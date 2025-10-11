@@ -8,6 +8,7 @@ from routers.pedido_router import router as pedido_router
 from routers.ws_router import router as ws_router
 from routers.proveedor_router import router as proveedor_router
 from routers.materiales_router import router as materiales_router
+from routers.contabilidad_router import router as contabilidad_router
 from models import Usuario, Rol, Inventario
 from db import engine, Base
 from fastapi.staticfiles import StaticFiles
@@ -88,6 +89,10 @@ async def mostrar_proveedor(request: Request):
 @app.get("/materiales", response_class=HTMLResponse)
 async def materiales_interfaz(request: Request):
     return templates.TemplateResponse("Materiales.html", {"request": request})
+#ruta contable
+@app.get("/contabilidad", response_class=HTMLResponse)
+async def interfaz_contable(request: Request):
+    return templates.TemplateResponse("contabilidad.html", {"request": request})
 
 @app.get("/ws-test")
 def ws_test():
@@ -111,3 +116,4 @@ app.include_router(usuario_auth.router)
 app.include_router(pedido_router)
 app.include_router(proveedor_router)
 app.include_router(materiales_router)
+app.include_router(contabilidad_router)
