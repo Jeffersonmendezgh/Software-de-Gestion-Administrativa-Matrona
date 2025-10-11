@@ -1,7 +1,7 @@
 // contabilidad.js
 document.addEventListener("DOMContentLoaded", () => {
   const API_BASE = "http://127.0.0.1:8000/contabilidad";
-  const tbody = document.getElementById("filaContable"); // tu tbody donde renderizas filas de pedidos
+  const tbody = document.getElementById("filaContable"); //  tbody tomare este bloque 
   const totalUnidadesEl = document.getElementById("totalUnidades");
   const totalIngresosEl = document.getElementById("totalIngresos");
   const ingresosPorProductoEl = document.getElementById("ingresosPorProducto");
@@ -49,13 +49,13 @@ document.addEventListener("DOMContentLoaded", () => {
     items.forEach(it => {
       const row = document.createElement("div");
       row.className = "flex justify-between";
-      // mostrar nombre y monto formateado
+      // mostrar nombre y monto formateado muuy importante
       row.innerHTML = `<span>${it.nombre_bebida}</span><span class="text-green-600">${formatCurrency(it.total_ingresos ?? it.total_ingresos)}</span>`;
       ingresosPorProductoEl.appendChild(row);
     });
   }
 
-  // carga historial y llena la tabla + calcula totales
+  // fetch carga historial y llena la tabla + calcula totales
   async function cargarHistorial() {
     try {
       const res = await fetch(`${API_BASE}/historial`);
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } catch (err) {
       console.error(err);
-      // muestra fallback visual si quieres
+      // esta linea para ver el error visualmente en caso de fallos
       tbody.innerHTML = `<tr><td colspan="6" class="text-center text-red-500 py-4">No se pudo cargar el historial.</td></tr>`;
     }
   }
@@ -114,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 //bloque para el grafico
 
-// Esperamos que el DOM esté listo
 document.addEventListener("DOMContentLoaded", async () => {
   const ctx = document.getElementById("graficoCervezas");
 
@@ -128,7 +127,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    //Convertir totales a número (llegan como strings "88000.00")
+    //Convertir totales a número pq estan llegango es string
     const etiquetas = datos.map(item => item.nombre_bebida);
     const totales = datos.map(item => parseFloat(item.total_ingresos));
 
@@ -136,7 +135,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const totalGeneral = totales.reduce((sum, val) => sum + val, 0);
     const porcentajes = totales.map(val => totalGeneral > 0 ? ((val / totalGeneral) * 100).toFixed(2) : 0);
 
-    // Crear gráfico de barras
+    //gráfico de barras
     new Chart(ctx, {
       type: "bar",
       data: {

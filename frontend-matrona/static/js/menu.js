@@ -1,6 +1,6 @@
 //  Función para enviar pedidos
 async function enviarPedido(clienteId, items) {
-    // items = [{ id_catalogo: 1, cantidad_pedido_uds: 2, presentacion:  }, ...] 
+    // items 
     const body = { id_cliente: clienteId, items };
 
     try {

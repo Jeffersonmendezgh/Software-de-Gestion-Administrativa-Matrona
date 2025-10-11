@@ -90,7 +90,7 @@ contenedor.addEventListener("click", async (e) => {
     if (presentacion === "sixpack") unidadesTotales = cantidad * 6;
     if (presentacion === "caja") unidadesTotales = cantidad * 24;
 
-    // Construcción del pedido (conforme a PedidoCreate)
+    // Construcción del pedido de acuerdoi a PedidoCreate
     const pedido = {
       items: [
         {
