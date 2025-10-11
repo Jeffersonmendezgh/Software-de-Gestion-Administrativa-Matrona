@@ -7,7 +7,7 @@ from typing import List
 
 router = APIRouter(prefix="/api/materiales", tags=["Materiales"])
 
-# ✅ Obtener todos los materiales
+#Obtener todos los materiales
 @router.get("/", response_model=List[MaterialResponse])
 def obtener_materiales(db: Session = Depends(get_db)):
     materiales = db.query(Materiales).all()
@@ -21,7 +21,7 @@ def crear_material(material: MaterialCreate, db: Session = Depends(get_db)):
         cantidad_a_agregar=material.cantidad_a_agregar,
         actividad = material.actividad,
         cantidad_disponible=None,  # dejemos opcional por ahora
-        id_proveedor=None          # aca igual
+        id_proveedor=None          # aca igual, por si decido vincular proveedores
     )
 
     db.add(nuevo_material)

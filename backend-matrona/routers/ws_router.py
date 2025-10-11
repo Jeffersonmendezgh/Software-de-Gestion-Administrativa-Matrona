@@ -9,7 +9,6 @@ async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
-            # opcional: si no quieres procesar mensajes entrantes, esto mantiene viva la conexión
             await websocket.receive_text()
     except WebSocketDisconnect:
         manager.disconnect(websocket)
