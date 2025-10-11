@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Panel de Materiales</title>
+</head>
+<body class="bg-gray-100 font-sans flex h-screen">
+       <aside class="w-64 bg-orange-400 text-black font-bold border-r-2 rounded-r-xl border-orange-600 shadow-2xl shadow-black/70">
+        <div class="p-4 flex items-center justify-center border-b-2 border-orange-700">
+            <h1 class="text-xl font-bold mx-1"><i class="fa-solid fa-bars mr-3 ml-3 text-red-800"></i> <a href="menu.html">Menu Principal</a></h1>
+        </div>
+        <nav class="p-4">
+            <ul class="space-y-2">
+                <li>
+                    <a href="inventario.html" class="flex items-center  p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-box mr-3 text-red-800"></i> Inventario
+                    </a>
+                </li>
+                <li>
+                    <a href="Materiales.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-boxes mr-3 text-red-800"></i> Materiales
+                    </a>
+                </li>
+                <li>
+                    <a href="contabilidad.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-calculator mr-3 text-red-800"></i> Contabilidad
+                    </a>
+                </li>
+                <li>
+                    <a href="catalogo.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-wine-bottle mr-3 text-red-800"></i> Catálogo de Productos
+                    </a>
+                </li>
+                <li>
+                    <a href="cotizaciones.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-file-invoice-dollar mr-3  text-red-800"></i> Cotizaciones
+                    </a>
+                </li>
+                <li>
+                    <a href="gestionEmpleados.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-users mr-3 text-red-800"></i> Empleados
+                    </a>
+                </li>
+                <li>
+                    <a href="gestionClientes.html" class="flex items-center p-2  rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-user-tie mr-3 text-red-800"></i> Clientes
+                    </a>
+                </li>
+                <li>
+                    <a href="Proveedores.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-truck mr-3 text-red-800"></i> Proveedores
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside> 
+
+  <div class="flex-1 flex flex-col overflow-hidden">
+    
+    <!-- cabeza-->
+    <header class="bg-orange-100 shadow-sm">
+      <div class="flex justify-between items-center p-4">
+        <h2 class="text-lg font-semibold text-orange-600">Panel Principal Materiales</h2>
+        <div class="flex items-center space-x-4">
+          <button class="btn-admin flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
+            <i class="fas fa-user"></i>
+            <span>Administrador</span>
+          </button>
+        </div>
+      </div>
+    </header>
+      <section id="modalAdmin" class="relative hidden">
+          <div id="divModal" class="absolute  right-0 mt-1 mr-3 w-fit bg-orange-500 text-white px-3 py-6 rounded flex flex-col text-sm shadow">
+            <span id="infoAdmin">Admin: Jefferson Mendez</span>         
+          </div>
+      </section>
+
+
+<main class="flex-1 bg-orange-100 px-6 py-8">
+  <section class="bg-white p-6 rounded-lg shadow-lg w-full max-w-6xl mx-auto">
+    <h3 class="text-xl font-bold text-orange-600 mb-6 border-b pb-2">Gestión de Materiales</h3>
+
+    <form class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div class="flex flex-col">
+        <label for="actividad" class="text-gray-700 font-medium mb-2">Actividad</label>
+        <select
+          id="actividad"
+          name="actividad"
+          class="p-2 border-2 border-orange-400 rounded-lg focus:outline-none focus:border-orange-600 focus:ring-2 focus:ring-orange-300"
+        >
+          <option value="producir">Producir</option>
+          <option value="envasar">Envasar</option>
+        </select>
+      </div>
+
+      <!-- Nombre del material -->
+      <div class="flex flex-col">
+        <label for="material" class="text-gray-700 font-medium mb-2">Material</label>
+        <input
+          id="tipoMaterial"
+          type="text"
+          placeholder="Nombre del material"
+          class="p-2 border-2 border-orange-400 rounded-lg focus:outline-none focus:border-orange-600 focus:ring-2 focus:ring-orange-300"
+        />
+      </div>
+
+      <!-- Valor -->
+      <div class="flex flex-col">
+        <label for="valor" class="text-gray-700 font-medium mb-2">Cantidad</label>
+        <input
+          id="cantidadAgregar"
+          type="text"
+          placeholder="cantidad"
+          class="p-2 border-2 border-orange-400 rounded-lg focus:outline-none focus:border-orange-600 focus:ring-2 focus:ring-orange-300"
+        />
+      </div>
+
+      <!-- Botón -->
+      <div class="flex flex-col justify-end">
+        <button
+          type="submit"
+          class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg transition"
+        >
+          <i class="fa-solid fa-check mr-2"></i> Agregar
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Sección de bloques con la info de los materiales-->
+ <section class="w-full max-w-6xl mx-auto mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
+  
+  <!-- Tabla de Producción -->
+  <div id="tabla-produccion" class="bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Materiales para Producción</h3>
+    <table class="w-full table-auto border-collapse">
+      <thead class="bg-orange-100 text-gray-700">
+        <tr>
+          <th class="p-3 text-left">Material</th>
+          <th class="p-3 text-left">Cantidad</th>
+          <th class="p-3 text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr>
+          <td class="p-3">Trigo</td>
+          <td class="p-3">100 kg</td>
+          <td class="p-3 text-center">
+            <button class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-edit"></i></button>
+            <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+        <!-- aca por si agrego mas -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Tabla de Envasado -->
+  <div id="tabla-envasado" class="bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4 border-b pb-2">Materiales para Envasado</h3>
+    <table class="w-full table-auto border-collapse">
+      <thead class="bg-orange-100 text-gray-700">
+        <tr>
+          <th class="p-3 text-left">Material</th>
+          <th class="p-3 text-left">Cantidad</th>
+          <th class="p-3 text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr>
+          <td class="p-3">Tapas dorada</td>
+          <td class="p-3">200 unidades</td>
+          <td class="p-3 text-center">
+            <button class="text-blue-600 hover:text-blue-800 mr-2"><i class="fas fa-edit"></i></button>
+            <button class="text-red-600 hover:text-red-800"><i class="fas fa-trash-alt"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+</main>
+
+<div class="flex justify-end items-end h-20 w-full bg-orange-100 p-4"> 
+   <button class="flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
+        <a href="menu.html">
+         <i class="fas fa-right-from-bracket"></i><span>Salir</span></a>
+   </button>
+ </div>
+
+ 
+
+       
+<!-- Modal para editar los materiales -->
+<div id="miModal" class="hidden fixed inset-0 bg-black bg-opacity-40 ">
+  <div class="bg-white p-5 rounded shadow w-80">
+    <h3>Editar Material</h3>
+
+    <label>Nombre:</label>
+    <input id="campoNombre" type="text" class="w-full mb-2 border rounded p-1" />
+
+    <label>Valor:</label>
+    <input id="campoValor" type="text" class="w-full mb-2 border rounded p-1" />
+
+    <div class="flex justify-end gap-2">
+      <button id="cancelar" class="bg-gray-300 px-3 py-1 rounded">Cancelar</button>
+      <button id="guardar" class="bg-orange-600 text-white px-3 py-1 rounded">Guardar</button>
+    </div>
+  </div>
+</div>
+<script src="/static/js/materiales.js" > </script>
+
+
+</body>
+</html>

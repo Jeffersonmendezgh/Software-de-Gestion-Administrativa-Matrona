@@ -7,6 +7,7 @@ from routers import cliente
 from routers.pedido_router import router as pedido_router
 from routers.ws_router import router as ws_router
 from routers.proveedor_router import router as proveedor_router
+from routers.materiales_router import router as materiales_router
 from models import Usuario, Rol, Inventario
 from db import engine, Base
 from fastapi.staticfiles import StaticFiles
@@ -83,6 +84,11 @@ def mostrar_menu(request: Request):
 async def mostrar_proveedor(request: Request):
     return templates.TemplateResponse("proveedores.html", {"request": request})
 
+#ruta para Materiales
+@app.get("/materiales", response_class=HTMLResponse)
+async def materiales_interfaz(request: Request):
+    return templates.TemplateResponse("Materiales.html", {"request": request})
+
 @app.get("/ws-test")
 def ws_test():
     from utils.websocket import manager
@@ -104,4 +110,4 @@ app.include_router(ws_router)
 app.include_router(usuario_auth.router)
 app.include_router(pedido_router)
 app.include_router(proveedor_router)
-
+app.include_router(materiales_router)
