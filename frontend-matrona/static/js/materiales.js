@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function() {
     tablaDestino.appendChild(nuevaFila);
   }
 
-  // ✅ Agregar eventos a los botones (editar y eliminar)
+  //Agregar eventos a los botones (editar y eliminar)
   function agregarEventosBotones() {
     document.querySelectorAll(".editar-btn").forEach(boton => {
       if (!boton.hasAttribute("data-event-added")) {
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
               fila.remove();
             } catch (error) {
-              console.error("❌ Error al eliminar:", error);
+              console.error("Error al eliminar:", error);
             }
           }
         });
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  //Editar material (PUT desde el modal)
+  //Editar material (PUT desde el modal) cambie los ids en html tener presente
   document.getElementById("guardar").addEventListener("click", async function() {
     const nuevoNombre = document.getElementById("campoNombre").value;
     const nuevoValor = document.getElementById("campoValor").value;
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
       cerrarModal();
 
     } catch (error) {
-      console.error("❌ Error al actualizar:", error);
+      console.error("Error al actualizar:", error);
     }
   });
 
