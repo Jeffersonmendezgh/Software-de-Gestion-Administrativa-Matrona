@@ -8,6 +8,7 @@ from .pedidos import Pedido
 from .detalle_pedido import DetallePedido
 from .proveedor import Proveedor
 from .materiales import Materiales
+from .empleado import Empleado
 
 
-__all__ = ["Usuario", "Rol", "Inventario", "Catalogo", "Cliente", "Pedido", "DetallePedido", "Proveedor", "Materiales"]
+__all__ = ["Usuario", "Rol", "Inventario", "Catalogo", "Cliente", "Pedido", "DetallePedido", "Proveedor", "Materiales", "Empleado"]

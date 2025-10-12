@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tbody.appendChild(tr);
   }
 
-  // render ingresos por producto (lista lateral)
+  // render ingresos por producto lista lateral
   function renderIngresosPorProducto(items) {
     ingresosPorProductoEl.innerHTML = ""; // limpiar
     if (!items || items.length === 0) {

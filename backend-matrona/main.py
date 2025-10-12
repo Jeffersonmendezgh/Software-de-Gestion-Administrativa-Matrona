@@ -9,6 +9,7 @@ from routers.ws_router import router as ws_router
 from routers.proveedor_router import router as proveedor_router
 from routers.materiales_router import router as materiales_router
 from routers.contabilidad_router import router as contabilidad_router
+from routers.empleado_router import router as empleado_router
 from models import Usuario, Rol, Inventario
 from db import engine, Base
 from fastapi.staticfiles import StaticFiles
@@ -117,3 +118,4 @@ app.include_router(pedido_router)
 app.include_router(proveedor_router)
 app.include_router(materiales_router)
 app.include_router(contabilidad_router)
+app.include_router(empleado_router)

@@ -17,4 +17,5 @@ class Usuario(Base):
 
     #relacion con cliente
     cliente = relationship("Cliente", back_populates="usuario", uselist=False)
+    empleado = relationship("Empleado", back_populates="usuario")
 

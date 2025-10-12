@@ -6,6 +6,7 @@ from datetime import date
 from models.usuario import Usuario
 from models.rol import Rol
 from models.cliente import Cliente
+from models.empleado import Empleado
 from schemas.usuario import UsuarioCreate, UsuarioOut, UsuarioLogin, Token
 from utils.auth import get_password_hash, verify_password, create_access_token
 from utils.deps import get_current_user, require_role
@@ -43,16 +44,27 @@ def registro(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     db.refresh(db_usuario)
 
 #creamos la vinculacion con la tabla cliente
+   # if else para que me quede mas claro
     if db_usuario.id_rol == 3:
         nuevo_cliente = Cliente(
             id_usuarios=db_usuario.id_usuarios,
             fecha_registro=date.today()
         )
         db.add(nuevo_cliente)
-        db.commit()
-        db.refresh(nuevo_cliente)
-    return db_usuario
 
+    elif db_usuario.id_rol == 2:
+        nuevo_empleado = Empleado(
+            id_usuarios=db_usuario.id_usuarios,
+            fecha_contratacion=date.today(),  # Obligatorio tengo que poner por defecto
+            salario=0,                     # sino pongo nada se me romple el modelo archemy
+            fecha_pago=date.today(),          # luego con PATCH lo arreglo directamente con lo que venga del front
+            area_laboral=None,
+            telefono_empleado=None
+        )
+        db.add(nuevo_empleado)
+
+    db.commit()  # Guarda cliente o empleado
+    return db_usuario
 # Login
 @router.post("/login", response_model=Token)
 def login(data: UsuarioLogin, db: Session = Depends(get_db)):

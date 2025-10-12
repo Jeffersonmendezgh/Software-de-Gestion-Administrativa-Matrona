@@ -2,10 +2,6 @@ const contenedor = document.getElementById("catalogoProductos");
 
 document.addEventListener("DOMContentLoaded", async () => {
   
-// usuario.js — versión sin módulos
-
-
-
   try {
     const response = await fetch("/catalogo/");
     const catalogo = await response.json();
