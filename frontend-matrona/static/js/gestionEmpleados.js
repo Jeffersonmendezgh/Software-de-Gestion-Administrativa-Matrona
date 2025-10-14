@@ -59,7 +59,7 @@ function renderizarEmpleados(empleados) {
                     <button class="editar p-2 text-orange-600 hover:bg-orange-100 rounded-full"data-id="${e.id_empleado}">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="p-2 text-red-600 hover:bg-red-100 rounded-full"data-id="${e.id_empleado}">
+                    <button class="eliminar p-2 text-red-600 hover:bg-red-100 rounded-full"data-id="${e.id_empleado}">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
@@ -77,7 +77,34 @@ function renderizarEmpleados(empleados) {
             abrirFormulario(empleado)
         });
     });
+// Botón eliminar
+document.querySelectorAll(".eliminar").forEach((btn) => {
+    btn.addEventListener("click", async (ev) => {
+        const id = ev.currentTarget.dataset.id;
+        const confirmar = confirm("¿Seguro que deseas eliminar este empleado?");
+
+        if (!confirmar) return;
+
+        try {
+            const res = await fetch(`${BASE_URL_EMPLEADOS}${id}`, {
+                method: "DELETE",
+            });
+
+            if (!res.ok) throw new Error("Error al eliminar el empleado");
+
+            alert("Empleado eliminado correctamente ");
+            cargarEmpleados(); // recarga la lista
+
+        } catch (error) {
+            console.error(error);
+            alert("No se pudo eliminar el empleado ");
+        }
+    });
+});
+
 }
+
+
 //mostrar formulario con datos cargados
 function abrirFormulario(empleado) {
     idEmpleadoSeleccionado = empleado.id_empleado; // guardamos solo el ID

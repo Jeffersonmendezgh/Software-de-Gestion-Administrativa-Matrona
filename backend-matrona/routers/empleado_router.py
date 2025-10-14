@@ -38,3 +38,13 @@ def actualizar_empleado(id_empleado: int, empleado: EmpleadoUpdate, db: Session 
     db.commit()
     db.refresh(empleado_db)
     return empleado_db
+
+#endpoint para eliminar empleados
+@router.delete("/{id_empleado}")
+def eliminar_empleado(id_empleado: int, db: Session = Depends(get_db)):
+    db_empleado = db.query(Empleado).filter(Empleado.id_empleado == id_empleado).first()
+    if not db_empleado:
+        raise HTTPException(status_code=404, detail="empleado no encontrado")
+    db.delete(db_empleado)
+    db.commit()
+    return {f"Empleado con id {id_empleado} eliminado"}

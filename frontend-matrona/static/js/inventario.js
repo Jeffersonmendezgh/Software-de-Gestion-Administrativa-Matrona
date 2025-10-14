@@ -76,7 +76,7 @@ async function eliminarProducto(id_catalogo) {
 let inventarioSeleccionado = null; // Guardamos id de la cerveza a editar
 
 function abrirModal(id) {
-    inventarioSeleccionado = id; // guardamos qué cerveza vamos a modificar
+    inventarioSeleccionado = id; // guardamos aca qué cerveza vamos a modificar
     document.getElementById("modalStock").classList.remove("hidden");
 }
 
@@ -103,7 +103,7 @@ async function confirmarStock() {
 }
 
 //bloque para agregar la funcion de detalles al bloque de codigo
-// Detectar click en los botones de "Detalles"
+// Detectar click en los botones de Detalles
 document.getElementById("productosInventario").addEventListener("click", async (e) => {
   const btn = e.target.closest(".btn-detalles"); // busca el botón con clase
   if (!btn) return;
