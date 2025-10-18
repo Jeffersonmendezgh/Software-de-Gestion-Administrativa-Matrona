@@ -1,7 +1,14 @@
 const contenedor = document.getElementById("catalogoProductos");
 
 document.addEventListener("DOMContentLoaded", async () => {
-  
+
+//funcion para formatear precios
+function formatearPrecio(valor){
+  if(!valor) return "$0";
+  return valor.toLocaleString("es-CO", {
+    style: "currency", currency: "COP", minimumFractionDigits: 0
+  })
+}
   try {
     const response = await fetch("/catalogo/");
     const catalogo = await response.json();
@@ -14,24 +21,23 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="flex flex-col md:flex-row gap-6">
             <!-- Imagen -->
             <div class="md:w-1/3 flex justify-center items-center bg-gray-50 rounded-lg p-4">
-              <img src="https://res.cloudinary.com/dgrj6myiy/image/upload/v1757984968/beers_u44het.jpg" class="h-60 object-contain">
+              <img src="${imagenesCervezas[item.inventario.nombre_bebida] || 'https://res.cloudinary.com/dgrj6myiy/image/upload/v1757984968/beers_u44het.jpg'}" class="h-60 object-contain">
             </div>
             <!-- Detalles -->
             <div class="md:w-2/3 flex flex-col justify-between">
               <h3 class="text-2xl font-bold text-orange-700 mb-2">${item.inventario.nombre_bebida}</h3>
               <div class="grid grid-cols-2 gap-y-2 mb-4 text-gray-700">
-                <div><span class="font-semibold">${item.precio_unidad}</span></div>
-                <div><span class="font-semibold">${item.descripcion}</span></div>
-                <div><span class="font-semibold">${item.alcohol}</span></div>
-                <div><span class="font-semibold">${item.contenido}</span> ML</div>
-                <div><span class="font-semibold">Vencimiento:</span> 20 - 09 - 2026</div>
+                <div><span class="font-semibold">Precio Unitario: ${formatearPrecio(item.precio_unidad)}</span></div>
+                <div><span class="font-semibold">Descripción: ${item.descripcion}</span></div>
+                <div><span class="font-semibold">Volumen de Alcohol: ${item.alcohol}</span></div>
+                <div><span class="font-semibold">Contenido: ${item.contenido}</span> ML</div>
               </div>
               <div class="mb-4">
-                <h4 class="font-semibold text-gray-800 mb-2">Presentaciones:</h4>
+                <h4 class="font-semibold text-gray-800 mb-2">Presentaciones y Precio</h4>
                 <div class="flex flex-wrap gap-3 text-sm">
-                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">${item.precio_unidad}</span>
-                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">${item.precio_sixpack}</span>
-                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">${item.precio_caja}</span>
+                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">unidad: ${formatearPrecio(item.precio_unidad)}</span>
+                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">sixpack: ${formatearPrecio(item.precio_sixpack)}</span>
+                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">Caja: ${formatearPrecio(item.precio_caja)}</span>
                 </div>
               </div>
               <div class="border-t pt-4 mt-2">
@@ -66,6 +72,16 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Error cargando el catalogo: ", error);
   }
 });
+
+//images cervezas en cloud
+const imagenesCervezas = {
+  "Matrona Classica": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1760752816/Matrona_clasica_utfbum.jpg",
+  "Matrona Durazno": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1760751671/Matrona_Durazno_5_ug5mpq.jpg",
+  "Matrona Menta": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1760751649/matrona_menta_wesgdz.jpg",
+  "Matrona Cafe": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1760752926/matrona_cafe_qlxxks.jpg",
+  "Matrona Frutos Rojos": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1760753785/Matrona_Frutos_rojos_b8xujz.jpg"
+
+}
 
 // Delegación de eventos para pedidos
 contenedor.addEventListener("click", async (e) => {

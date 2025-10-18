@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     items.forEach(it => {
       const row = document.createElement("div");
       row.className = "flex justify-between";
-      // mostrar nombre y monto formateado muuy importante
+      // mostrar nombre y monto formateado muuy importante para facilitar la contabilidad
       row.innerHTML = `<span>${it.nombre_bebida}</span><span class="text-green-600">${formatCurrency(it.total_ingresos ?? it.total_ingresos)}</span>`;
       ingresosPorProductoEl.appendChild(row);
     });

@@ -1,6 +1,13 @@
 // inventario.js
 console.log(" inventario.js cargadondo correctamente");
-
+//funcion para formatear precios
+function formatearPrecio(valor){
+  if(!valor) return "$0";
+  return valor.toLocaleString("es-CO", {
+    style: "currency", currency: "COP", minimumFractionDigits: 0
+  })
+  .replace(/\s/g, ""); //para quitar el espacio
+}
 async function cargarInventario() {
     try {
         const response = await fetch("http://127.0.0.1:8000/catalogo/");
@@ -122,9 +129,9 @@ document.getElementById("productosInventario").addEventListener("click", async (
     document.getElementById("alcohol").innerText = `${item.catalogo[0].alcohol} Vol Alcohol`;
     document.getElementById("contendio").innerText = `${item.catalogo[0].contenido} Ml de Contenido`;
 
-    document.getElementById("costoUnidad").innerText = item.catalogo[0].precio_unidad ?? '--';
-    document.getElementById("costoSixpack").innerText = item.catalogo[0].precio_sixpack ?? '--';
-    document.getElementById("costoCaja").innerText = item.catalogo[0].precio_caja ?? '--';
+    document.getElementById("costoUnidad").innerText = item.catalogo[0].precio_unidad ? formatearPrecio(item.catalogo[0].precio_unidad) : '--';
+    document.getElementById("costoSixpack").innerText = item.catalogo[0].precio_sixpack ? formatearPrecio(item.catalogo[0].precio_sixpack): '--';
+    document.getElementById("costoCaja").innerText = item.catalogo[0].precio_caja ? formatearPrecio(item.catalogo[0].precio_caja): '--';
 
     
     console.log(" Detalles recibidos:", item);

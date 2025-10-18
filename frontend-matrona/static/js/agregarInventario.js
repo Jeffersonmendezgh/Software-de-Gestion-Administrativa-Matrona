@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             alert(isEditing ? "Cerveza actualizada " : "Cerveza agregada ");
 
-            window.location.href = "/inventario.html"; // volver al inventario
+            window.location.href = "/inventario"; // volver al inventario
         } catch (error) {
             console.error(" Error:", error);
             alert("Hubo un error. Revisa la consola.");

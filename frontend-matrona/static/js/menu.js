@@ -46,7 +46,7 @@ function renderPedido(pedido) {
 
     cont.prepend(div);
 
-    //  Enganchar botón "Entregar" si existe
+    //  Enganchar botón Entregar
     const btn = div.querySelector(`#btn-pedido-${pedido.id_pedidos}`);
     if (btn) {
         btn.addEventListener("click", async () => {
