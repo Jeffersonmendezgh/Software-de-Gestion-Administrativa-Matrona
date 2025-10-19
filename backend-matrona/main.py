@@ -100,6 +100,11 @@ async def interfaz_contable(request: Request):
 async def gestion_empleados(request: Request):
     return templates.TemplateResponse("gestionEmpleados.html", {"request": request})
 
+#ruta para interfaz principal empleados
+@app.get("/empleados/interfaz", response_class=HTMLResponse)
+async def interfaz_empleado(request: Request):
+    return templates.TemplateResponse("empleadoInterfaz.html", {"request": request})
+
 @app.get("/ws-test")
 def ws_test():
     from utils.websocket import manager

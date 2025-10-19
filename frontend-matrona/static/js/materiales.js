@@ -164,3 +164,21 @@ document.addEventListener("DOMContentLoaded", function() {
   //Inicializar
   cargarMateriales();
 });
+
+//mostrar usuario
+function mostrarUsuarioActual() {
+  const nombre = localStorage.getItem("nombreUsuario");
+  const apellido = localStorage.getItem("apellidoUsuario");
+  const rol = localStorage.getItem("rolUsuario");
+
+  const nombreSpan = document.getElementById("nombreUsuario");
+  const rolSpan = document.getElementById("rolUsuario");
+
+  if (nombre && apellido) {
+    nombreSpan.textContent = `${nombre} ${apellido}`
+  }
+  if (rol) {
+    rolSpan.textContent = `${rol}`
+  }
+}
+mostrarUsuarioActual()

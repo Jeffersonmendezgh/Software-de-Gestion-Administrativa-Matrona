@@ -83,14 +83,19 @@ async function eliminarProducto(id_catalogo) {
 let inventarioSeleccionado = null; // Guardamos id de la cerveza a editar
 
 function abrirModal(id) {
-    inventarioSeleccionado = id; // guardamos aca qué cerveza vamos a modificar
-    document.getElementById("modalStock").classList.remove("hidden");
+    inventarioSeleccionado = id;
+    const modal = document.getElementById("modalStock");
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
 }
 
 function cerrarModal() {
-    document.getElementById("modalStock").classList.add("hidden");
+    const modal = document.getElementById("modalStock");
+    modal.classList.remove("flex");
+    modal.classList.add("hidden");
     document.getElementById("modalStockInput").value = "";
 }
+
 
 async function confirmarStock() {
     const cantidad = parseInt(document.getElementById("modalStockInput").value);

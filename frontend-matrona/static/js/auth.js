@@ -67,7 +67,7 @@ switch (userData.rol) {
     window.location.href = "/menu";
     break;
   case 2: // Empleado
-    window.location.href = "/inventario";
+    window.location.href = "/empleados/interfaz";
     break;
   case 3: // Cliente
     window.location.href = "/catalogo";

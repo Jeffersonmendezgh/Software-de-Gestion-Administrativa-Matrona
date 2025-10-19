@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await response.json();
             alert("Te has registrado exitosamente Bienvenido a nuestro sistema ¡Matrona!");
             console.log(data);
-
+            window.location.href = "/auth/login";
             // Redirigir después de registrar
             
         } catch (err) {
