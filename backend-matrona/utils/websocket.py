@@ -26,10 +26,10 @@ class ConnectionManager:
 
     def broadcast_json_sync(self, message: dict):
         """
-        Llamable desde BackgroundTasks, aunque esté en un worker thread.
+        Llamable desde BackgroundTasks, aunque esté en un worker thread por ahora lo manejare asi.
         """
         if not self.loop:
-            raise RuntimeError("❌ No se inicializó el loop principal")
+            raise RuntimeError(" No se inicializó el loop principal")
 
         # Programar la tarea en el loop principal desde otro hilo
         self.loop.call_soon_threadsafe(

@@ -161,7 +161,7 @@ function mostrarUsuarioActual() {
   }
 
   if (rol) {
-    rolSpan.textContent = `(Cliente ${rol})`;
+    rolSpan.textContent = `(Cliente${rol})`;
   } else {
     rolSpan.textContent = "";
   }
