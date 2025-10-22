@@ -79,7 +79,9 @@ const imagenesCervezas = {
   "Matrona Durazno": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1760751671/Matrona_Durazno_5_ug5mpq.jpg",
   "Matrona Menta": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1760751649/matrona_menta_wesgdz.jpg",
   "Matrona Cafe": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1760752926/matrona_cafe_qlxxks.jpg",
-  "Matrona Frutos Rojos": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1760753785/Matrona_Frutos_rojos_b8xujz.jpg"
+  "Matrona Frutos Rojos": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1761099006/frutos_rojos_cpnpjn.jpg",
+  "Matrona Ciruela": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1761099308/Matrona_ciruela_licwu2.jpg",
+  "Matrona Chocolate": "https://res.cloudinary.com/dgrj6myiy/image/upload/v1761099565/Matrona_Chocolate_vn8irt.jpg"
 
 }
 
