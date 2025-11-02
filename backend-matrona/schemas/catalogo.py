@@ -17,7 +17,7 @@ class CatalogoBase(BaseModel):
     id_catalogo: int
     id_inventario: int
     descripcion: Optional[str]
-    contenido: Optional[int]
+    contenido: Optional[int] = None
     alcohol: Optional[str]
     precio_unidad: Optional[float]
     precio_sixpack: Optional[float]
@@ -36,7 +36,7 @@ class CatalogoCreate(BaseModel):
     cantidad_disponible: int 
     descripcion: Optional[str]
     alcohol: Optional[str]
-    contenido: Optional[int] 
+    contenido: Optional[int] = None
     precio_unidad: Optional[float]
     precio_sixpack: Optional[float]
     precio_caja: Optional[float]

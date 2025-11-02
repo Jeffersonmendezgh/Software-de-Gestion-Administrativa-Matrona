@@ -76,9 +76,10 @@ def actualizar_catalogo(id_catalogo: int, data: CatalogoCreate, db: Session = De
     inventario.cantidad_disponible += data.cantidad_disponible  # sumamos al stock
     inventario.unidades_agregadas = data.cantidad_disponible    # las nuevas agregadas
     inventario.ultimo_movimiento = datetime.now()               # fecha actual
-    inventario.contenido = data.contenido                       # nuevo contenido
+                          
 
     # Actualizar catálogo
+    catalogo.contenido = data.contenido # nuevo contenido
     catalogo.descripcion = data.descripcion
     catalogo.alcohol = data.alcohol
     catalogo.precio_unidad = data.precio_unidad

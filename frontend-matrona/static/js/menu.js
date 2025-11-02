@@ -31,7 +31,7 @@ function renderPedido(pedido) {
 
     const div = document.createElement("div");
     div.className = "flex bg-orange-200 shadow-xl p-3 rounded border-l-4 border-orange-500 mb-2";
-//los operadores ?. me sirven para evitar errores en caso de que algun campo vena null
+   //los operadores ?. me sirven para evitar errores en caso de que algun campo venga null
     div.innerHTML = `
         <div class="w-1/4">${pedido.cliente?.usuario.nombre || "Cliente desconocido"} ${pedido.cliente?.usuario.apellido || ""}</div>
         <div class="w-1/4">${pedido.detalles?.[0]?.cantidad_pedido_uds || 0}</div>
