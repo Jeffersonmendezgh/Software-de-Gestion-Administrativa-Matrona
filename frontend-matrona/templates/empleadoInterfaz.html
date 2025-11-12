@@ -16,27 +16,23 @@
         <nav class="p-4 ">
             <ul class="space-y-2">
                 <li>
-                    <a href="inventario.html" class="flex items-center  p-2 rounded hover:bg-orange-700 transition">
+                    <a href="/inventario" class="flex items-center  p-2 rounded hover:bg-orange-700 transition">
                         <i class="fas fa-box mr-3 text-red-800"></i> Inventario
                     </a>
                 </li>
                 <li>
-                    <a href="Materiales.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                    <a href="/materiales" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
                         <i class="fas fa-boxes mr-3 text-red-800"></i> Materiales
                     </a>
                 </li>
                 <li>
-                    <a href="catalogo.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                    <a href="/catalogo" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
                         <i class="fas fa-wine-bottle mr-3 text-red-800"></i> Catálogo de Productos
                     </a>
                 </li>
+                
                 <li>
-                    <a href="gestionClientes.html" class="flex items-center p-2  rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-user-tie mr-3 text-red-800"></i> Clientes
-                    </a>
-                </li>
-                <li>
-                    <a href="Proveedores.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                    <a href="/proveedores" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
                         <i class="fas fa-truck mr-3 text-red-800"></i> Proveedores
                     </a>
                 </li>
@@ -51,43 +47,43 @@
           </h2>
 
           <div class="absolute top-2 right-4">
-              <button class="flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
-                    <i class="fas fa-user"></i>
-                    <span>Sandra Delgado</span>
-              </button>
-          </div>
+            <button class="flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
+                <i class="fas fa-user"></i>
+                <span id="nombreEmpleado">Cargando...</span>
+            </button>
+            </div>
           <div class="flex items-center justify-center  pt-4 -ml-16 pr-20">
             <div class="flex flex-col items-center mb-10">
               <img src="https://res.cloudinary.com/dgrj6myiy/image/upload/logo_matrona_okhnsu" class="h-28 rounded-xl " alt="Logo Matrona">
             </div>
           </div>
         </header>
-    <main class="p-6 bg-orange-100 min-h-screen">
+    <main id="bloqueInfoEmpleado" class="p-6 bg-orange-100 min-h-screen">
         <div class="flex flex-row gap-6 justify-start items-start mt-10">
             <!-- Tarjeta 1 -->
             <div class="bg-white shadow-md rounded-lg p-6 w-64 text-center border border-orange-300">
-            <h1 class="text-lg font-bold text-orange-700 mb-2">Salario</h1>
+            <h1 id="salario" class="text-lg font-bold text-orange-700 mb-2">Salario</h1>
             <p class="text-gray-600">COP $2.500.000</p>
             </div>
 
             <!-- Tarjeta 2 -->
             <div class="bg-white shadow-md rounded-lg p-6 w-64 text-center border border-orange-300">
-            <h1 class="text-lg font-bold text-orange-700 mb-2">Fecha de Pago</h1>
+            <h1 id="fechaPago" class="text-lg font-bold text-orange-700 mb-2">Fecha de Pago</h1>
             <p class="text-gray-600">30 de Octubre 2025</p>
             </div>
 
             <!-- Tarjeta 3 -->
             <div class="bg-white shadow-md rounded-lg p-6 w-64 text-center border border-orange-300">
-            <h1 class="text-lg font-bold text-orange-700 mb-2">Área Laboral</h1>
+            <h1 id="areaLaboral" class="text-lg font-bold text-orange-700 mb-2">Área Laboral</h1>
             <p class="text-gray-600">Producción</p>
             </div>
         </div>
     </main>
 
         <footer class="fixed bottom-0 right-1 w-full bg-orange-100 border-t p-4 flex justify-between items-center">
-            <p class="text-sm text-gray-500 ml-56 pl-10 ">© 2025 Matrona Cervezas - Todos los derechos reservados</p>
+            <p class="text-sm text-gray-500 ml-56 pl-10 ">© 2025 Cerveza Artesanal Matrona - Todos los derechos reservados</p>
             <button class="flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
-                <a href="inicioSesion.html" class="flex items-center">
+                <a href="auth/login" class="flex items-center">
                     <i class="fas fa-right-from-bracket mr-2"></i>
                     <span>Cerrar sesión</span>
                 </a>
@@ -95,5 +91,7 @@
         </footer>
     </div>
     </div>
+
+ <script src="../static/js/empleado.js"></script>
 </body>
 </html>

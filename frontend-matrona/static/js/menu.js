@@ -137,4 +137,3 @@ const logoutBtn = document.getElementById("logoutBtn")
       window.location.href = "/auth/login/";
     });
   }
-

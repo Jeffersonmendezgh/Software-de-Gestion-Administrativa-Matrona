@@ -75,14 +75,14 @@ def crear_pedido(
         # actualizar total
         pedido.total_pedido = total
         db.add(pedido)
-        db.commit()  #  aquí confirmamos todo
+        db.commit()  
 
         # recargar el pedido completo con catálogo e inventario
         pedido_full = db.query(Pedido).options(
             joinedload(Pedido.cliente).joinedload(Cliente.usuario),
             joinedload(Pedido.detalles)
                 .joinedload(DetallePedido.catalogo)
-                .joinedload(Catalogo.inventario)  #  importante: cargar inventario
+                .joinedload(Catalogo.inventario)  #  importante cargar inventario
         ).filter(Pedido.id_pedidos == pedido.id_pedidos).first()
 
         

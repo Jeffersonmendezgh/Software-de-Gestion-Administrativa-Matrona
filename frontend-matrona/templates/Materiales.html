@@ -8,66 +8,16 @@
     <title>Panel de Materiales</title>
 </head>
 <body class="bg-gray-100 font-sans flex h-screen">
-       <aside class="w-64 bg-orange-400 text-black font-bold border-r-2 rounded-r-xl border-orange-600 shadow-2xl shadow-black/70">
-        <div class="p-4 flex items-center justify-center border-b-2 border-orange-700">
-            <h1 class="text-xl font-bold mx-1"><i class="fa-solid fa-bars mr-3 ml-3 text-red-800"></i> <a href="/menu">Menu Principal</a></h1>
-        </div>
-        <nav class="p-4">
-            <ul class="space-y-2">
-                <li>
-                    <a href="/inventario" class="flex items-center  p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-box mr-3 text-red-800"></i> Inventario
-                    </a>
-                </li>
-                <li>
-                    <a href="/materiales" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-boxes mr-3 text-red-800"></i> Materiales
-                    </a>
-                </li>
-                <li>
-                    <a href="/contabilidad" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-calculator mr-3 text-red-800"></i> Contabilidad
-                    </a>
-                </li>
-                <li>
-                    <a href="catalogo.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-wine-bottle mr-3 text-red-800"></i> Catálogo de Productos
-                    </a>
-                </li>
-                <li>
-                    <a href="/empleados" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-users mr-3 text-red-800"></i> Empleados
-                    </a>
-                </li>
-                <li>
-                    <a href="gestionClientes.html" class="flex items-center p-2  rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-user-tie mr-3 text-red-800"></i> Clientes
-                    </a>
-                </li>
-                <li>
-                    <a href="/proveedor" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-truck mr-3 text-red-800"></i> Proveedores
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside> 
+<button id="verSidebar" class="hidden p-2 bg-orange-600 text-white fixed top-4 left-4 z-50">
+     <i class="fas fa-bars"></i>
+    </button>
+    <!-- Barra Lateral, el boton anterior es el boton oculto para mostrar la barra -->
+       {%include 'componentes/sidebar.html'%}
 
   <div class="flex-1 flex flex-col overflow-hidden">
     
     <!-- cabeza-->
-    <header class="bg-orange-100 shadow-sm">
-      <div class="flex justify-between items-center p-4">
-        <h2 class="text-lg font-semibold text-orange-600">Panel Principal Materiales</h2>
-        <div class="flex items-center space-x-4">
-          <button class="btn-admin flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
-              <i class="fas fa-user"></i>
-              <span id="nombreUsuario">Administrador</span>
-              <span id="rolUsuario" class="text-sm text-orange-200"></span>
-            </button>
-        </div>
-      </div>
-    </header>
+    {%include 'componentes/header.html'%}
       <section id="modalAdmin" class="relative hidden">
           <div id="divModal" class="absolute  right-0 mt-1 mr-3 w-fit bg-orange-500 text-white px-3 py-6 rounded flex flex-col text-sm shadow">
             <span id="infoAdmin">Admin: Jefferson Mendez</span>         
@@ -181,15 +131,7 @@
 </section>
 </main>
 
-<div class="flex justify-end items-end h-20 w-full bg-orange-100 p-4"> 
-   <button class="flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
-        <a href="/auth/login">
-         <i class="fas fa-right-from-bracket"></i><span>Salir</span></a>
-   </button>
- </div>
-
- 
-
+{% include 'componentes/footer.html' %}
        
 <!-- Modal para editar los materiales -->
 <div id="miModal" class="hidden fixed inset-0 bg-black bg-opacity-40 ">
@@ -209,6 +151,7 @@
   </div>
 </div>
 <script src="/static/js/materiales.js" > </script>
+<script src="/static/js/sidebar.js"></script>
 
 
 </body>

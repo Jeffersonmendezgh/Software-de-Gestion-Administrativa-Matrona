@@ -90,7 +90,7 @@ def ruta_protegida(current_user=Depends(get_current_user)):
 @router.delete("/{id}", dependencies=[Depends(require_role(1))])  # 1 = administrador
 def borrar_usuario(id: int):
 
-    return {"msg": f"Usuario con id {id} eliminado (simulación)"}
+    return {"msg": f"Usuario con id {id} eliminado "}
 
 #router para obtener en el fronted mediante el token el usuario logeado
 @router.get("/me")

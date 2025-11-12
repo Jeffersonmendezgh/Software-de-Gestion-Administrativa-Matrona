@@ -43,3 +43,10 @@ class EmpleadoResponse(EmpleadoBase):
     class Config:
         orm_mode = True
 
+class EmpleadoMeResponse(BaseModel):
+    usuario: UsuarioBase
+    area_laboral: Optional[str] = None
+    salario: float
+    fecha_contrato: date
+    fecha_pago: date
+

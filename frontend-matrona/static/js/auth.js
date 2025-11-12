@@ -60,6 +60,29 @@ async function login(event) {
     localStorage.setItem("idUsuario", userData.id_usuarios);
 
     console.log("usuario logeado", userData);
+
+// Si el usuario es empleado, obtenemos datos adicionales
+    if (userData.rol === 2) {
+      const EMPLEADO_URL = `http://127.0.0.1:8000/empleados/${userData.id_usuarios}`;
+
+      const empRes = await fetch(EMPLEADO_URL, {
+        headers: { Authorization: "Bearer " + data.access_token },
+      });
+
+      if (empRes.ok) {
+        const empleadoData = await empRes.json();
+        console.log("Datos del empleado:", empleadoData);
+
+        // Guardar datos del empleado en localStorage
+        localStorage.setItem("salarioEmpleado", empleadoData.salario);
+        localStorage.setItem("areaLaboral", empleadoData.area_laboral);
+        localStorage.setItem("fechaContratacion", empleadoData.fecha_contratacion);
+        localStorage.setItem("fechaPago", empleadoData.fecha_pago);
+      } else {
+        console.warn("No se pudieron obtener los datos del empleado");
+      }
+    }
+
   
     // Redirigir según rol de user
 switch (userData.rol) {

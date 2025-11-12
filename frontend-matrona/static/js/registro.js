@@ -2,7 +2,16 @@
 console.log("esta funcionando")
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("formRegistro");
-    
+
+ //funcion para mostrar alerta de bienvenida
+function BienvenidaUsuario(mensaje) {
+  const alerta = document.getElementById("BienvenidaUsuario");
+  alerta.textContent = mensaje;
+  alerta.classList.remove("hidden");
+
+  setTimeout(() => alerta.classList.add("hidden"), 5500);
+}
+
     form.addEventListener("submit", async (e) => {
         e.preventDefault(); 
 
@@ -38,9 +47,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const data = await response.json();
-            alert("Te has registrado exitosamente Bienvenido a nuestro sistema ¡Matrona!");
+            BienvenidaUsuario("Te has registrado exitosamente Bienvenido a nuestro sistema ¡Matrona!");
             console.log(data);
-            window.location.href = "/auth/login";
+            setTimeout(() => {
+                window.location.href = "/auth/login";
+            }, 3000)
+            
             // Redirigir después de registrar
             
         } catch (err) {

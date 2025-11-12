@@ -8,69 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-white flex h-screen">
-    <aside class="w-64 bg-orange-400 text-black font-bold border-r-2 rounded-r-xl border-orange-600 shadow-2xl shadow-black/70 z-50">
-        <div class="p-4 flex items-center justify-center  border-b-2 border-orange-700">
-            <h1  class="text-xl font-bold mx-1"><i class="fa-solid fa-bars mr-3 ml-0 text-red-800"></i> <a href="menu.html">Menu Principal</a></h1>
-        </div>
-        <nav class="p-4">
-            <ul class="space-y-2">
-                <li>
-                    <a href="/inventario" class="flex items-center  p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-box mr-3 text-red-800"></i> Inventario
-                    </a>
-                </li>
-                <li>
-                    <a href="/materiales" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-boxes mr-3 text-red-800"></i> Materiales
-                    </a>
-                </li>
-                <li>
-                    <a href="/contabilidad" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-calculator mr-3 text-red-800"></i> Contabilidad
-                    </a>
-                </li>
-                <li>
-                    <a href="/catalogo" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-wine-bottle mr-3 text-red-800"></i> Catálogo de Productos
-                    </a>
-                </li>
-                <li>
-                    <a href="/empleados" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-users mr-3 text-red-800"></i> Empleados
-                    </a>
-                </li>
-                <li>
-                    <a href="gestionClientes.html" class="flex items-center p-2  rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-user-tie mr-3 text-red-800"></i> Clientes
-                    </a>
-                </li>
-                <li>
-                    <a href="/proveedor" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-truck mr-3 text-red-800"></i> Proveedores
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
-
+    <button id="verSidebar" class="hidden p-2 bg-orange-600 text-white fixed top-4 left-4 z-50">
+     <i class="fas fa-bars"></i>
+    </button>
+    {% include 'componentes/sidebar.html' %}
     <div class="flex-1 flex flex-col overflow-hidden">
         <!-- Barra Superior -->
-        <header class="bg-orange-50 shadow-sm">
-            <div class="flex justify-between items-center p-4">
-                <h2 class="text-lg font-semibold text-gray-800">Panel de Gestión de Empleados</h2>
-                <div class="flex items-center justify-center ">
-                <img  src="https://res.cloudinary.com/dgrj6myiy/image/upload/logo_matrona_okhnsu"class="mx-auto h-20 rounded-xl -translate-x-20" >
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button class="flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
-                        <i class="fas fa-user"></i>
-                        <span>Administrador</span>
-                    </button>
-                </div>
-            </div>
-        </header>
+        {%include 'componentes/header.html'%}
 
-        <main class="flex-1 overflow-auto p-6 bg-orange-50">
+        <main class="flex-1 overflow-auto p-6 bg-orange-100">
             <div class="max-w-4xl mx-auto">
                 <div id="formularioEmpleado" class="hidden bg-white border border-orange-200 rounded-lg shadow-md overflow-hidden">
                     <div class="bg-orange-100 p-4 border-b border-orange-200">
@@ -163,57 +109,13 @@
                                 </button>
                             </div>
                         </div>
-                        
-                        <!-- Tarjeta de Empleado 2 -->
-                       <div class="bg-white p-4 rounded-lg shadow-md border border-orange-200 hover:shadow-lg transition">
-                            <div class="flex items-center mb-3">
-                                <div class="bg-orange-100 p-3 rounded-full mr-3">
-                                    <i class="fas fa-user text-orange-600"></i>
-                                </div>
-                                <h3 class="font-bold text-lg">Cristian Sanches</h3>
-                            </div>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex items-center">
-                                    <i class="fas fa-calendar-day text-orange-500 mr-2 w-5"></i>
-                                    <span>Fecha de Contratación: 20/01/2023</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-briefcase text-orange-500 mr-2 w-5"></i>
-                                    <span>Área Laboral: Planta de producción</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-money-bill-wave text-orange-500 mr-2 w-5"></i>
-                                    <span>Salario: $2,500,000</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-calendar-day text-orange-500 mr-2 w-5"></i>
-                                    <span>Fecha de Pago: 30/7/2025</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-phone text-orange-500 mr-2 w-5"></i>
-                                    <span>Teléfono: 3106783223</span>
-                                </div>
-                            </div>
-                            <div class="mt-4 flex justify-end space-x-2">
-                                <button class="p-2 text-orange-600 hover:bg-orange-100 rounded-full">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="p-2 text-red-600 hover:bg-red-100 rounded-full">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </main>
-        <div class="flex justify-end items-end h-20 w-full bg-orange-50 p-4"> 
-            <button class="flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
-               <a href="menu.html">
-                <i class="fas fa-right-from-bracket"></i><span>Salir</span></a>
-            </button>
-        </div>
+        {% include 'componentes/footer.html' %}
     </div>
     <script src="/static/js/gestionEmpleados.js"></script>
+    <script src="/static/js/sidebar.js"></script>
 </body>
 </html>

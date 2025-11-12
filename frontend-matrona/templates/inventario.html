@@ -9,50 +9,11 @@
 </head>
 <body  class="bg-gray-100 font-sans flex h-screen overflow-hidden">
     <!-- Barra Lateral Izquierda  -->
-    <aside class="w-64 bg-orange-400 text-black font-bold border-r-2 rounded-r-xl border-orange-600 shadow-2xl shadow-black/70">
-        <div class="p-4 flex items-center justify-center border-b-2 border-orange-700">
-            <h1 class="text-xl font-bold mx-1"><i class="fa-solid fa-bars mr-3 ml-3 text-red-800"></i> <a href="/menu">Menu Principal</a></h1>
-        </div>
-        <nav class="p-4">
-            <ul class="space-y-2">
-                <li>
-                    <a href="/inventario" class="flex items-center  p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-box mr-3 text-red-800"></i> Inventario
-                    </a>
-                </li>
-                <li>
-                    <a href="/materiales" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-boxes mr-3 text-red-800"></i> Materiales
-                    </a>
-                </li>
-                <li>
-                    <a href="/contabilidad" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-calculator mr-3 text-red-800"></i> Contabilidad
-                    </a>
-                </li>
-                <li>
-                    <a href="/catalogo" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-wine-bottle mr-3 text-red-800"></i> Catálogo de Productos
-                    </a>
-                </li>
-                <li>
-                    <a href="/empleados" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-users mr-3 text-red-800"></i> Empleados
-                    </a>
-                </li>
-                <li>
-                    <a href="gestionClientes.html" class="flex items-center p-2  rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-user-tie mr-3 text-red-800"></i> Clientes
-                    </a>
-                </li>
-                <li>
-                    <a href="proveedor" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-truck mr-3 text-red-800"></i> Proveedores
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
+    <button id="verSidebar" class="hidden p-2 bg-orange-600 text-white fixed top-4 left-4 z-50">
+     <i class="fas fa-bars"></i>
+    </button>
+    <!-- Barra Lateral -->
+    {%include 'componentes/sidebar.html'%}
 
     <div class="flex-1 flex flex-col min-h-0 overflow-hidden">
         <!-- Barra Superior del panel del inventario -->
@@ -75,19 +36,7 @@
                 <h1 class="text-2xl font-bold text-orange-600 mb-6 border-b border-orange-600 pb-2">Gestión de Inventario</h1>
                 
                 <!-- Barra de botones horizontales superiores -->
-                <div class="flex flex-wrap gap-3 mb-6">
-                    <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg flex items-center">
-                        <i class="fas fa-boxes mr-2"></i> Stock de Cervezas
-                    </button>
-                    
-                    <button class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg flex items-center">
-                        <i class="fas fa-plus mr-2"></i> <a href="/agregar-inventario">Agregar Nueva Cerveza</a> 
-                    </button>
-                    </button>
-                    <button id="btnMovimiento" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg flex items-center">
-                        <i class="fas fa-history mr-2"></i> Ultimo Movimiento
-                    </button>
-                </div>
+                
 
 
                   <!-- El modal mostrar el ultimo movimiento-->
@@ -166,7 +115,7 @@
                 </div>
 
                 <!-- bloque para mostrar los precios y detalles -->
-  <div id="bloqueDetalles" class="mt-8 bg-orange-50 p-6 rounded-lg shadow-md max-w-3xl mx-auto">
+  <div id="bloqueDetalles" class="mt-8 bg-orange-50 p-4 rounded-lg shadow-md max-w-2xl mx-auto">
   <h3 id="detalles" class="text-xl font-semibold text-orange-700 mb-4 text-center"><i class="fa-solid fa-beer-mug-empty mr-2"></i>Detalles Matrona Clásica</h3>
   <div class="text-center text-gray-700 mb-6">
     <p id="stock">300 Unidades disponibles</p> 
@@ -177,34 +126,29 @@
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     <!-- Costo unidad -->
-    <div class="bg-white p-4 rounded shadow-lg text-center">
-      <div class="bg-orange-600 text-white py-2 px-3 rounded-lg text-lg font-semibold">Costo Unidad</div>
-      <p id="costoUnidad" class="mt-3 text-orange-700 text-xl font-bold">$4.000</p>
+    <div class="bg-white p-1 rounded shadow-lg text-center">
+      <div class="bg-white text-orange-700 py-1 px-3 rounded-lg text-lg font-bold">Costo Unidad</div>
+      <p id="costoUnidad" class="mt-1 text-orange-700 font-bold">$4.000</p>
     </div>
 
     <!-- Costo sixpack -->
-    <div class="bg-white p-4 rounded shadow-lg text-center">
-      <div class="bg-orange-600 text-white py-2 px-3 rounded-lg text-lg font-semibold">Costo Sixpack</div>
-      <p id="costoSixpack" class="mt-3 text-orange-700 text-xl font-bold">$22.000</p>
+    <div class="bg-white p-1 rounded shadow-lg text-center">
+      <div class="bg-white text-orange-700  py-1 px-3 rounded-lg text-lg font-bold">Costo Sixpack</div>
+      <p id="costoSixpack" class="mt-1 text-orange-700 font-bold">$22.000</p>
     </div>
 
     <!-- Costo caja -->
-    <div class="bg-white p-4 rounded shadow-lg text-center">
-      <div class="bg-orange-600 text-white py-2 px-3 rounded-lg text-lg font-semibold">Costo Caja</div>
-      <p id="costoCaja" class="mt-3 text-orange-700 text-xl font-bold">$90.000</p>
+    <div class="bg-white p-1 rounded shadow-lg text-center">
+      <div class="bg-white text-orange-700  py-1 px-3 rounded-lg text-lg font-bold">Costo Caja</div>
+      <p id="costoCaja" class="mt-1 text-orange-700  font-bold">$90.000</p>
     </div>
   </div>
 </div>
             </div>
         </main>
-        <div class="flex justify-end items-end h-20 w-full bg-orange-100 p-4"> 
-            <button class="flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
-               <a href="/auth/login">
-                <i class="fas fa-right-from-bracket"></i>
-                <span>Salir</span>
-                </a>
-            </button>
-        </div>
+         
+            {%include 'componentes/footer.html'%}
+        
     </div>
 <!-- Modal para agregar stock -->
 <div id="modalStock" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center z-50">
@@ -220,6 +164,7 @@
 </div>
 
    <script src="/static/js/inventario.js"></script>
+   <script src="/static/js/sidebar.js"></script>
     
     
 </body>

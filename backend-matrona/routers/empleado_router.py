@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from db import get_db
 from typing import List
 from models import Empleado, Usuario
-from schemas.empleado import EmpleadoCreate, EmpleadoUpdate, EmpleadoResponse
+from schemas.empleado import EmpleadoCreate, EmpleadoUpdate, EmpleadoResponse, EmpleadoMeResponse
 from sqlalchemy import func
 
 router = APIRouter(prefix="/empleados", tags=["Empleados"])
@@ -48,3 +48,29 @@ def eliminar_empleado(id_empleado: int, db: Session = Depends(get_db)):
     db.delete(db_empleado)
     db.commit()
     return {f"Empleado con id {id_empleado} eliminado"}
+
+@router.get("/{id_usuario}", response_model=EmpleadoMeResponse)
+def obtener_empleado_por_usuario(id_usuario: int, db: Session = Depends(get_db)):
+    # Buscar al empleado y su relación con usuario
+    empleado = (
+        db.query(Empleado)
+        .join(Usuario)
+        .filter(Empleado.id_usuarios == id_usuario)
+        .first()
+    )
+
+    if not empleado:
+        raise HTTPException(status_code=404, detail="Empleado no encontrado")
+
+    return {
+        "usuario": {
+            "id_usuarios": empleado.usuario.id_usuarios,
+            "nombre": empleado.usuario.nombre,
+            "apellido": empleado.usuario.apellido,
+            "rol": empleado.usuario.id_rol
+        },
+        "area_laboral": empleado.area_laboral,
+        "salario": empleado.salario,
+        "fecha_contrato": empleado.fecha_contratacion,
+        "fecha_pago": empleado.fecha_pago
+    }

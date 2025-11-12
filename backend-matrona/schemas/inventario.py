@@ -24,6 +24,7 @@ class InventarioUpdate(BaseModel):
     cantidad_disponible: Optional[int] = None
     ultimo_movimiento: Optional[datetime] = None
     unidades_agregadas: Optional[int] = None
+    
 
 
 class StockUpdate(BaseModel):

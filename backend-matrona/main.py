@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Request, Depends
 from routers.inventario import router as inventario_router
 from routers.catalogo_router import router as catalogo_router
 from routers.usuario import router as usuario_router
@@ -10,6 +10,7 @@ from routers.proveedor_router import router as proveedor_router
 from routers.materiales_router import router as materiales_router
 from routers.contabilidad_router import router as contabilidad_router
 from routers.empleado_router import router as empleado_router
+from routers.cliente import router as cliente_router
 from models import Usuario, Rol, Inventario
 from db import engine, Base
 from fastapi.staticfiles import StaticFiles
@@ -98,12 +99,17 @@ async def interfaz_contable(request: Request):
 #ruta para gestionEmpleados
 @app.get("/empleados", response_class=HTMLResponse)
 async def gestion_empleados(request: Request):
-    return templates.TemplateResponse("gestionEmpleados.html", {"request": request})
+    return templates.TemplateResponse("gestionEmpleados.html", {"request": request, "header_title": "Panel de Gestión de Empelados"})
 
 #ruta para interfaz principal empleados
 @app.get("/empleados/interfaz", response_class=HTMLResponse)
 async def interfaz_empleado(request: Request):
     return templates.TemplateResponse("empleadoInterfaz.html", {"request": request})
+
+#ruta interfazp para listar clientes
+@app.get("/clientes", response_class=HTMLResponse)
+async def listar_clientes(request:Request):
+    return templates.TemplateResponse("gestionClientes.html", {"request":request, "header_title": "Panel de Gestión de Clientes"})
 
 @app.get("/ws-test")
 def ws_test():
@@ -129,3 +135,4 @@ app.include_router(proveedor_router)
 app.include_router(materiales_router)
 app.include_router(contabilidad_router)
 app.include_router(empleado_router)
+app.include_router(cliente_router)

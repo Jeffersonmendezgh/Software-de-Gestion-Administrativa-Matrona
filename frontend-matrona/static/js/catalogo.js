@@ -85,6 +85,14 @@ const imagenesCervezas = {
 
 }
 
+
+function mostrarAlerta(mensaje) {
+  const alerta = document.getElementById("alerta");
+  alerta.textContent = mensaje;
+  alerta.classList.remove("hidden");
+
+  setTimeout(() => alerta.classList.add("hidden"), 5500);
+}
 // Delegación de eventos para pedidos
 contenedor.addEventListener("click", async (e) => {
   if (e.target.classList.contains("btn-reservar")) {
@@ -129,7 +137,7 @@ contenedor.addEventListener("click", async (e) => {
 
       if (res.ok) {
         const data = await res.json();
-        alert(` Pedido reservado: ${cantidad} ${presentacion}(s) = ${unidadesTotales} cervezas`);
+        mostrarAlerta(`Pedido reservado: ${cantidad} ${presentacion}(s) = ${unidadesTotales} cervezas`);
         console.log("Respuesta backend:", data);
       } else {
         const errorData = await res.json();
@@ -179,4 +187,31 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "/auth/login/";
     });
   }
+
+  //sidebar y funcion para ocultar
+const sidebarCliente = document.getElementById("sidebarCliente");
+const verSidebarCliente = document.getElementById("verSidebaCliente");
+
+//ocultar el sidebar al hacer click afuera
+document.addEventListener('click', (e) => {
+    const clickedOutside = !sidebarCliente.contains(e.target) && !verSidebar.contains(e.target);
+    const esBotonOLink = e.target.closest('button, a, i'); 
+    const isVisible = !sidebarCliente.classList.contains('hidden');
+//containts verifica si sidebar es un descendiente de un evento.target el DOM, necesito recordarlo 
+    if (clickedOutside && !esBotonOLink && isVisible) {
+        sidebarCliente.classList.add('hidden');
+        verSidebarCliente.classList.remove('hidden')
+    }
 });
+
+//mostrar el sidebar al hacer click en el boton que tengo oculto
+verSidebarCliente.addEventListener('click', () => {
+    sidebarCliente.classList.remove('hidden');
+    verSidebarCliente.classList.add('hidden');
+});
+});
+
+//ocultar sidebar
+
+
+
