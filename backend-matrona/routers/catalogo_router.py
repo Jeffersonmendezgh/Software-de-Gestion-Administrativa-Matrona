@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 
 router = APIRouter(prefix="/catalogo", tags=["Catálogo"])
 
-# Crear un registro de catálogo
+# Crear un registro de inventario y catalogo en cascada
 @router.post("/", response_model=CatalogoBase)
 def crear_catalogo(data: CatalogoCreate, db: Session = Depends(get_db)):
     try:
@@ -22,9 +22,9 @@ def crear_catalogo(data: CatalogoCreate, db: Session = Depends(get_db)):
             ultimo_movimiento=datetime.now(timezone.utc)
         )
         db.add(nuevo_inventario)
-        db.flush()    # ejecuta INSERT en BD pero NO confirma la transacción: ahora existe id     
+        db.flush()    # ejecuta INSERT en BD pero NO confirma la transacción por ahora 
 
-        # Crear catálogo asociado aquí sí va contenido
+        # Crear catálogo asociado a inventario 
         nuevo_catalogo = Catalogo(
             id_inventario=nuevo_inventario.id_inventario,
             descripcion=data.descripcion,
@@ -35,7 +35,7 @@ def crear_catalogo(data: CatalogoCreate, db: Session = Depends(get_db)):
             precio_caja=data.precio_caja
         )
         db.add(nuevo_catalogo) 
-        db.commit()
+        db.commit() #aca si se crea la nueva cerveza por completo
         db.refresh(nuevo_catalogo)
 
         return nuevo_catalogo

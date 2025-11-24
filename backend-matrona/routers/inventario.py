@@ -10,6 +10,7 @@ from schemas.inventario import InventarioBase, InventarioCreate, InventarioUpdat
 
 router = APIRouter(prefix="/inventario", tags=["Inventario"])
 
+#obtener toda la lista de bebidas en el inventario
 @router.get("/", response_model=List[InventarioBase])
 def listar_inventario(db: Session = Depends(get_db)):
     return db.query(Inventario).all()
@@ -17,12 +18,12 @@ def listar_inventario(db: Session = Depends(get_db)):
 @router.get("/{id_inventario}")
 def obtener_item(id_inventario: int, db: Session = Depends(get_db)):
     inventario = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()
-
+    #si el inventario no existe
     if not inventario:
         raise HTTPException(status_code=404, detail="Item no encontrado")
-
+    #hacemos query a catalogo para traer los datos relacionados de cada id
     catalogo = db.query(Catalogo).filter(Catalogo.id_inventario == id_inventario).all()
-
+    #traemos todos esos datos 
     return {
         "id_inventario": inventario.id_inventario,
         "nombre_bebida": inventario.nombre_bebida,
@@ -39,7 +40,7 @@ def obtener_item(id_inventario: int, db: Session = Depends(get_db)):
                 "precio_caja": c.precio_caja,
                 "descripcion": c.descripcion
             }
-            for c in catalogo
+            for c in catalogo #iteramos en catalogo
         ]
     }
 
@@ -88,11 +89,11 @@ def reemplazar_item(id_inventario: int, payload: InventarioCreate, db: Session =
 
 @router.patch("/{id_inventario}", response_model=InventarioBase)
 def actualizar_parcial(id_inventario: int, payload: InventarioUpdate, db: Session = Depends(get_db)):
-    item = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()
+    item = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()# query para buscar el item a editar
     if not item:
         raise HTTPException(status_code=404, detail="Item no encontrado")
 
-    datos = payload.model_dump(exclude_unset=True)
+    datos = payload.model_dump(exclude_unset=True)#exclude_unset True permite identificar solo los campos que se quieren cambiar
     if "nombre_bebida" in datos:
         # verificar unicidad si cambia nombre
         if datos["nombre_bebida"] != item.nombre_bebida:
@@ -101,7 +102,7 @@ def actualizar_parcial(id_inventario: int, payload: InventarioUpdate, db: Sessio
                 raise HTTPException(status_code=400, detail="Otro item ya tiene ese nombre_bebida")
 
     for campo, valor in datos.items():
-        setattr(item, campo, valor)
+        setattr(item, campo, valor)#actualiza solo los campos que se envian
 
     db.commit()
     db.refresh(item)
@@ -114,7 +115,7 @@ def agregar_stock(id_inventario: int, payload: StockUpdate, db:Session = Depends
     if not item:
         raise HTTPException(status_code=404, detail="Item no encontrado")
     try:
-        item.agregar_stock(payload.unidades)  #  metodo definido en el modelo para agregar unidades
+        item.agregar_stock(payload.unidades)  # llamamos al metodo definido en el modelo para agregar unidades
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     db.commit()
