@@ -15,11 +15,11 @@ DATABASE_URL = (
 engine = create_engine(DATABASE_URL, pool_recycle=3600)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 
-Base = declarative_base()
+Base = declarative_base() #clase base para todos los modelos sqlalchemy
 
 def get_db():
-    db = SessionLocal()
+    db = SessionLocal()#nueva sesion en db
     try:
-        yield db
+        yield db #yield entrega la sesion al endpoint
     finally:
-        db.close()
+        db.close()#cierra siempre la session

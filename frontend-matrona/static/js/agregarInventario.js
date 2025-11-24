@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById("precio_caja").value = data.precio_caja || "";
             });
     }
-
+  //evento de click en el boton guardar con el objeto js que se va a enviar
     btnGuardar.addEventListener("click", async () => {
         const data = {
             nombre_bebida: document.getElementById("nombre_cerveza").value,
@@ -43,9 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     ? `http://127.0.0.1:8000/catalogo/${editId}`   // PUT
                     : "http://127.0.0.1:8000/catalogo/",          // POST
                 {
-                    method: isEditing ? "PUT" : "POST",
+                    method: isEditing ? "PUT" : "POST",//si es edditing put sino post
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
+                    body: JSON.stringify(data) //object a json
                 }
             );
 

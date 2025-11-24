@@ -85,7 +85,7 @@ const imagenesCervezas = {
 
 }
 
-
+//funcion para mostrar alerta dinamica
 function mostrarAlerta(mensaje) {
   const alerta = document.getElementById("alerta");
   alerta.textContent = mensaje;

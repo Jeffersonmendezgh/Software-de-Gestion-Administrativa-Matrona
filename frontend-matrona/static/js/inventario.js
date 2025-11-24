@@ -13,13 +13,9 @@ async function cargarInventario() {
         const response = await fetch("http://127.0.0.1:8000/catalogo/");
         const inventario = await response.json();
 
-        console.log(" Inventario recibido desde FastAPI:", inventario);
-
         const contenedor = document.getElementById("productosInventario");
         contenedor.innerHTML = ""; 
-
         inventario.forEach(item => {
-            console.log("Item recibido:", item);
             const productoHTML = `
                 <div class="border-b p-4 hover:bg-gray-50">
                     <div class="flex items-center justify-between">
@@ -59,13 +55,13 @@ async function cargarInventario() {
 }
 
 // Llamar la función al cargar la página
-async function eliminarProducto(id_catalogo) {
+async function eliminarProducto(id_inventario) {
     if (!confirm("¿Estás seguro de eliminar este producto?")) {
         return; // si el usuario cancela, no hace nada
     }
 
     try {
-        const response = await fetch(`http://127.0.0.1:8000/catalogo/${id_catalogo}`, {
+        const response = await fetch(`http://127.0.0.1:8000/inventario/${id_inventario}`, {
             method: "DELETE"
         });
 
@@ -104,7 +100,7 @@ async function confirmarStock() {
         await fetch(`http://127.0.0.1:8000/inventario/agregar-stock/${inventarioSeleccionado}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ unidades: cantidad })
+            body: JSON.stringify({ unidades: cantidad })//pasamos el valor que viene en el modal
         });
 
         cerrarModal();
@@ -124,11 +120,11 @@ document.getElementById("productosInventario").addEventListener("click", async (
   console.log(" Click en Detalles de ID:", id);
 
   try {
-    const res = await fetch(`/inventario/${id}`);
+    const res = await fetch(`/inventario/${id}`); //ejecutamos fetch y traemos en producto segubn su id
     if (!res.ok) throw new Error("Error al obtener detalles");
-    const item = await res.json();
+    const item = await res.json(); // convertimos el json en objeto js 
 
-    // Actualizar el bloque de detalles
+    // Actualizar el bloque de detalles con los datos que vienen en el json
     document.getElementById("detalles").innerText = `Detalles ${item.nombre_bebida}`;
     document.getElementById("stock").innerText = `${item.cantidad_disponible} Unidades disponibles`;
     document.getElementById("alcohol").innerText = `${item.catalogo[0].alcohol} Vol Alcohol`;
