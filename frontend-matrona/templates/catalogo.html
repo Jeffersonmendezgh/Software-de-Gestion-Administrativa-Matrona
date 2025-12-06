@@ -11,47 +11,21 @@
   <button id="verSidebarCliente" class="hidden p-2 bg-orange-600 text-white fixed top-4 left-4 z-50">
      <i class="fas fa-bars"></i>
     </button>
-    <aside id="asideCliente" class="w-64 bg-orange-400 text-black font-bold border-r-2 rounded-r-xl border-orange-600 shadow-2xl shadow-black/70 z-50">
-      <div class="p-4 flex flex-col items-center justify-center border-b border-orange-700">
-        <i class="fas fa-beer text-2xl text-orange-900 mb-2"></i>  
-        <h1 class="text-xl font-bold text-center">Cerveza Matrona</h1>
-      </div>
-        <nav class="p-4">
-            <ul class="space-y-2">
-                <li>
-                    <a href="catalogo.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-wine-bottle mr-3 text-red-800"></i> Catálogo de Productos
-                    </a>
-                </li>
-                <li>
-                    <a href="pedidosCliente.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-truck mr-3 text-red-800"></i> Pedidos
-                    </a>
-                </li>
-                <li>
-                    <a href="historialCliente.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-clock-rotate-left mr-3 text-red-800"></i> Historial
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </aside>
+   {%include 'componentes/sidebar.html'%}
     <div class="flex-1 flex flex-col overflow-hidden">
         <header class="bg-orange-50 shadow-sm relative h-10">
           <h2 class="absolute top-2 left-1/2 transform -translate-x-1/2 text-xl font-bold text-orange-700">
-           Bienvenido a Matrona ¡Reserva ya tu pedido!
+           Bienvenido a Matrona ¡Reserva ya tu pedido!!
             <i class="fas fa-beer text-2xl text-orange-800 mb-2"></i> 
           </h2>
           
-          <div class="absolute top-2 right-4" id="userInfo">
+          <div class="absolute top-2 right-4">
               <div class="flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
                 <i class="fas fa-user"></i>
-                <span id="nombreUsuario">Usuari</span>
-                <span id="rolUsuario" class="text-sm text-orange-200"></span>
+               <h1>{{ user_name }} </h1>
+                
               </div>
           </div>
-
-          
         </header>
         
 <!-- div con el diseño de la alerta al reservar el pedido -->
@@ -66,7 +40,7 @@
   <div class="bg-orange-50 p-6 rounded-xl shadow-lg border border-gray-200 mb-8">
     <div class="flex flex-col md:flex-row gap-6">
      <div class="md:w-1/3 flex justify-center items-center bg-gray-50 rounded-lg p-4">
-      <img src="Imagenes/matrona cafe.jpg" alt="Matrona Café" class="h-48 object-contain">
+     
       </div>
     <!-- Detalles -->
     <div class="md:w-2/3 flex flex-col justify-between">
@@ -115,12 +89,7 @@
 
     </div>
         </main>
-   <footer class="bg-orange-50 border-t p-4 flex justify-between items-center">
-      <p class="text-sm text-gray-500">© 2025 Matrona Cervezas - Todos los derechos reservados</p>
-        <button id="logoutBtn" class="mt-2 bg-gray-200 text-orange-700 px-3 py-1 rounded-lg hover:bg-gray-300 transition">
-          Cerrar sesión
-        </button>
-    </footer>
+   {% include 'componentes/footer.html' %}
     </div>
     </div>
    <script src="/static/js/catalogo.js"></script> 

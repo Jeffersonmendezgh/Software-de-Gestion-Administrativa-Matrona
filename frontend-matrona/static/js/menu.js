@@ -101,6 +101,7 @@ async function cargarPedidos() {
 document.addEventListener("DOMContentLoaded", cargarPedidos);
 
 //funcion para mostrar infoadmin
+/*
 function mostrarUsuarioActual() {
   const nombre = localStorage.getItem("nombreUsuario");
   const apellido = localStorage.getItem("apellidoUsuario");
@@ -137,3 +138,4 @@ const logoutBtn = document.getElementById("logoutBtn")
       window.location.href = "/auth/login/";
     });
   }
+    */

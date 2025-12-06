@@ -150,6 +150,7 @@ contenedor.addEventListener("click", async (e) => {
     }
   }
 });
+/*
 //funciona para traer los datos del usuario logeado y mostrarlos en pantalla
 function mostrarUsuarioActual() {
   const nombre = localStorage.getItem("nombreUsuario");
@@ -210,8 +211,7 @@ verSidebarCliente.addEventListener('click', () => {
     verSidebarCliente.classList.add('hidden');
 });
 });
-
-//ocultar sidebar
+*/
 
 
 

@@ -20,7 +20,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from fastapi import WebSocket
 from utils.websocket import manager
-import models
+from utils.deps import get_current_user
 
 
 
@@ -52,13 +52,13 @@ async def agregar_inventario(request: Request):
 
 # Ruta para abrir inventario.html
 @app.get("/inventario", response_class=HTMLResponse)
-async def mostrar_inventario(request: Request):
-    return templates.TemplateResponse("inventario.html", {"request":request})
+async def mostrar_inventario(request: Request, current_user:Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("inventario.html", {"request":request, "user_role":current_user.id_rol, "user_name":current_user.nombre})
 
 #ruta para abrir catalogo
 @app.get("/catalogo", response_class=HTMLResponse)
-async def mostrar_catalogo(request: Request):
-    return templates.TemplateResponse("catalogo.html", {"request":request})
+async def mostrar_catalogo(request: Request, current_user:Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("catalogo.html", {"request":request, "user_role": current_user.id_rol, "user_name":current_user.nombre})
 
 #ruta para put modificar mediante el formulari
 @app.get("/editar-inventario/{id_catalogo}", response_class=HTMLResponse)
@@ -79,37 +79,37 @@ def mostrar_login(request: Request):
 
 #ruta menu
 @app.get("/menu")
-def mostrar_menu(request: Request):
-    return templates.TemplateResponse("menu.html", {"request": request})
+def mostrar_menu(request: Request, current_user: Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("menu.html", {"request": request, "user_role": current_user.id_rol, "user_name": current_user.nombre})
 
 #ruta para mostrar proveedor
-@app.get("/proveedor", response_class=HTMLResponse)
-async def mostrar_proveedor(request: Request):
-    return templates.TemplateResponse("proveedores.html", {"request": request})
+@app.get("/proveedor")
+async def mostrar_proveedor(request: Request, current_user: Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("proveedores.html", {"request": request, "user_role": current_user.id_rol, "user_name":current_user.nombre}) #agregar getcurrent user a todos los endpoints
 
 #ruta para Materiales
 @app.get("/materiales", response_class=HTMLResponse)
-async def materiales_interfaz(request: Request):
-    return templates.TemplateResponse("Materiales.html", {"request": request})
+async def materiales_interfaz(request: Request, current_user: Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("Materiales.html", {"request": request, "user_role":current_user.id_rol, "user_name":current_user.nombre})
 #ruta contable
 @app.get("/contabilidad", response_class=HTMLResponse)
-async def interfaz_contable(request: Request):
-    return templates.TemplateResponse("contabilidad.html", {"request": request})
+async def interfaz_contable(request: Request, current_user: Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("contabilidad.html", {"request": request, "user_role":current_user.id_rol, "user_name":current_user.nombre})
 
 #ruta para gestionEmpleados
-@app.get("/empleados", response_class=HTMLResponse)
-async def gestion_empleados(request: Request):
-    return templates.TemplateResponse("gestionEmpleados.html", {"request": request, "header_title": "Panel de Gestión de Empelados"})
+@app.get("/empleados")
+async def gestion_empleados(request: Request, current_user:Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("gestionEmpleados.html", {"request": request, "user_role": current_user.id_rol, "header_title": "Panel de Gestión dse Empelados", "user_name": current_user.nombre})
 
 #ruta para interfaz principal empleados
 @app.get("/empleados/interfaz", response_class=HTMLResponse)
-async def interfaz_empleado(request: Request):
-    return templates.TemplateResponse("empleadoInterfaz.html", {"request": request})
+async def interfaz_empleado(request: Request, current_user: Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("empleadoInterfaz.html", {"request": request, "user_role": current_user.id_rol, "user_name":current_user.nombre})
 
 #ruta interfazp para listar clientes
 @app.get("/clientes", response_class=HTMLResponse)
-async def listar_clientes(request:Request):
-    return templates.TemplateResponse("gestionClientes.html", {"request":request, "header_title": "Panel de Gestión de Clientes"})
+async def listar_clientes(request:Request, current_user: Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("gestionClientes.html", {"request":request, "header_title": "Panel de Gestión de Clientes", "user_role": current_user.id_rol, "user_name": current_user.nombre})
 
 @app.get("/ws-test")
 def ws_test():

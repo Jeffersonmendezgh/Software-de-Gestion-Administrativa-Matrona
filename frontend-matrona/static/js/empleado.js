@@ -1,4 +1,16 @@
-document.addEventListener("DOMContentLoaded", async () => {
+async function cargarEmpleado() {
+  const res = await fetch("http://127.0.0.1:8000/empleados/actual"); // sin id_usuario
+  if (res.ok) {
+    const data = await res.json();
+    document.getElementById("salario").textContent = data.salario;
+    document.getElementById("areaLaboral").textContent = data.area_laboral;
+    document.getElementById("fechaPago").textContent = data.fecha_pago;
+  }
+}
+cargarEmpleado();
+
+
+/*document.addEventListener("DOMContentLoaded", async () => {
   const idUsuario = localStorage.getItem("idUsuario");
   const token = localStorage.getItem("token");
 
@@ -60,3 +72,4 @@ function mostrarMensajeError(mensaje) {
     <p class="text-red-500 text-center mt-10">${mensaje}</p>
   `;
 }
+*/

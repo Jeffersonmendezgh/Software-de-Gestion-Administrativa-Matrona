@@ -3,8 +3,9 @@ from sqlalchemy.orm import Session
 from db import get_db
 from typing import List
 from models import Empleado, Usuario
-from schemas.empleado import EmpleadoCreate, EmpleadoUpdate, EmpleadoResponse, EmpleadoMeResponse
+from schemas.empleado import EmpleadoCreate, EmpleadoMeActual, EmpleadoUpdate, EmpleadoResponse, EmpleadoMeResponse
 from sqlalchemy import func
+from utils.deps import get_current_user
 
 router = APIRouter(prefix="/empleados", tags=["Empleados"])
 
@@ -13,6 +14,22 @@ def listar_empleados(db: Session = Depends(get_db)):
     empleados = db.query(Empleado).join(Empleado.usuario).all()
     return empleados
 
+@router.get("/actual", response_model=EmpleadoMeActual)
+def empleado_actual(current_user: Usuario = Depends(get_current_user), db: Session = Depends(get_db)):
+    empleado = db.query(Empleado).filter(Empleado.id_usuarios == current_user.id_usuarios).first()
+    if not empleado:
+        raise HTTPException(status_code=404, detail="Empleado no encontrado")
+
+    return {
+        "usuario": {
+            "nombre": current_user.nombre,
+            "apellido": current_user.apellido
+        },
+        "area_laboral": empleado.area_laboral,
+        "salario": empleado.salario,  
+        "fecha_contratacion": empleado.fecha_contratacion,
+        "fecha_pago": empleado.fecha_pago
+    }
 
 #patch para editar empleado
 @router.patch("/{id_empleado}", response_model=EmpleadoResponse)
@@ -38,6 +55,8 @@ def actualizar_empleado(id_empleado: int, empleado: EmpleadoUpdate, db: Session 
     db.commit()
     db.refresh(empleado_db)
     return empleado_db
+
+
 
 #endpoint para eliminar empleados
 @router.delete("/{id_empleado}")
@@ -71,6 +90,7 @@ def obtener_empleado_por_usuario(id_usuario: int, db: Session = Depends(get_db))
         },
         "area_laboral": empleado.area_laboral,
         "salario": empleado.salario,
-        "fecha_contrato": empleado.fecha_contratacion,
+        "fecha_contratacion": empleado.fecha_contratacion,
         "fecha_pago": empleado.fecha_pago
     }
+
