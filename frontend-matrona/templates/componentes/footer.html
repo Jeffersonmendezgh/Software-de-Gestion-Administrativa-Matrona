@@ -1,9 +1,17 @@
 <footer class="bg-orange-100 border-t p-4 flex items-center  ">
             <p class="flex justify-start text-gray-800">© 2025 Cerveza Artesanal Matrona - Todos los derechos reservados</p>
-            <button id="logoutBtn" class="fixed  bottom-4 right-4 bg-orange-600 text-white px-4 py-2 mt-2 rounded-lg hover:bg-orange-700 transition">
+            <button onclick="logout()" class="fixed  bottom-4 right-4 bg-orange-600 text-white px-4 py-2 mt-2 rounded-lg hover:bg-orange-700 transition">
                 <a href="/auth/login" class="flex items-center">
                     <i class="fas fa-right-from-bracket mr-2"></i>
                     <span >Salir</span>
                 </a>
             </button>
 </footer>
+<script>
+async function logout() {
+    const res = await fetch("/auth/logout", { method: "POST"});
+    if (res.ok){
+        window.location.href= "/auth/login"
+    }
+}
+</script>

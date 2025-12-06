@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 from datetime import date
+from decimal import Decimal
 
 #Base para lectura de usuario
 class UsuarioBase(BaseModel):
@@ -43,10 +44,26 @@ class EmpleadoResponse(EmpleadoBase):
     class Config:
         orm_mode = True
 
+class UsuarioData(BaseModel):
+    nombre: str
+    apellido: str
+
 class EmpleadoMeResponse(BaseModel):
     usuario: UsuarioBase
     area_laboral: Optional[str] = None
     salario: float
-    fecha_contrato: date
+    fecha_contratacion: date
     fecha_pago: date
 
+    class Config:
+        orm_mode = True
+#clase personalizada necesaria para acceder a los datos de empleado logeado
+class EmpleadoMeActual(BaseModel):
+    usuario: UsuarioData
+    area_laboral: Optional[str] = None
+    salario: Decimal
+    fecha_contratacion: date
+    fecha_pago: date
+
+    class Config:
+        orm_mode = True

@@ -5,8 +5,19 @@
         <nav class="p-4">
             <ul class="space-y-2">
                 <li>
+                    <a href="/catalogo" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-wine-bottle mr-3 text-red-800"></i> Catálogo de Productos
+                    </a>
+                </li>
+                {% if user_role in [1, 2] %}
+                <li>
                     <a href="/inventario" class="flex items-center  p-2 rounded hover:bg-orange-700 transition">
                         <i class="fas fa-box mr-3 text-red-800"></i> Inventario
+                    </a>
+                </li>
+                <li>
+                    <a href="/proveedor" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-truck mr-3 text-red-800"></i> Proveedores
                     </a>
                 </li>
                 <li>
@@ -14,16 +25,14 @@
                         <i class="fas fa-boxes mr-3 text-red-800"></i> Materiales
                     </a>
                 </li>
+                {% endif %}
+                {% if user_role == 1 %}
                 <li>
                     <a href="/contabilidad" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
                         <i class="fas fa-calculator mr-3 text-red-800"></i> Contabilidad
                     </a>
                 </li>
-                <li>
-                    <a href="/catalogo" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-wine-bottle mr-3 text-red-800"></i> Catálogo de Productos
-                    </a>
-                </li>
+                
                 <li>
                     <a href="/empleados" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
                         <i class="fas fa-users mr-3 text-red-800"></i> Empleados
@@ -34,11 +43,27 @@
                         <i class="fas fa-user-tie mr-3 text-red-800"></i> Clientes
                     </a>
                 </li>
+                {% endif %}
+                {% if user_role == 2 %}
                 <li>
-                    <a href="/proveedor" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fas fa-truck mr-3 text-red-800"></i> Proveedores
+                    <a href="/empleados/interfaz" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fa-solid fa-arrows-left-right-to-line text-red-800"></i> Dashboard Principal
                     </a>
                 </li>
+                {% endif %}
+                {% if user_role == 3 %}
+                
+                <li>
+                    <a href="pedidosCliente.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-truck mr-3 text-red-800"></i> Pedidos
+                    </a>
+                </li>
+                <li>
+                    <a href="historialCliente.html" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
+                        <i class="fas fa-clock-rotate-left mr-3 text-red-800"></i> Historial
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </nav>
     </aside>

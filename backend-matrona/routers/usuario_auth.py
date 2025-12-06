@@ -1,5 +1,5 @@
 # routers/usuario_auth.py
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response, Form
 from sqlalchemy.orm import Session
 from db import get_db
 from datetime import date
@@ -10,6 +10,9 @@ from models.empleado import Empleado
 from schemas.usuario import UsuarioCreate, UsuarioOut, UsuarioLogin, Token
 from utils.auth import get_password_hash, verify_password, create_access_token
 from utils.deps import get_current_user, require_role
+from datetime import timedelta
+from fastapi.responses import RedirectResponse
+
 
 
 router = APIRouter(prefix="/auth", tags=["Usuarios"])
@@ -66,19 +69,42 @@ def registro(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     db.commit()  # Guarda cliente o empleado
     return db_usuario
 # Login
-@router.post("/login", response_model=Token)
-def login(data: UsuarioLogin, db: Session = Depends(get_db)):
-    user = db.query(Usuario).filter(Usuario.correo == data.correo).first()
-    if not user:
-        raise HTTPException(status_code=401, detail="Credenciales inválidas")
-
-    if not verify_password(data.contrasena, user.contrasena):
+@router.post("/login")
+def login(
+    # parametros configurados para iniciar sesion desde el form
+    correo: str = Form(...), 
+    contrasena: str = Form(...),
+    db: Session = Depends(get_db),
+):
+    user = db.query(Usuario).filter(Usuario.correo == correo).first()
+    if not user or not verify_password(contrasena, user.contrasena):
         raise HTTPException(status_code=401, detail="Credenciales inválidas")
 
     token_data = {"sub": str(user.id_usuarios), "role": str(user.id_rol)}
-    access_token = create_access_token(token_data)
+    access_token = create_access_token(token_data, expires_delta=timedelta(minutes=30))
 
-    return {"access_token": access_token, "token_type": "bearer"}
+    # Decide la URL según el rol
+    if user.id_rol == 1:
+        redirect_url = "/menu"
+    elif user.id_rol == 2:
+        redirect_url = "/empleados/interfaz"
+    elif user.id_rol == 3:
+        redirect_url = "/catalogo"
+    else:
+        redirect_url = "/"
+
+    # Crea el objeto de redirección y configura la cookie en él
+    redirect = RedirectResponse(url=redirect_url, status_code=303)
+    redirect.set_cookie(
+        key="access_token",
+        value=access_token,
+        httponly=True, #no accesible desde js
+        samesite="lax",
+        secure=False,  # True en producción con HTTPS no puedo olvidarlo
+        max_age=30 * 60 #tiempo de vida de la coockie en secs
+    )
+    return redirect
+
 
 # Ruta protegida
 @router.get("/protegido")
@@ -101,3 +127,9 @@ def get_me(current_user: Usuario = Depends(get_current_user)):
         "apellido": current_user.apellido,
         "rol": current_user.id_rol
     }
+
+#router para cerrar la sesion
+@router.post("/logout")
+def logout(response: Response):
+    response.delete_cookie("access_token")
+    return {"message":"Sesion cerrada correctamente"}

@@ -21,19 +21,13 @@
                 <h2 class="text-lg font-bold text-orange-600 pl-8">Panel principal Matrona</h2>
                 <div class="flex items-center space-x-4">
                     <button class="btn-admin flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
-                        <i class="fas fa-user"></i>
-                        <span id="nombreUsuario">Administrador</span>
-                        <span id="rolUsuario" class="text-sm text-orange-200"></span>
+                        <i class="fas fa-user pr-3"></i>
+                        {{ user_name }}
                     </button>
                 </div>
             </div>
         </header>
-                <section id="modalAdmin" class="relative hidden">
-                    <div id="divModal" class="absolute  right-0 mt-1 mr-3 w-fit bg-orange-500 text-white px-3 py-6 rounded flex flex-col text-sm shadow">
-                        <span id="infoAdmin">Admin: Jefferson Mendez</span>
-                        
-                    </div>
-                </section>
+               
                 
 
  <main class="flex-1 overflow-auto p-6 bg-orange-100">

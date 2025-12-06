@@ -1,5 +1,5 @@
 // decodificar JWT
-function parseJwt(token) {
+/* function parseJwt(token) {
   try {
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
@@ -112,3 +112,4 @@ async function fetchWithAuth(path, options = {}) {
   const base = "http://127.0.0.1:8000";
   return fetch(base + path, options);//ejecuta el fetch normal
 }
+*/
