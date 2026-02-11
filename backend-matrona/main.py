@@ -73,7 +73,7 @@ def mostrar_registro(request: Request):
     return templates.TemplateResponse("registrosUsuario.html", {"request": request})
 
 #ruta para redirigir al login
-@app.get("/auth/login", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 def mostrar_login(request: Request):
     return templates.TemplateResponse("inicioSesion.html", {"request": request})
 
