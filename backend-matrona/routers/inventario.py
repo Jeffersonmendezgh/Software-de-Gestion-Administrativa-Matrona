@@ -20,7 +20,7 @@ def obtener_item(id_inventario: int, db: Session = Depends(get_db)):
     inventario = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()
     #si el inventario no existe
     if not inventario:
-        raise HTTPException(status_code=404, detail="Item no encontrado")
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
     #hacemos query a catalogo para traer los datos relacionados de cada id
     catalogo = db.query(Catalogo).filter(Catalogo.id_inventario == id_inventario).all()
     #traemos todos esos datos 
@@ -43,7 +43,7 @@ def obtener_item(id_inventario: int, db: Session = Depends(get_db)):
             for c in catalogo #iteramos en catalogo
         ]
     }
-
+#crear inventario 
 @router.post("/", response_model=InventarioBase, status_code=status.HTTP_201_CREATED)
 def crear_item(payload: InventarioCreate, db: Session = Depends(get_db)):
     # chequear nombre único
@@ -61,7 +61,7 @@ def crear_item(payload: InventarioCreate, db: Session = Depends(get_db)):
     try:
         db.commit()
     except IntegrityError:
-        db.rollback()
+        db.rollback() #rollback: asegura que los cambios parciales no corrompan la base de datos
         raise HTTPException(status_code=400, detail="Error de integridad al crear el item")
     db.refresh(nuevo)
     return nuevo
@@ -108,7 +108,7 @@ def actualizar_parcial(id_inventario: int, payload: InventarioUpdate, db: Sessio
     db.refresh(item)
     return item
 
-#parch para agregar cervezas
+#patch para agregar cervezas al stock
 @router.patch("/agregar-stock/{id_inventario}", response_model=InventarioBase)
 def agregar_stock(id_inventario: int, payload: StockUpdate, db:Session = Depends(get_db)):
     item = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()

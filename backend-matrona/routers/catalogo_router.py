@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 router = APIRouter(prefix="/catalogo", tags=["Catálogo"])
 
 # Crear un registro de inventario y catalogo en cascada
-@router.post("/", response_model=CatalogoBase)
+@router.post("/inventario/create/", response_model=CatalogoBase)
 def crear_catalogo(data: CatalogoCreate, db: Session = Depends(get_db)):
     try:
     # Crear inventario 
@@ -59,7 +59,7 @@ def obtener_catalogo(id_catalogo: int, db: Session = Depends(get_db)):
     return catalogo
 
 #  PUT para actualizar catálogo + inventario
-@router.put("/{id_catalogo}", response_model=CatalogoBase)
+@router.put("/inventario/edit/{id_catalogo}", response_model=CatalogoBase)
 def actualizar_catalogo(id_catalogo: int, data: CatalogoCreate, db: Session = Depends(get_db)):
     #  Buscar el registro de catálogo
     catalogo = db.query(Catalogo).filter(Catalogo.id_catalogo == id_catalogo).first()

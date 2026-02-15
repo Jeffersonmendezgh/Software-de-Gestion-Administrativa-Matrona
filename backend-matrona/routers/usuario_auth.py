@@ -17,7 +17,7 @@ from fastapi.responses import RedirectResponse
 
 router = APIRouter(prefix="/auth", tags=["Usuarios"])
 
-# Registro
+# Registro de usuarios en la db
 @router.post("/registro", response_model=UsuarioOut)
 def registro(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     # Validar correo único

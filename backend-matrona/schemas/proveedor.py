@@ -26,4 +26,12 @@ class ProveedorCreate(BaseModel):
     direccion_proveedor: Optional[str] = None
     frecuencia_entrega: Optional[str] = None
 
+#para modificar proveedor
+class ProveedorModified(BaseModel):
+    material_que_provee: str
+    cantidadM: str
+    telefono: Optional[str] = None
+    direccion_proveedor: Optional[str] = None
+    frecuencia_entrega: Optional[str] = None
+
 

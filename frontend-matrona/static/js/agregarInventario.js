@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Si es edición, traer datos actuales y rellenar form
     if (isEditing && editId) {
-        fetch(`http://127.0.0.1:8000/catalogo/${editId}`)
+        fetch(`http://127.0.0.1:8000/catalogo/inventario/edit/${editId}`)
             .then(res => res.json())
             .then(data => {
                 document.getElementById("nombre_cerveza").value = data.inventario.nombre_bebida;
@@ -40,8 +40,8 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(
                 isEditing
-                    ? `http://127.0.0.1:8000/catalogo/${editId}`   // PUT
-                    : "http://127.0.0.1:8000/catalogo/",          // POST
+                    ? `http://127.0.0.1:8000/catalogo/inventario/edit/${editId}`   // PUT
+                    : "http://127.0.0.1:8000/catalogo/inventario/create/",          // POST
                 {
                     method: isEditing ? "PUT" : "POST",//si es edditing put sino post
                     headers: { "Content-Type": "application/json" },

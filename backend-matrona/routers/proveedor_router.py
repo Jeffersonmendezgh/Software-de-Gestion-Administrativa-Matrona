@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from db import get_db
 from models import Proveedor
-from schemas.proveedor import ProveedorCreate, ProveedorOut, ProveedorBase
+from schemas.proveedor import ProveedorCreate, ProveedorOut, ProveedorBase, ProveedorModified
 
 router = APIRouter(prefix="/proveedor", tags=["proveedores"])
 #router para agrgar proveedores
@@ -19,3 +19,16 @@ def crear_proveedor(data: ProveedorCreate, db: Session = Depends(get_db)):
 @router.get("/", response_model=List[ProveedorBase])
 def listar_proveedores(db: Session = Depends(get_db)):
     return db.query(Proveedor).all()
+
+#router para modificar el proveedor
+@router.patch("/edit/{id_proveedor}")
+def modificar_proveedor(id_proveedor: str, data: ProveedorModified, db:Session = Depends(get_db)):
+    proveedor = db.query(Proveedor).filter(Proveedor.id_proveedor == id_proveedor).first()
+    if not proveedor:
+        raise HTTPException(status_code=400, detail="no se encontro proveedor")
+    data_dict = data.dict(exclude_unset=True)
+    for campo, valor in data_dict.items():
+        setattr(proveedor, campo, valor)
+    db.commit()
+    db.refresh(proveedor)
+    return proveedor

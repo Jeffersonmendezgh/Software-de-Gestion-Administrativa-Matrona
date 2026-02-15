@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-  const API_URL = "http://127.0.0.1:8000/api/materiales"; // endpoint backend
+  const API_URL = "http://127.0.0.1:8000/api/materiales"; // endpoint backend put
   const form = document.querySelector("form");
   const modal = document.getElementById("miModal");
   let idMaterialActual = null; // Para guardar el ID cuando editamos

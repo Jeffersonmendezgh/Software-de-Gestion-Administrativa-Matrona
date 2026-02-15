@@ -38,7 +38,7 @@ async function cargarInventario() {
                         class="text-green-600 hover:text-green-800 px-3 py-1 rounded">
                         <i class="fas fa-plus mr-1"></i> Agregar stock
                     </button>
-                    <button onclick="eliminarProducto(${item.id_catalogo})" 
+                    <button onclick="eliminarProducto(${item.inventario.id_inventario})" 
                         class="text-red-600 hover:text-red-800 px-3 py-1 rounded">
                         <i class="fas fa-trash mr-1"></i> Eliminar
                         </button>
