@@ -68,7 +68,9 @@ def registro(usuario: UsuarioCreate, db: Session = Depends(get_db)):
 
     db.commit()  # Guarda cliente o empleado
     return db_usuario
-# Login
+
+# Login, aca  se crea el token de acceso y se envia en la coockie  
+# se da autorizacion al usuario y se redirije segun rol que provee JWT token
 @router.post("/login")
 def login(
     # parametros configurados para iniciar sesion desde el form

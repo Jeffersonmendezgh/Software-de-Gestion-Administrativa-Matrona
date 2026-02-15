@@ -9,11 +9,13 @@ from utils.deps import get_current_user
 
 router = APIRouter(prefix="/empleados", tags=["Empleados"])
 
+#router para listar a todos los empleados
 @router.get("/", response_model=List[EmpleadoResponse])
 def listar_empleados(db: Session = Depends(get_db)):
     empleados = db.query(Empleado).join(Empleado.usuario).all()
     return empleados
 
+#router para acceder al empleado en session
 @router.get("/actual", response_model=EmpleadoMeActual)
 def empleado_actual(current_user: Usuario = Depends(get_current_user), db: Session = Depends(get_db)):
     empleado = db.query(Empleado).filter(Empleado.id_usuarios == current_user.id_usuarios).first()
@@ -31,7 +33,7 @@ def empleado_actual(current_user: Usuario = Depends(get_current_user), db: Sessi
         "fecha_pago": empleado.fecha_pago
     }
 
-#patch para editar empleado
+#patch para modificar el empleado mediante el respectivo id
 @router.patch("/{id_empleado}", response_model=EmpleadoResponse)
 def actualizar_empleado(id_empleado: int, empleado: EmpleadoUpdate, db: Session = Depends(get_db)):
     # Buscar empleado
@@ -68,6 +70,7 @@ def eliminar_empleado(id_empleado: int, db: Session = Depends(get_db)):
     db.commit()
     return {f"Empleado con id {id_empleado} eliminado"}
 
+# router para obtener al empleado vinculado al id usuario mediante join
 @router.get("/{id_usuario}", response_model=EmpleadoMeResponse)
 def obtener_empleado_por_usuario(id_usuario: int, db: Session = Depends(get_db)):
     # Buscar al empleado y su relación con usuario

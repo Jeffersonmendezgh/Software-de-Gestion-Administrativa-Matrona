@@ -14,7 +14,9 @@ router = APIRouter(prefix="/inventario", tags=["Inventario"])
 @router.get("/", response_model=List[InventarioBase])
 def listar_inventario(db: Session = Depends(get_db)):
     return db.query(Inventario).all()
-#router para traer enviar los datos al bloque de detalles
+
+#router para obtener los datos completos de una bebida
+#muy util para mostrar en la interfaz todos los datos de una bebida en especifico
 @router.get("/{id_inventario}")
 def obtener_item(id_inventario: int, db: Session = Depends(get_db)):
     inventario = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()
@@ -43,7 +45,9 @@ def obtener_item(id_inventario: int, db: Session = Depends(get_db)):
             for c in catalogo #iteramos en catalogo
         ]
     }
+
 #crear inventario 
+"""
 @router.post("/", response_model=InventarioBase, status_code=status.HTTP_201_CREATED)
 def crear_item(payload: InventarioCreate, db: Session = Depends(get_db)):
     # chequear nombre único
@@ -65,7 +69,9 @@ def crear_item(payload: InventarioCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Error de integridad al crear el item")
     db.refresh(nuevo)
     return nuevo
+"""
 
+#router para modificar cerveza en el inventario
 @router.put("/{id_inventario}", response_model=InventarioBase)
 def reemplazar_item(id_inventario: int, payload: InventarioCreate, db: Session = Depends(get_db)):
     item = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()
@@ -87,9 +93,11 @@ def reemplazar_item(id_inventario: int, payload: InventarioCreate, db: Session =
     db.refresh(item)
     return item
 
+#router para modificar una bebida mediante su id
+#uso de settattr model_dump para modificar solo los campos requeridos
 @router.patch("/{id_inventario}", response_model=InventarioBase)
 def actualizar_parcial(id_inventario: int, payload: InventarioUpdate, db: Session = Depends(get_db)):
-    item = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()# query para buscar el item a editar
+    item = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()# query para buscar la bebida a editar
     if not item:
         raise HTTPException(status_code=404, detail="Item no encontrado")
 
@@ -122,7 +130,7 @@ def agregar_stock(id_inventario: int, payload: StockUpdate, db:Session = Depends
     db.refresh(item)
     return item
     
-
+#router para eliminar una cerveza del inventario
 @router.delete("/{id_inventario}")
 def eliminar_item(id_inventario: int, db: Session = Depends(get_db)):
     item = db.query(Inventario).filter(Inventario.id_inventario == id_inventario).first()

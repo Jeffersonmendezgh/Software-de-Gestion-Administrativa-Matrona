@@ -39,7 +39,7 @@ def obtener_ingresos_por_producto(db: Session = Depends(get_db)):
     resultados = (
         db.query(
             Inventario.nombre_bebida.label("nombre_bebida"),
-            func.sum(DetallePedido.subtotal).label("total_ingresos")#fun para sumar todo lo que va y mostrarlo
+            func.sum(DetallePedido.subtotal).label("total_ingresos")#fun para sumar todo lo que va de ingresoso y mostrarlo
         )
         .join(Catalogo, Catalogo.id_catalogo == DetallePedido.id_catalogo)
         .join(Inventario, Catalogo.id_inventario == Inventario.id_inventario)

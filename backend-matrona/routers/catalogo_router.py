@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 router = APIRouter(prefix="/catalogo", tags=["Catálogo"])
 
 # Crear un registro de inventario y catalogo en cascada
+#mediante este endpoint se crea una cerveza y se actualiza inventario-catalogo
 @router.post("/inventario/create/", response_model=CatalogoBase)
 def crear_catalogo(data: CatalogoCreate, db: Session = Depends(get_db)):
     try:
@@ -45,12 +46,12 @@ def crear_catalogo(data: CatalogoCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail="Error al crear producto")
 
 
-#  Obtener todo el catálogo
+#  Obtener todo el catálogo util para listar el catalogo de bebidas
 @router.get("/", response_model=List[CatalogoBase])
 def listar_catalogo(db: Session = Depends(get_db)):
     return db.query(Catalogo).all()
 
-#  Obtener un registro por id
+#  Obtener un registro por id, para obtener catalogo mediante id de una bebida en catalogo
 @router.get("/{id_catalogo}", response_model=CatalogoBase)
 def obtener_catalogo(id_catalogo: int, db: Session = Depends(get_db)):
     catalogo = db.query(Catalogo).filter(Catalogo.id_catalogo == id_catalogo).first()
@@ -58,7 +59,8 @@ def obtener_catalogo(id_catalogo: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Catálogo no encontrado")
     return catalogo
 
-#  PUT para actualizar catálogo + inventario
+#  PUT para actualizar catálogo + inventario 
+# actualizacion en cascada para los dos modelos
 @router.put("/inventario/edit/{id_catalogo}", response_model=CatalogoBase)
 def actualizar_catalogo(id_catalogo: int, data: CatalogoCreate, db: Session = Depends(get_db)):
     #  Buscar el registro de catálogo

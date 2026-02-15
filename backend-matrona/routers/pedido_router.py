@@ -17,7 +17,9 @@ from sqlalchemy.orm import joinedload
 #from routers.ws_router import broadcast
 
 router = APIRouter(prefix="/pedidos", tags=["pedidos"])
-#postpara crear el pedido nuevo al hacer click en catalogo
+
+#post para crear el pedido nuevo al hacer click en catalogo
+# clave para crear el pedido accede al clinte en session, catalogo y calcula el total de pedido
 @router.post("/", response_model=PedidoOut, status_code=status.HTTP_201_CREATED)
 def crear_pedido(
     data: PedidoCreate,
@@ -97,6 +99,7 @@ def crear_pedido(
 
 
 #  Endpoint para entregar pedido es decir cambiar el estado de pediente a entregado
+# Endpoint clave para el administrador y el manejo de los pedidos reservados
 @router.put("/{pedido_id}/estado")
 def entregar_pedido(pedido_id: int, db: Session = Depends(get_db)):
     # 1. Buscar pedido
@@ -158,6 +161,7 @@ def listar_pedidos(db: Session = Depends(get_db)):
 
     return pedidos
 
+# eliminacion de pedidos
 @router.delete("/{id_pedidos}")
 def eliminar_pedido(id_pedidos: int, db: Session = Depends(get_db)):
     db_pedidos = db.query(Pedido).filter(Pedido.id_pedidos == id_pedidos).first()

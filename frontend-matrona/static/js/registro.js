@@ -50,7 +50,7 @@ function BienvenidaUsuario(mensaje) {
             BienvenidaUsuario("Te has registrado exitosamente Bienvenido a nuestro sistema ¡Matrona!");
             console.log(data);
             setTimeout(() => {
-                window.location.href = "/auth/login";
+                window.location.href = "/";
             }, 3000)
             
             // Redirigir después de registrar

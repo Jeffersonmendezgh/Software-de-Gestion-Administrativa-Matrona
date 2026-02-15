@@ -7,10 +7,12 @@ from schemas import UsuarioBase, UsuarioCreate, UsuarioPut
 
 router = APIRouter(prefix="/usuarios", tags=["Usuarios"])
 
+#obtener usuarios
 @router.get("/", response_model=list[UsuarioBase])
 def obtener_usuarios(db: Session = Depends(get_db)):
     return db.query(Usuario).all()
 
+#crear usuario
 @router.post("/", response_model=UsuarioBase)
 def crear_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     rol = db.query(Rol).filter(Rol.id_rol == usuario.id_rol).first()
@@ -23,6 +25,7 @@ def crear_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     db.refresh(db_usuario) 
     return db_usuario #retorna datos creados
 
+#editar usuario
 @router.put("/{id_usuarios}", response_model=UsuarioPut)
 def reemplazar_usuario(id_usuarios: int, usuario: UsuarioPut, db: Session = Depends(get_db)):
     db_usuario = db.query(Usuario).filter(Usuario.id_usuarios == id_usuarios).first()
@@ -48,6 +51,7 @@ def reemplazar_usuario(id_usuarios: int, usuario: UsuarioPut, db: Session = Depe
     db.refresh(db_usuario)
     return db_usuario
 
+#eliminar usuario
 @router.delete("/{id_usuarios}")
 def eliminar_usuario(id_usuarios: int, db: Session = Depends(get_db)):
     db_usuario = db.query(Usuario).filter(Usuario.id_usuarios == id_usuarios).first()

@@ -13,7 +13,7 @@ def obtener_materiales(db: Session = Depends(get_db)):
     materiales = db.query(Materiales).all()
     return materiales
 
-
+#agregar un material nuevo 
 @router.post("/", response_model=MaterialResponse)
 def crear_material(material: MaterialCreate, db: Session = Depends(get_db)):
     nuevo_material = Materiales(
@@ -21,7 +21,7 @@ def crear_material(material: MaterialCreate, db: Session = Depends(get_db)):
         cantidad_a_agregar=material.cantidad_a_agregar,
         actividad = material.actividad,
         cantidad_disponible=None,  # dejemos opcional por ahora
-        id_proveedor=None          # aca igual, por si decido vincular proveedores
+        id_proveedor=None          
     )
 
     db.add(nuevo_material)
@@ -29,7 +29,7 @@ def crear_material(material: MaterialCreate, db: Session = Depends(get_db)):
     db.refresh(nuevo_material)
     return nuevo_material
 
-#put para editar mediante el modal
+#put para editar mediante el modal en el frontend, endpoint clave
 @router.put("/{id_material}", response_model=MaterialResponse)
 def actualizar_material(id_material: int, material: MaterialCreate, db: Session = Depends(get_db)):
     material_db = db.query(Materiales).filter(Materiales.id_materiales == id_material).first()
@@ -43,7 +43,7 @@ def actualizar_material(id_material: int, material: MaterialCreate, db: Session 
     db.refresh(material_db)
     return material_db
 
-#  Eliminar un material
+#  Eliminar un material mediante su id, clave tambien para el manejo de materiales
 @router.delete("/{id_material}")
 def eliminar_material(id_material: int, db: Session = Depends(get_db)):
     material_db = db.query(Materiales).filter(Materiales.id_materiales == id_material).first()
