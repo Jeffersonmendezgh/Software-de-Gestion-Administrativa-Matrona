@@ -38,6 +38,7 @@ def actualizar_material(id_material: int, material: MaterialCreate, db: Session 
     
     material_db.tipo_material = material.tipo_material
     material_db.cantidad_a_agregar = material.cantidad_a_agregar
+    material_db.cantidad_disponible = material.cantidad_disponible
 
     db.commit()
     db.refresh(material_db)

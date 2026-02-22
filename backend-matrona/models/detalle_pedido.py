@@ -20,3 +20,6 @@ class DetallePedido(Base):
     def catalogo_nombre(self):
         return self.catalogo.descripcion if self.catalogo else None
     
+    @property
+    def nombre_bebida(self):
+        return self.catalogo.inventario.nombre_bebida if self.catalogo and self.catalogo.inventario else None

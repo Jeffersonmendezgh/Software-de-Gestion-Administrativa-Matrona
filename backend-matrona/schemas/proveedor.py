@@ -5,6 +5,7 @@ from enum import Enum
 
 #esquema base
 class ProveedorBase(BaseModel):
+    id_proveedor: int
     nombre_proveedor: str
     material_que_provee: str
     cantidadM: str

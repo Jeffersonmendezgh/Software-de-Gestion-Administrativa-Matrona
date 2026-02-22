@@ -62,3 +62,15 @@ def modificar_proveedor(id_proveedor: str, data: ProveedorModified, db:Session =
     db.commit()
     db.refresh(proveedor)
     return proveedor
+
+#eliminar proveedores
+@router.delete("/{id_proveedor}")
+def eliminar_proveedor(id_proveedor: int, db: Session = Depends(get_db)):
+     proveedor = db.query(Proveedor).filter(Proveedor.id_proveedor == id_proveedor).first()
+     if not proveedor:
+          raise HTTPException(status_code=400, detail="proveedor no encontrado")
+     db.delete(proveedor)
+     db.commit()
+     return {"mensaje": f"se elimino correctamente el proveedor con id {id_proveedor}"}
+     
+                       

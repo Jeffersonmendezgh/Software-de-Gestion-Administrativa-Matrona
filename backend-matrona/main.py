@@ -111,6 +111,11 @@ async def interfaz_empleado(request: Request, current_user: Usuario = Depends(ge
 async def listar_clientes(request:Request, current_user: Usuario = Depends(get_current_user)):
     return templates.TemplateResponse("gestionClientes.html", {"request":request, "header_title": "Panel de Gestión de Clientes", "user_role": current_user.id_rol, "user_name": current_user.nombre})
 
+#ruta interfaz pedidos cliente
+@app.get("/pedidos/cliente")
+async def control_pedidos(request: Request, current_user: Usuario = Depends(get_current_user)):
+    return templates.TemplateResponse("pedidosCliente.html", {"request": request, "user_role": current_user.id_rol, "user_name":current_user.nombre})
+
 @app.get("/ws-test")
 def ws_test():
     from utils.websocket import manager

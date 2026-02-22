@@ -18,7 +18,7 @@ from sqlalchemy.orm import joinedload
 
 router = APIRouter(prefix="/pedidos", tags=["pedidos"])
 
-#post para crear el pedido nuevo al hacer click en catalogo
+#post para crear el pedido unico por cliente
 # clave para crear el pedido accede al clinte en session, catalogo y calcula el total de pedido
 @router.post("/", response_model=PedidoOut, status_code=status.HTTP_201_CREATED)
 def crear_pedido(
@@ -88,7 +88,7 @@ def crear_pedido(
         ).filter(Pedido.id_pedidos == pedido.id_pedidos).first()
 
         
-        from schemas.pedido import PedidoOut
+        
         return PedidoOut.model_validate(pedido_full, from_attributes=True)
 
 
@@ -156,7 +156,7 @@ def listar_pedidos(db: Session = Depends(get_db)):
     for pedido in pedidos:
         for detalle in pedido.detalles:
             if detalle.catalogo and detalle.catalogo.inventario:
-                detalle.nombre_bebida = detalle.catalogo.inventario.nombre_bebida
+                detalle.nombre_bebida 
 
 
     return pedidos

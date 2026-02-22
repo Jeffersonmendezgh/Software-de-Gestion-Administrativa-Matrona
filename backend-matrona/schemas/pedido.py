@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import date
+from decimal import Decimal
 
 
 class UsuarioInfo(BaseModel):
@@ -34,7 +35,7 @@ class DetallePedidoOut(BaseModel):
     nombre_bebida: Optional[str] = None
 
     
-    catalogo_nombre: Optional[str] = None 
+    #catalogo_nombre: Optional[str] = None 
 
     class Config:
         from_attributes = True
@@ -54,3 +55,16 @@ class PedidoOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+#reporte de pedidos
+class DetallePedidoReporte(BaseModel):
+    nombre_cerveza: str
+    cantidad: int
+    subtotal: Decimal
+
+class PedidoReporte(BaseModel):
+    id_pedido: int
+    fecha: date
+    estado: str
+    total: Decimal
+    detalles: list[DetallePedidoReporte]

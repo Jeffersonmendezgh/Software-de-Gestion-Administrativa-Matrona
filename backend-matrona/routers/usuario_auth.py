@@ -115,10 +115,15 @@ def ruta_protegida(current_user=Depends(get_current_user)):
 
 
 #endpoint para eliminar
-@router.delete("/{id}", dependencies=[Depends(require_role(1))])  # 1 = administrador
-def borrar_usuario(id: int):
+@router.delete("/{id_usuarios}", dependencies=[Depends(require_role(1))])  # 1 = administrador
+def borrar_usuario(id_usuarios: int, db: Session = Depends(get_db)):
+    user = db.query(Usuario).filter(Usuario.id_usuarios == id_usuarios).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    db.delete(user)
+    db.commit()
 
-    return {"msg": f"Usuario con id {id} eliminado "}
+    return {"msg": f"Usuario con id {id_usuarios} eliminado "}
 
 #router para obtener en el fronted mediante el token el usuario logeado
 @router.get("/me")
