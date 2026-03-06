@@ -29,21 +29,21 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="API Matrona")
 
-#  Ruta absoluta de la carpeta frontend
-frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend-matrona")
-
-# Servir la carpeta frontend como "static"
-
-#  Base del proyecto
+# Base del proyecto (carpeta backend-matrona)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Ruta a la carpeta "static" dentro de frontend-matrona
-static_path = os.path.join(BASE_DIR, "..", "frontend-matrona", "static")
+# Ruta absoluta al frontend
+FRONTEND_DIR = os.path.join(BASE_DIR, "..", "frontend-matrona")
 
-# Montar la carpeta estática
-app.mount("/static", StaticFiles(directory="../frontend-matrona/static"), name="static")
-#templates HTML
-templates = Jinja2Templates(directory="../frontend-matrona/templates")
+# Rutas específicas
+STATIC_DIR = os.path.join(FRONTEND_DIR, "static")
+TEMPLATES_DIR = os.path.join(FRONTEND_DIR, "templates")
+
+# Montar archivos estáticos
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+# Templates HTML
+templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 #ruta para mostrar el formulario
 @app.get("/agregar-inventario", response_class=HTMLResponse)
