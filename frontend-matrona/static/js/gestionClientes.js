@@ -1,5 +1,5 @@
 const listaClientes = document.getElementById('listaClientes');
-const API_URL =  'http://127.0.0.1:8000/clientes/';
+const API_URL =  '/clientes/';
 
 async function cargarClientes() {
     try {

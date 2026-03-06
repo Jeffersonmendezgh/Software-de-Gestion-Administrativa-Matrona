@@ -34,7 +34,7 @@ function BienvenidaUsuario(mensaje) {
         };
 
         try {
-            const response = await fetch("http://127.0.0.1:8000/auth/registro", {
+            const response = await fetch("/auth/registro", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)

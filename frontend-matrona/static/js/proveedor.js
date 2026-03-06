@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mensaje = document.getElementById("mensaje");
   const mensajeError = document.getElementById("mensajeError");
   const tablaProveedores = document.getElementById("filaProveedores");
-  const BASE_URL = "http://127.0.0.1:8000/proveedor/";
+  const BASE_URL = "/proveedor/";
 
   // Función para mostrar mensaje de éxito o error
   function mostrarMensaje(texto, tipo = "exito") {

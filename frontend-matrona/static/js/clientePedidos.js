@@ -15,7 +15,7 @@ function formatearPrecio(valor){
 
 async function cargarPedido() {
     
-    const response = await fetch("http://127.0.0.1:8000/clientes/mis-pedidos");
+    const response = await fetch("/clientes/mis-pedidos");
     const clientePedido = await response.json();
     console.log("que me trae",clientePedido)
     const contenedorPedidos = document.getElementById("contenedor-principal-pedidos");

@@ -10,7 +10,7 @@ function formatearPrecio(valor){
 }
 async function cargarInventario() {
     try {
-        const response = await fetch("http://127.0.0.1:8000/catalogo/");
+        const response = await fetch("/catalogo/");
         const inventario = await response.json();
 
         const contenedor = document.getElementById("productosInventario");
@@ -61,7 +61,7 @@ async function eliminarProducto(id_inventario) {
     }
 
     try {
-        const response = await fetch(`http://127.0.0.1:8000/inventario/${id_inventario}`, {
+        const response = await fetch(`/inventario/${id_inventario}`, {
             method: "DELETE"
         });
 
@@ -97,7 +97,7 @@ async function confirmarStock() {
     const cantidad = parseInt(document.getElementById("modalStockInput").value);
 
     if (cantidad > 0) {
-        await fetch(`http://127.0.0.1:8000/inventario/agregar-stock/${inventarioSeleccionado}`, {
+        await fetch(`/inventario/agregar-stock/${inventarioSeleccionado}`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ unidades: cantidad })//pasamos el valor que viene en el modal

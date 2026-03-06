@@ -85,7 +85,7 @@ def mostrar_menu(request: Request, current_user: Usuario = Depends(get_current_u
 #ruta para mostrar proveedor
 @app.get("/proveedor")
 async def mostrar_proveedor(request: Request, current_user: Usuario = Depends(get_current_user)):
-    return templates.TemplateResponse("proveedores.html", {"request": request, "user_role": current_user.id_rol, "user_name":current_user.nombre}) #agregar getcurrent user a todos los endpoints
+    return templates.TemplateResponse("Proveedores.html", {"request": request, "user_role": current_user.id_rol, "user_name":current_user.nombre}) #agregar getcurrent user a todos los endpoints
 
 #ruta para Materiales
 @app.get("/materiales", response_class=HTMLResponse)
