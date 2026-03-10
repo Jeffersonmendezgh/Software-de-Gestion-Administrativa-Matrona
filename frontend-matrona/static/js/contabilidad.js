@@ -1,6 +1,6 @@
 // contabilidad.js
 document.addEventListener("DOMContentLoaded", () => {
-  const API_BASE = "http://127.0.0.1:8000/contabilidad";
+  const API_BASE = "/contabilidad";
   const tbody = document.getElementById("filaContable"); //  tbody tomare este bloque 
   const totalUnidadesEl = document.getElementById("totalUnidades");
   const totalIngresosEl = document.getElementById("totalIngresos");
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     // Llamar al backend
-    const response = await fetch("http://127.0.0.1:8000/contabilidad/ingresos");
+    const response = await fetch("/contabilidad/ingresos");
     const datos = await response.json();
 
     if (!Array.isArray(datos) || datos.length === 0) {

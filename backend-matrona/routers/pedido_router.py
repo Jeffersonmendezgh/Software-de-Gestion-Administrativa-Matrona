@@ -11,7 +11,7 @@ from models.detalle_pedido import DetallePedido
 from models.catalogo import Catalogo
 from models.inventario import Inventario
 from schemas.pedido import PedidoCreate, PedidoOut
-from utils.websocket import manager
+#from utils.websocket import manager
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import joinedload
 #from routers.ws_router import broadcast

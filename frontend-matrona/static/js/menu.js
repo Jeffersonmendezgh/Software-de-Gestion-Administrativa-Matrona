@@ -67,7 +67,7 @@ function renderPedido(pedido) {
     }
 }
 
-// WebSocket para notificaciones en tiempo real
+/*
 const ws = new WebSocket(
     (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/ws/pedidos"
 );
@@ -84,7 +84,7 @@ ws.onmessage = ev => {
 
 ws.onclose = () => console.warn(" WebSocket cerrado");
 ws.onerror = err => console.error(" WebSocket error:", err);
-
+*/
 //  Cargar pedidos existentes al iniciar
 async function cargarPedidos() {
     try {

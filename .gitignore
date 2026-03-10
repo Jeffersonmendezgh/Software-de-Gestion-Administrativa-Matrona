@@ -7,3 +7,4 @@ __pycache__/
 *.pyd
 venv/
 backend-matrona/.env
+backend-matrona/test.db

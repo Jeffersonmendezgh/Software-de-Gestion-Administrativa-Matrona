@@ -5,7 +5,7 @@ from routers.usuario import router as usuario_router
 from routers import usuario_auth
 from routers import cliente
 from routers.pedido_router import router as pedido_router
-from routers.ws_router import router as ws_router
+#from routers.ws_router import router as ws_router
 from routers.proveedor_router import router as proveedor_router
 from routers.materiales_router import router as materiales_router
 from routers.contabilidad_router import router as contabilidad_router
@@ -18,8 +18,8 @@ from fastapi.responses import FileResponse
 import os
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from fastapi import WebSocket
-from utils.websocket import manager
+#from fastapi import WebSocket
+#from utils.websocket import manager
 from utils.deps import get_current_user
 
 
@@ -116,24 +116,13 @@ async def listar_clientes(request:Request, current_user: Usuario = Depends(get_c
 async def control_pedidos(request: Request, current_user: Usuario = Depends(get_current_user)):
     return templates.TemplateResponse("pedidosCliente.html", {"request": request, "user_role": current_user.id_rol, "user_name":current_user.nombre})
 
-@app.get("/ws-test")
-def ws_test():
-    from utils.websocket import manager
-    manager.broadcast_json_sync({"type": "new_order", "data": {"msg": "Prueba desde backend"}})
-    return {"ok": True}
 
-@app.on_event("startup")
-async def startup_event():
-    # Guardar el loop principal en el manager
-    import asyncio
-    from utils.websocket import manager
-    manager.loop = asyncio.get_running_loop()
 
 app.include_router(usuario_router)
 app.include_router(inventario_router)
 app.include_router(catalogo_router)
 app.include_router(cliente.router)
-app.include_router(ws_router)
+#app.include_router(ws_router)
 app.include_router(usuario_auth.router)
 app.include_router(pedido_router)
 app.include_router(proveedor_router)

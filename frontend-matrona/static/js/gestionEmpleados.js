@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-const BASE_URL_EMPLEADOS = "http://127.0.0.1:8000/empleados/";
+const BASE_URL_EMPLEADOS = "/empleados/";
 
 let empleadosCache = []; // cache para poder buscar por id
 const contenedorEmpleados = document.getElementById("tarjetaEmpleado");
