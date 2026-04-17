@@ -26,17 +26,17 @@ function formatearPrecio(valor){
             <!-- Detalles -->
             <div class="md:w-2/3 flex flex-col justify-between">
               <h3 class="text-2xl font-bold text-orange-700 mb-2">${item.inventario.nombre_bebida}</h3>
-              <div class="grid grid-cols-2 gap-y-2 mb-4 text-gray-700">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-4 text-gray-700 text-sm sm:text-base">
                 <div><span class="font-semibold">Precio Unitario: ${formatearPrecio(item.precio_unidad)}</span></div>
-                <div><span class="font-semibold">Descripción: ${item.descripcion}</span></div>
+                <div><span class="font-semibold">Descripción: </span> <span> ${item.descripcion}</span></div>
                 <div><span class="font-semibold">Volumen de Alcohol: ${item.alcohol}</span></div>
                 <div><span class="font-semibold">Contenido: ${item.contenido}</span> ML</div>
               </div>
               <div class="mb-4">
                 <h4 class="font-semibold text-gray-800 mb-2">Presentaciones y Precio</h4>
                 <div class="flex flex-wrap gap-3 text-sm">
-                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">unidad: ${formatearPrecio(item.precio_unidad)}</span>
-                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">sixpack: ${formatearPrecio(item.precio_sixpack)}</span>
+                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">Unidad: ${formatearPrecio(item.precio_unidad)}</span>
+                  <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">Sixpack: ${formatearPrecio(item.precio_sixpack)}</span>
                   <span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-lg">Caja: ${formatearPrecio(item.precio_caja)}</span>
                 </div>
               </div>

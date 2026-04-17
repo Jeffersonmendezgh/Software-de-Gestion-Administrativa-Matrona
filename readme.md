@@ -1,6 +1,6 @@
 Estructura del Proyecto Matrona
 
-El Software de gestión administrativa Matrona, es un sistema que busca cumplir con las necesidades tegnologícas de una empresa en crecimiento,
+El Software de gestión administrativa Matrona, es un sistema que busca cumplir con las necesidades tecnologícas de una empresa en crecimiento,
 es por eso que su estructura ha sido cuidadosamente seleccionada pensando en construir un sistema escalable, moderno, seguro y facil de mantener.
 
 Se desarrolla un sistema modular, el cual esta dividido en módulos para cada funcionalidad, se separa el backend de el frontend para 

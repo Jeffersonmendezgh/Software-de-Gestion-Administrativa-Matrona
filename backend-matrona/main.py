@@ -62,10 +62,13 @@ async def mostrar_catalogo(request: Request, current_user:Usuario = Depends(get_
 
 #ruta para put modificar mediante el formulari
 @app.get("/editar-inventario/{id_catalogo}", response_class=HTMLResponse)
-async def editar_inventario(request: Request, id_catalogo: int):
+async def editar_inventario(request: Request, id_catalogo: int, current_user:Usuario = Depends(get_current_user)):
     return templates.TemplateResponse("agregarInventario.html", {
         "request": request,
-        "id_catalogo": id_catalogo
+        "id_catalogo": id_catalogo,
+        "user_role": current_user.id_rol,
+        "user_name": current_user.nombre,
+        "header_title": "Modificar Cerveza",
     })
 #ruta para mostrar el formulario
 @app.get("/auth/registro", response_class=HTMLResponse)
@@ -85,7 +88,7 @@ def mostrar_menu(request: Request, current_user: Usuario = Depends(get_current_u
 #ruta para mostrar proveedor
 @app.get("/proveedor")
 async def mostrar_proveedor(request: Request, current_user: Usuario = Depends(get_current_user)):
-    return templates.TemplateResponse("Proveedores.html", {"request": request, "user_role": current_user.id_rol, "user_name":current_user.nombre}) #agregar getcurrent user a todos los endpoints
+    return templates.TemplateResponse("Proveedores.html", {"request": request, "user_role": current_user.id_rol, "header_title": "Gestión Proveedores", "user_name":current_user.nombre}) #agregar getcurrent user a todos los endpoints
 
 #ruta para Materiales
 @app.get("/materiales", response_class=HTMLResponse)
@@ -94,12 +97,12 @@ async def materiales_interfaz(request: Request, current_user: Usuario = Depends(
 #ruta contable
 @app.get("/contabilidad", response_class=HTMLResponse)
 async def interfaz_contable(request: Request, current_user: Usuario = Depends(get_current_user)):
-    return templates.TemplateResponse("contabilidad.html", {"request": request, "user_role":current_user.id_rol, "user_name":current_user.nombre})
+    return templates.TemplateResponse("contabilidad.html", {"request": request, "user_role":current_user.id_rol, "header_title": "Panel Contabilidad", "user_name":current_user.nombre})
 
 #ruta para gestionEmpleados
 @app.get("/empleados")
 async def gestion_empleados(request: Request, current_user:Usuario = Depends(get_current_user)):
-    return templates.TemplateResponse("gestionEmpleados.html", {"request": request, "user_role": current_user.id_rol, "header_title": "Panel de Gestión dse Empelados", "user_name": current_user.nombre})
+    return templates.TemplateResponse("gestionEmpleados.html", {"request": request, "user_role": current_user.id_rol, "header_title": "Panel Gestión de Empleados", "user_name": current_user.nombre})
 
 #ruta para interfaz principal empleados
 @app.get("/empleados/interfaz", response_class=HTMLResponse)
@@ -109,7 +112,7 @@ async def interfaz_empleado(request: Request, current_user: Usuario = Depends(ge
 #ruta interfazp para listar clientes
 @app.get("/clientes", response_class=HTMLResponse)
 async def listar_clientes(request:Request, current_user: Usuario = Depends(get_current_user)):
-    return templates.TemplateResponse("gestionClientes.html", {"request":request, "header_title": "Panel de Gestión de Clientes", "user_role": current_user.id_rol, "user_name": current_user.nombre})
+    return templates.TemplateResponse("gestionClientes.html", {"request":request, "header_title": "Panel Gestión de Clientes", "user_role": current_user.id_rol, "user_name": current_user.nombre})
 
 #ruta interfaz pedidos cliente
 @app.get("/pedidos/cliente")

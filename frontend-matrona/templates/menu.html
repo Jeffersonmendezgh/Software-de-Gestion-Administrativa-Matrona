@@ -8,9 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="font-sans flex h-screen">
-    <button id="verSidebar" class="hidden p-2 bg-orange-600 text-white fixed top-4 left-4 z-50">
-     <i class="fas fa-bars"></i>
-    </button>
+    {%include 'componentes/botonMovil.html'%}
     <!-- Barra Lateral -->
     {%include 'componentes/sidebar.html'%}
 
@@ -20,10 +18,10 @@
             <div class="flex justify-between items-center p-4">
                 <h2 class="text-lg font-bold text-orange-600 pl-8">Panel principal Matrona</h2>
                 <div class="flex items-center space-x-4">
-                    <button class="btn-admin flex items-center space-x-2 bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 transition">
+                    <div class="btn-admin flex items-center space-x-2 bg-orange-100 text-orange-600 px-4 py-2 ">
                         <i class="fas fa-user pr-3"></i>
                         {{ user_name }}
-                    </button>
+                    </div>
                 </div>
             </div>
         </header>
@@ -32,18 +30,18 @@
 
  <main class="flex-1 overflow-auto p-6 bg-orange-100">
             
-             <h1 class="text-lg  font-bold mb-4 text-center translate-x-[-50px]">Sistema Matrona</h1>
-                <div class="flex items-center justify-center translate-x-[-50px] ">
-                 <img  src="https://res.cloudinary.com/dgrj6myiy/image/upload/logo_matrona_okhnsu"class="mx-auto h-40 rounded-xl" >
+             <h1 class="text-lg md:text-xl font-bold mb-4 text-center">Sistema Matrona</h1>
+                <div class="flex items-center justify-center  ">
+                 <img  src="https://res.cloudinary.com/dgrj6myiy/image/upload/logo_matrona_okhnsu"class="mx-auto h-24 md:h-40 rounded-xl" >
                 </div>
                 <p class="font-semibold">Pedidos</p>
-             <button class="bg-white font-bold font text-xl text-green-600 h-20 w-20 rounded-xl border-2 border-orange-500">8</button>
+             <button class="bg-white font-bold font text-xl text-green-600 h-20 w-20 rounded-xl border-2 border-orange-500 mb-2">8</button>
                
 
-         <div class="flex  items-center bg-orange-100 text-orange-600 font-bold p-3">
+         <div class="hidden md:grid grid-cols-5 bg-orange-100 text-orange-600 font-bold p-3">
          <div class="w-1/4">Cliente</div>
          <div class="w-1/4">Unidades</div>
-         <div class="w-1/4">Tipo de Cerveza</div>
+         <div class="w-1/4">Tipo Cerveza</div>
          <div class="w-1/4">Presentación</div>
          <div class="w-1/4 text-right">Estado</div>
          </div>
@@ -52,7 +50,8 @@
          <div class="contenedor_pedidos space-y-3 overflow-auto max-h-64">
 
         <!-- Pedido 1 -->
-         <div class="flex bg-orange-200 shadow-xl p-3 rounded border-l-4 border-orange-500">
+         <div class="bg-orange-200 shadow-xl p-3 rounded border-l-4 border-orange-500 
+            grid grid-cols-1 md:grid-cols-5 gap-2">
             <div class="w-1/4">Camilo Suarez</div>
             <div class="w-1/4">48</div>
             <div class="w-1/4">Matrona Classica</div>

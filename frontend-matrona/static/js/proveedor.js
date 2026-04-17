@@ -21,31 +21,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //  Función para renderizar la tabla
   function renderizarProveedores(proveedores) {
-    tablaProveedores.innerHTML = ""; // Limpiar la tabla
+  tablaProveedores.innerHTML = "";
 
-    if (proveedores.length === 0) {
-      tablaProveedores.innerHTML = `
-        <tr><td colspan="6" class="text-center text-gray-500 py-4">No hay proveedores registrados.</td></tr>
-      `;
-      return;
-    }
-
-    proveedores.forEach((p) => {
-      const fila = document.createElement("tr");
-      fila.classList.add("hover:bg-orange-100");
-
-      fila.innerHTML = `
-        <td class="px-6 py-4 whitespace-nowrap text-gray-900">${p.nombre_proveedor}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-900">${p.material_que_provee}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-900">${p.cantidadM}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-900">${p.frecuencia_entrega}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-900">${p.telefono}</td>
-        <td class="px-6 py-4 whitespace-nowrap text-gray-900">${p.direccion_proveedor}</td>
-      `;
-
-      tablaProveedores.appendChild(fila);
-    });
+  if (proveedores.length === 0) {
+    tablaProveedores.innerHTML = `
+      <tr>
+        <td colspan="6" class="text-center text-gray-500 py-4">
+          No hay proveedores registrados.
+        </td>
+      </tr>
+    `;
+    return;
   }
+
+  proveedores.forEach((p) => {
+    const fila = document.createElement("tr");
+
+    // I clases responsive en el TR
+    fila.className = `
+      hover:bg-orange-100 
+      block md:table-row 
+      mb-4 md:mb-0 
+      border md:border-0 
+      rounded-lg md:rounded-none 
+      p-2 md:p-0
+    `;
+
+    fila.innerHTML = `
+      <td class="px-6 py-2 md:py-4 whitespace-nowrap text-gray-900 block md:table-cell">
+        <span class="md:hidden font-bold">Proveedor: </span>
+        ${p.nombre_proveedor}
+      </td>
+
+      <td class="px-6 py-2 md:py-4 whitespace-nowrap text-gray-900 block md:table-cell">
+        <span class="md:hidden font-bold">Material: </span>
+        ${p.material_que_provee}
+      </td>
+
+      <td class="px-6 py-2 md:py-4 whitespace-nowrap text-gray-900 block md:table-cell">
+        <span class="md:hidden font-bold">Cantidad: </span>
+        ${p.cantidadM}
+      </td>
+
+      <td class="px-6 py-2 md:py-4 whitespace-nowrap text-gray-900 block md:table-cell">
+        <span class="md:hidden font-bold">Frecuencia: </span>
+        ${p.frecuencia_entrega}
+      </td>
+
+      <td class="px-6 py-2 md:py-4 whitespace-nowrap text-gray-900 block md:table-cell">
+        <span class="md:hidden font-bold">Teléfono: </span>
+        ${p.telefono}
+      </td>
+
+      <td class="px-6 py-2 md:py-4 text-gray-900 block md:table-cell">
+        <span class="md:hidden font-bold">Dirección: </span>
+        ${p.direccion_proveedor}
+      </td>
+    `;
+
+    tablaProveedores.appendChild(fila);
+  });
+}
 
   // Obtener lista de proveedores desde el backend
   async function cargarProveedores() {

@@ -8,19 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-gray-100 font-sans flex h-screen">
-  <button id="verSidebarCliente" class="hidden p-2 bg-orange-600 text-white fixed top-4 left-4 z-50">
-     <i class="fas fa-bars"></i>
-    </button>
+  {%include 'componentes/botonMovil.html'%}
    {%include 'componentes/sidebar.html'%}
     <div class="flex-1 flex flex-col overflow-hidden">
-        <header class="bg-orange-50 shadow-sm relative h-10">
-          <h2 class="absolute top-2 left-1/2 transform -translate-x-1/2 text-xl font-bold text-orange-700">
-           Bienvenido a Matrona ¡Reserva ya tu pedido!!
-            <i class="fas fa-beer text-2xl text-orange-800 mb-2"></i> 
+        <header class="bg-orange-50 shadow-sm relative pt-8">
+          <h2 class="text-center text-lg sm:text-xl font-bold text-orange-700 mt-8 md:mt-0 px-4">
+           Bienvenido a Matrona ¡Reserva ya tu pedido!!🍺🍺
+            
           </h2>
           
-          <div class="absolute top-2 right-4">
-              <div class="flex items-center space-x-2 bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition">
+          <div class="absolute top-2 right-4 pt-2">
+              <div class="flex items-center space-x-2 bg-orange-50 text-orange-600 px-4 py-2 rounded-lg">
                 <i class="fas fa-user"></i>
                <h1>{{ user_name }} </h1>
                 
@@ -32,8 +30,8 @@
 <div id="alerta" class="hidden fixed top-4 left-1/2 pt-8 transform -translate-x-1/2 bg-orange-500 text-white px-4 py-2 rounded-lg shadow-md"></div>
 
 
-        <div class="flex items-start justify-start  pt-4 pl-4 space-x-4 bg-orange-50">
-              <img src="https://res.cloudinary.com/dgrj6myiy/image/upload/logo_matrona_okhnsu" class="h-28 rounded-xl " alt="Logo Matrona">
+        <div class="flex justify-center md:justify-start pt-6 sm:pt-8 px-4 bg-orange-50">
+              <img src="https://res.cloudinary.com/dgrj6myiy/image/upload/logo_matrona_okhnsu" class="h-16 sm:h-20 md:h-24 lg:h-28 w-auto rounded-xl " alt="Logo Matrona">
           </div>
         <main class="flex-1 overflow-auto p-6 bg-orange-50">
 <div id="catalogoProductos" class="max-w-4xl mx-auto">
@@ -45,7 +43,7 @@
     <!-- Detalles -->
     <div class="md:w-2/3 flex flex-col justify-between">
       <h3 class="text-2xl font-bold text-orange-700 mb-2">Matrona Café</h3>
-      <div class="grid grid-cols-2 gap-y-2 mb-4 text-gray-700">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-4 text-gray-700 text-sm sm:text-base">
         <div><span class="font-bold">Valor unitario:</span> $4.000</div>
         <div><span class="font-semibold">Descripción:</span> Bebida con escensia de café y alto nivel de alcohol</div>
         <div><span class="font-semibold">Volumen de alcohol:</span> 6.5 % Vol</div>
@@ -93,5 +91,6 @@
     </div>
     </div>
    <script src="/static/js/catalogo.js"></script> 
+   <script src="/static/js/sidebar.js"></script>
 </body>
 </html>

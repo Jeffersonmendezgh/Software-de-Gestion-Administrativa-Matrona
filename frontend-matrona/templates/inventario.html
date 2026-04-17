@@ -9,9 +9,7 @@
 </head>
 <body  class="bg-gray-100 font-sans flex h-screen overflow-hidden">
     <!-- Barra Lateral Izquierda  -->
-    <button id="verSidebar" class="hidden p-2 bg-orange-600 text-white fixed top-4 left-4 z-50">
-     <i class="fas fa-bars"></i>
-    </button>
+    {% include 'componentes/botonMovil.html' %}
     <!-- Barra Lateral -->
     {%include 'componentes/sidebar.html'%}
 
@@ -47,7 +45,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <span class="font-semibold">Matrona Clásica</span>
-                                <span id="unidadesMatronaClasica" class="ml-4 text-gray-600">300 Unidades</span>
+                                <span id="unidadesMatronaClasica" class="block sm:inline sm:ml-4 text-gray-600 text-sm sm:text-base">300 Unidades</span>
                             </div>
                             <div class="flex gap-2">
                                 <input type="number" id="inputMatronaClasica" class="w-16 border px-2 py-1 rounded hidden" min="1" placeholder="0">

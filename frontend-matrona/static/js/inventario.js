@@ -18,16 +18,16 @@ async function cargarInventario() {
         inventario.forEach(item => {
             const productoHTML = `
                 <div class="border-b p-4 hover:bg-gray-50">
-                    <div class="flex items-center justify-between">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div>
                             <span class="font-semibold">${item.inventario.nombre_bebida}</span>
-                            <span class="ml-4 text-gray-600">${item.inventario.cantidad_disponible} Unidades</span>
+                            <span class="block sm:inline sm:ml-4 text-gray-600 text-sm sm:text-base">${item.inventario.cantidad_disponible} Unidades</span>
                         </div>
-                        <div class="flex gap-2">
+                        <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
                             <input type="number" class="w-16 border px-2 py-1 rounded hidden" min="1" placeholder="0">
                             
                             <a href="/editar-inventario/${item.id_catalogo}" 
-                       class="text-orange-600 hover:text-orange-800 px-3 py-1 rounded inline-block">
+                       class="flex items-center justify-center text-orange-600 hover:text-orange-800 px-3 py-1 rounded">
                        <i class="fas fa-edit mr-1"></i> Modificar
                     </a>
                     <button class="btn-detalles text-orange-600 hover:text-orange-800 px-3 py-1 rounded" 

@@ -11,14 +11,14 @@ document.addEventListener('click', (e) => {
     const isVisible = !sidebar.classList.contains('hidden');
 //containts verifica si sidebar es un descendiente de un evento.target el DOM, necesito recordarlo 
     if (clickedOutside && !esBotonOLink && isVisible) {
-        sidebar.classList.add('hidden');
-        verSidebar.classList.remove('hidden')
+        sidebar.classList.add('-translate-x-full');
+        verSidebar.classList.remove('-translate-x-full')
     }
 });
 
 //mostrar el sidebar al hacer click en el boton que tengo oculto
 verSidebar.addEventListener('click', () => {
-    sidebar.classList.remove('hidden');
-    verSidebar.classList.add('hidden');
+    sidebar.classList.remove('-translate-x-full');
+    verSidebar.classList.add('-translate-x-full');
 });
 })

@@ -30,17 +30,43 @@ function renderPedido(pedido) {
     const cont = document.querySelector(".contenedor_pedidos");
 
     const div = document.createElement("div");
-    div.className = "flex bg-orange-200 shadow-xl p-3 rounded border-l-4 border-orange-500 mb-2";
-   //los operadores ?. me sirven para evitar errores en caso de que algun campo venga null
+
+    //    usamos grid responsive para lograr adaptarlo a la pantalla movil 
+    div.className = `
+        bg-orange-200 shadow-xl p-3 rounded border-l-4 border-orange-500 mb-2
+        grid grid-cols-1 md:grid-cols-5 gap-2
+    `;
+
     div.innerHTML = `
-        <div class="w-1/4">${pedido.cliente?.usuario.nombre || "Cliente desconocido"} ${pedido.cliente?.usuario.apellido || ""}</div>
-        <div class="w-1/4">${pedido.detalles?.[0]?.cantidad_pedido_uds || 0}</div>
-        <div class="w-1/4">${pedido.detalles?.[0]?.nombre_bebida || "Sin nombre"}</div>
-        <div class="w-1/4">${pedido.detalles?.[0]?.presentacion || "N/A"}</div>
-        <div class="w-1/4 text-right font-semibold ${pedido.estado === "entregado" ? "text-green-600" : "text-red-600"}">
-            ${pedido.estado === "pendiente" 
-                ? `<button id="btn-pedido-${pedido.id_pedidos}" class="bg-orange-400 text-black rounded-xl p-1">Entregar</button> Pendiente`
-                : "Entregado"}
+        <div class="text-sm md:text-base">
+            <span class="md:hidden font-bold">Cliente: </span>
+            ${pedido.cliente?.usuario.nombre || "Cliente desconocido"} ${pedido.cliente?.usuario.apellido || ""}
+        </div>
+
+        <div class="text-sm md:text-base">
+            <span class="md:hidden font-bold">Unidades: </span>
+            ${pedido.detalles?.[0]?.cantidad_pedido_uds || 0}
+        </div>
+
+        <div class="text-sm md:text-base">
+            <span class="md:hidden font-bold">Tipo: </span>
+            ${pedido.detalles?.[0]?.nombre_bebida || "Sin nombre"}
+        </div>
+
+        <div class="text-sm md:text-base">
+            <span class="md:hidden font-bold">Presentación: </span>
+            ${pedido.detalles?.[0]?.presentacion || "N/A"}
+        </div>
+
+        <div class="text-sm md:text-base md:text-right font-semibold ${
+            pedido.estado === "entregado" ? "text-green-600" : "text-red-600"
+        }">
+            <span class="md:hidden font-bold">Estado: </span>
+            ${
+                pedido.estado === "pendiente" 
+                ? `<button id="btn-pedido-${pedido.id_pedidos}" class="bg-orange-400 text-black rounded-xl px-2 py-1">Entregar</button> Pendiente`
+                : "Entregado"
+            }
         </div>
     `;
 
