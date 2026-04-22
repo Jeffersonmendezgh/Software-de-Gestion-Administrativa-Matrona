@@ -26,7 +26,7 @@ def test_crear_catalogo_e_inventario(client):
 
     lista = inventario.json()
 
-    assert any(i["nombre_bebida"] == "IPA Test" for i in lista)
+    assert any(i["nombre_bebida"] == "Matrona artesanal" for i in lista)
 
     assert data["descripcion"] == "Cerveza de prueba"
     assert data["contenido"] == 330
