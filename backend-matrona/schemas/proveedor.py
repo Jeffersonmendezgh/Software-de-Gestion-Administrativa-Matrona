@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional, List
 from enum import Enum
 #from schemas.materiales import MaterialCreate
@@ -21,8 +21,7 @@ class ActividadEnum(str,Enum):
 # para mostrar proveedores
 class ProveedorOut(ProveedorBase):
     id_proveedor: int
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
         
 # Este se usa para CREAR un proveedor
 class ProveedorCreate(BaseModel):
@@ -57,7 +56,6 @@ class ProveedorMaterial(BaseModel):
     direccion_proveedor: Optional[str] = None
     frecuencia_entrega: Optional[str] = None
     materiales: MaterialInline
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 

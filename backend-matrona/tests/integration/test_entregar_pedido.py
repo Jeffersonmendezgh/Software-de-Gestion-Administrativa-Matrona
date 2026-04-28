@@ -23,7 +23,6 @@ def test_entregar_pedido_y_descuento_inventario(client):
     assert response_login.status_code == 303
     assert "access_token" in response_login.cookies
 
-    #  A partir de aquí YA esta autenticado
 
     # Crear cerveza inventario  catálogo
     client.post("/catalogo/inventario/create/", json={

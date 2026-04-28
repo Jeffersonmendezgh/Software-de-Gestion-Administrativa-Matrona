@@ -1,5 +1,5 @@
 # schemas.py
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
 from typing import Optional
 
 class UsuarioBase(BaseModel):
@@ -10,8 +10,8 @@ class UsuarioBase(BaseModel):
     correo: str
     direccion: Optional[str]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
+    
 #de aca para abajo va el post
 class UsuarioCreate(BaseModel):
     id_rol: Optional[int]
@@ -30,8 +30,7 @@ class UsuarioPut(BaseModel):
     contrasena: str
     direccion: str
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class UsuarioOut(BaseModel):
     id_usuarios: int
@@ -41,8 +40,7 @@ class UsuarioOut(BaseModel):
     direccion: Optional[str] = None
     id_rol: Optional[int]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class UsuarioLogin(BaseModel):
     correo: EmailStr

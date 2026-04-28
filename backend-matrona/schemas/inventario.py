@@ -1,5 +1,5 @@
 # schemas/inventario.py
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import datetime
 
@@ -10,8 +10,7 @@ class InventarioBase(BaseModel):
     ultimo_movimiento: Optional[datetime] = None
     unidades_agregadas: Optional[int] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class InventarioCreate(BaseModel):
     nombre_bebida: str

@@ -60,21 +60,19 @@ def test_realizar_pedido_cliente(driver):
     # ingresar cantidad
     input_cantidad = card.find_element(By.CLASS_NAME, "cantidad")
     input_cantidad.clear()
-    input_cantidad.send_keys("1")
+    input_cantidad.send_keys("6")
 
-    #  hacer pedido
-    boton_reservar = driver.find_element(By.CLASS_NAME, "btn-reservar")
+    # hacer pedido 
+    boton_reservar = card.find_element(By.CLASS_NAME, "btn-reservar")
     driver.execute_script("arguments[0].click();", boton_reservar)
 
-    # validar alerta
+    # esperar alerta
     wait.until(
-        lambda d: len(d.find_element(By.ID, "alerta").text.strip()) > 0
+        EC.visibility_of_element_located((By.ID, "alerta"))
     )
 
+    # validar alerta
     alerta = driver.find_element(By.ID, "alerta")
-
     assert alerta.text.strip() != ""
-
-    print("Mensaje de alerta:", alerta.text)
 
     time.sleep(3)

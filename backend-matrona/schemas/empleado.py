@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import date
 from decimal import Decimal
@@ -9,8 +9,7 @@ class UsuarioBase(BaseModel):
     apellido: str
     correo: Optional[str] = None
     direccion: Optional[str] = None
-    class Config:
-        orm_mode = True
+    model_config =  ConfigDict(from_attributes=True)
 
 class EmpleadoBase(BaseModel):
     fecha_contratacion: Optional[date] = None
@@ -21,6 +20,7 @@ class EmpleadoBase(BaseModel):
 
 class EmpleadoCreate(EmpleadoBase):
     id_usuarios: int
+
 #actualizar empleado
 class EmpleadoUpdate(BaseModel):
     nombre: Optional[str] = None
@@ -30,6 +30,7 @@ class EmpleadoUpdate(BaseModel):
     fecha_pago: Optional[date] = None
     area_laboral: Optional[str] = None
     telefono_empleado: Optional[str] = None
+
 #respuesta de empleado
 class EmpleadoResponse(EmpleadoBase):
     id_empleado: int
@@ -41,8 +42,7 @@ class EmpleadoResponse(EmpleadoBase):
     usuario: UsuarioBase
     
 
-    class Config:
-        orm_mode = True
+    model_config =  ConfigDict(from_attributes=True)
 
 class UsuarioData(BaseModel):
     nombre: str
@@ -55,8 +55,9 @@ class EmpleadoMeResponse(BaseModel):
     fecha_contratacion: date
     fecha_pago: date
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
+
+    
 #clase personalizada necesaria para acceder a los datos de empleado logeado
 class EmpleadoMeActual(BaseModel):
     usuario: UsuarioData
@@ -65,5 +66,4 @@ class EmpleadoMeActual(BaseModel):
     fecha_contratacion: date
     fecha_pago: date
 
-    class Config:
-        orm_mode = True
+    model_config =  ConfigDict(from_attributes=True)

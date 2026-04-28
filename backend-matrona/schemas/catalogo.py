@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 
 
@@ -8,8 +8,7 @@ class InventarioMini(BaseModel):
     nombre_bebida: str
     cantidad_disponible: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # Esquema base de Catálogo atencion importante la idea es devolver esto al frontend al actualizar div
@@ -26,8 +25,7 @@ class CatalogoBase(BaseModel):
     # Relación para mostrar también inventario
     inventario: Optional[InventarioMini]
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 # Esquema para crear catálogo + inventario juntos

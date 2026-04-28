@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import List, Optional
 from datetime import date
 from decimal import Decimal
@@ -8,16 +8,14 @@ class UsuarioInfo(BaseModel):
     nombre: str
     apellido: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class ClienteInfo(BaseModel):
     id_cliente: int
     usuario: UsuarioInfo   #  accedemos a la relación con Usuario
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class DetallePedidoCreate(BaseModel):
@@ -37,8 +35,7 @@ class DetallePedidoOut(BaseModel):
     
     #catalogo_nombre: Optional[str] = None 
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class PedidoCreate(BaseModel):
@@ -53,8 +50,7 @@ class PedidoOut(BaseModel):
     cliente: ClienteInfo
     detalles: List[DetallePedidoOut]
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 #reporte de pedidos
 class DetallePedidoReporte(BaseModel):

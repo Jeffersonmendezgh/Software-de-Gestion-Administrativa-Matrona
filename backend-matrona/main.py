@@ -73,22 +73,22 @@ async def editar_inventario(request: Request, id_catalogo: int, current_user:Usu
 #ruta para mostrar el formulario
 @app.get("/auth/registro", response_class=HTMLResponse)
 def mostrar_registro(request: Request):
-    return templates.TemplateResponse("registrosUsuario.html", {"request": request})
+    return templates.TemplateResponse(request, "registrosUsuario.html", {"request": request})
 
 #ruta para redirigir al login
 @app.get("/", response_class=HTMLResponse)
 def mostrar_login(request: Request):
-    return templates.TemplateResponse("inicioSesion.html", {"request": request})
+    return templates.TemplateResponse(request, "inicioSesion.html", {"request": request})
 
 #ruta menu
 @app.get("/menu")
 def mostrar_menu(request: Request, current_user: Usuario = Depends(get_current_user)):
-    return templates.TemplateResponse("menu.html", {"request": request, "user_role": current_user.id_rol, "user_name": current_user.nombre})
+    return templates.TemplateResponse(request, "menu.html", {"request": request, "user_role": current_user.id_rol, "user_name": current_user.nombre})
 
 #ruta para mostrar proveedor
 @app.get("/proveedor")
 async def mostrar_proveedor(request: Request, current_user: Usuario = Depends(get_current_user)):
-    return templates.TemplateResponse("Proveedores.html", {"request": request, "user_role": current_user.id_rol, "header_title": "Gestión Proveedores", "user_name":current_user.nombre}) #agregar getcurrent user a todos los endpoints
+    return templates.TemplateResponse(request, "Proveedores.html", {"request": request, "user_role": current_user.id_rol, "header_title": "Gestión Proveedores", "user_name":current_user.nombre}) #agregar getcurrent user a todos los endpoints
 
 #ruta para Materiales
 @app.get("/materiales", response_class=HTMLResponse)

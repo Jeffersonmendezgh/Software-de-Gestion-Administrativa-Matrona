@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from schemas.proveedor import ProveedorOut
 
@@ -19,8 +19,7 @@ class MaterialesOut(MaterialBase):
     id_materiales: int
     proveedor: Optional[ProveedorOut] = None
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 #mateial update
 class MaterialUpdate(BaseModel):
@@ -30,5 +29,4 @@ class MaterialUpdate(BaseModel):
 class MaterialResponse(MaterialBase):
     id_materiales: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

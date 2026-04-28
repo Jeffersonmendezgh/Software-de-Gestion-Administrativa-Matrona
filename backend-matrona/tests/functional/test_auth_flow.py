@@ -23,13 +23,13 @@ def test_flujo_completo_autenticacion(client):
 
     assert login.status_code == 303
 
-    # 3 verificar cookie de autenticación
+    # revisamos si esta el token en la cookie
     assert "access_token" in login.cookies
 
     # guardar cookie
     cookies = login.cookies
 
-    # 4 acceder a la página protegida
+    # entramos a la pagina protegida, y claro tenemos que pasarle la cookie para poder acceder al sistema
     menu = client.get("/menu", cookies=cookies)
 
     assert menu.status_code == 200
