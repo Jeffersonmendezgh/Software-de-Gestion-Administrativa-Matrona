@@ -14,6 +14,7 @@ from schemas.pedido import PedidoCreate, PedidoOut
 #from utils.websocket import manager
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import joinedload
+from sqlalchemy import func
 #from routers.ws_router import broadcast
 
 router = APIRouter(prefix="/pedidos", tags=["pedidos"])
@@ -171,3 +172,24 @@ def eliminar_pedido(id_pedidos: int, db: Session = Depends(get_db)):
     db.delete(db_pedidos)
     db.commit()
     return {"mensaje": f"Pedido con id {id_pedidos} eliminado"}
+
+
+#endpoint traer pedidos con estado pendiente
+@router.get("/pendientes")
+def pedidos_pendientes(db:Session = Depends(get_db)):
+    db_pedidos_pendientes = db.query(Pedido).filter(Pedido.estado == "pendiente").all()
+    if not db_pedidos_pendientes:
+        raise HTTPException(status_code=404, detail="no hay pedidos")
+    
+    return db_pedidos_pendientes
+
+#endpoint count para total pedidos pendentes
+@router.get("/total/pendientes")
+def total_pendientes(db:Session = Depends(get_db)):
+    db_total_pedientes = (db.query(func.count(Pedido.id_pedidos)).filter(Pedido.estado == "pendiente").scalar()) #scalar devulve un entero
+
+    if not db_total_pedientes:
+        raise HTTPException(status_code=404, detail="no hay pedidos pendientes")
+    
+    return db_total_pedientes
+    

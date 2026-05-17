@@ -92,7 +92,26 @@ function renderPedido(pedido) {
         });
     }
 }
+async function pedidos_pendientes() {
+    try {
+        const response = await fetch("pedidos/total/pendientes");
+        const pedidosP = await response.json();
 
+        const container = document.getElementById("pedidos-pendientes");
+        container.innerHTML = "";
+
+            const pedidoHTML = `
+                           
+             <div class="flex items-center justify-center bg-white font-bold font text-xl text-green-600 h-20 w-20 rounded-xl border-2 border-orange-500">${pedidosP}</div>
+            `;
+            container.insertAdjacentHTML("beforeend", pedidoHTML);
+    ;
+    } catch (error){
+        console.error("errores al obtener los pedidos pendientes", error)
+    }
+}
+
+pedidos_pendientes()
 /*
 const ws = new WebSocket(
     (location.protocol === "https:" ? "wss://" : "ws://") + location.host + "/ws/pedidos"
