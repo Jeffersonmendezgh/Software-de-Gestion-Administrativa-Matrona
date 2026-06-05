@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de error</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="bg-orange-100">
+<main class="grid min-h-full place-items-center bg-orange-100 px-6 py-50 sm:py-32 lg:px-8">
+ <!-- Icono --> <div class="flex justify-center mb-6">
+   <div class="bg-red-100 text-red-600 p-6 rounded-full text-4xl shadow">
+     <i class="fas fa-triangle-exclamation"></i>
+     </div> 
+    </div>
+     <!-- Código --> 
+      <p class="text-base font-semibold text-red-600">Error</p>
+       <!-- Título --> 
+        <h1 class="mt-4 text-5xl font-semibold text-gray-900 sm:text-7xl"> Servicio no disponible </h1>
+         <!-- Mensaje --> <p class="mt-6 text-lg font-medium text-gray-500 sm:text-xl"> Por favor inténtalo de nuevo más tarde </p> 
+          <!-- Botones --> <div class="mt-10 flex items-center justify-center gap-x-4"> 
+            <button onclick="history.back()" class="rounded-md bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-300">
+               <i class="fas fa-arrow-left mr-1"></i> Volver </button>
+                <a href="/" class="rounded-md bg-orange-500 px-4 py-2 text-sm font-semibold text-white hover:bg-orange-600"> 
+                  <i class="fas fa-home mr-1"></i> Inicio </a> 
+                </div>
+</main>
+</body>
+</html>

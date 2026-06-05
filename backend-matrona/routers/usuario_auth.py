@@ -80,7 +80,7 @@ def login(
 ):
     user = db.query(Usuario).filter(Usuario.correo == correo).first()
     if not user or not verify_password(contrasena, user.contrasena):
-        raise HTTPException(status_code=401, detail="Credenciales inválidas")
+        raise HTTPException(status_code=401, detail="Credenciales inválidas, verifica e intenta de nuevo")
 
     token_data = {"sub": str(user.id_usuarios), "role": str(user.id_rol)}
     access_token = create_access_token(token_data, expires_delta=timedelta(minutes=30))

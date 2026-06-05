@@ -150,68 +150,6 @@ contenedor.addEventListener("click", async (e) => {
     }
   }
 });
-/*
-//funciona para traer los datos del usuario logeado y mostrarlos en pantalla
-function mostrarUsuarioActual() {
-  const nombre = localStorage.getItem("nombreUsuario");
-  const apellido = localStorage.getItem("apellidoUsuario");
-  const rol = localStorage.getItem("rolUsuario");
-
-  const nombreSpan = document.getElementById("nombreUsuario");
-  const rolSpan = document.getElementById("rolUsuario");
-
-  if (!nombreSpan || !rolSpan) {
-    console.warn(" Elementos del usuario no encontrados en el HTML.");
-    return;
-  }
-
-  if (nombre && apellido) {
-    nombreSpan.textContent = `${nombre} ${apellido}`;
-  } else {
-    nombreSpan.textContent = "Invitado";
-  }
-
-  if (rol) {
-    rolSpan.textContent = `(Cliente${rol})`;
-  } else {
-    rolSpan.textContent = "";
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  mostrarUsuarioActual();
-
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-      localStorage.clear();
-      window.location.href = "/auth/login/";
-    });
-  }
-
-  //sidebar y funcion para ocultar
-const sidebarCliente = document.getElementById("sidebarCliente");
-const verSidebarCliente = document.getElementById("verSidebaCliente");
-
-//ocultar el sidebar al hacer click afuera
-document.addEventListener('click', (e) => {
-    const clickedOutside = !sidebarCliente.contains(e.target) && !verSidebar.contains(e.target);
-    const esBotonOLink = e.target.closest('button, a, i'); 
-    const isVisible = !sidebarCliente.classList.contains('hidden');
-//containts verifica si sidebar es un descendiente de un evento.target el DOM, necesito recordarlo 
-    if (clickedOutside && !esBotonOLink && isVisible) {
-        sidebarCliente.classList.add('hidden');
-        verSidebarCliente.classList.remove('hidden')
-    }
-});
-
-//mostrar el sidebar al hacer click en el boton que tengo oculto
-verSidebarCliente.addEventListener('click', () => {
-    sidebarCliente.classList.remove('hidden');
-    verSidebarCliente.classList.add('hidden');
-});
-});
-*/
 
 
 

@@ -47,8 +47,8 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 #ruta para mostrar el formulario
 @app.get("/agregar-inventario", response_class=HTMLResponse)
-async def agregar_inventario(request: Request):
-    return templates.TemplateResponse("agregarInventario.html", {"request": request})
+async def agregar_inventario(request: Request, current_user:Usuario= Depends(get_current_user)):
+    return templates.TemplateResponse("agregarInventario.html", {"request": request, "user_role":current_user.id_rol, "user_name":current_user.nombre})
 
 # Ruta para abrir inventario.html
 @app.get("/inventario", response_class=HTMLResponse)
@@ -119,7 +119,10 @@ async def listar_clientes(request:Request, current_user: Usuario = Depends(get_c
 async def control_pedidos(request: Request, current_user: Usuario = Depends(get_current_user)):
     return templates.TemplateResponse("pedidosCliente.html", {"request": request, "user_role": current_user.id_rol, "user_name":current_user.nombre})
 
-
+#error interfaz
+@app.get("/error")
+async def pagina_error(request: Request):
+    return templates.TemplateResponse("error.html", {"request": request})
 
 app.include_router(usuario_router)
 app.include_router(inventario_router)

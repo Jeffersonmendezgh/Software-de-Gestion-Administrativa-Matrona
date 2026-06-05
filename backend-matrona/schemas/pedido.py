@@ -56,7 +56,6 @@ class PedidoOut(BaseModel):
 class DetallePedidoReporte(BaseModel):
     nombre_cerveza: str
     cantidad: int
-    subtotal: Decimal
 
 class PedidoReporte(BaseModel):
     id_pedido: int

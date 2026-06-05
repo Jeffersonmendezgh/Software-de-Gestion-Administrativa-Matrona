@@ -29,6 +29,11 @@ def obtener_historial_ventas(db:Session = Depends(get_db)):
         .join(DetallePedido, Pedido.id_pedidos == DetallePedido.id_pedidos)#para saber que pidio
         .join(Catalogo, DetallePedido.id_catalogo == Catalogo.id_catalogo)#para conocer el catalogo product
         .join(Inventario, Catalogo.id_inventario == Inventario.id_inventario)#traer nombre bebida
+        .filter(Pedido.estado == "entregado")
+        
+
+        #ordenar del mas reciente al mas antiguo
+        .order_by(Pedido.fecha_pedido.desc(), Pedido.id_pedidos.desc())
         .all()
     )
     return resultados

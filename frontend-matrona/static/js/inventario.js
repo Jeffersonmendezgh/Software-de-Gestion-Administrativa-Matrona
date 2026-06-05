@@ -72,7 +72,7 @@ async function eliminarProducto(id_inventario) {
         cargarInventario();
 
     } catch (error) {
-        console.error(" Error al eliminar producto:", error);
+        window.location.href = "/error";
     }
 }
 //logica con modal para agregar nuevas cervezas

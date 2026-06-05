@@ -139,3 +139,23 @@ def eliminar_item(id_inventario: int, db: Session = Depends(get_db)):
     db.delete(item)
     db.commit()
     return {"mensaje": f"Item {id_inventario} eliminado"}
+
+#inventario ultimo movimiento
+@router.get("/ultimo/movimiento")
+def obtener_ultimo_movimiento(db: Session = Depends(get_db)):
+    inventario = (
+        db.query(Inventario)
+        .filter(Inventario.ultimo_movimiento != None)
+        .order_by(Inventario.ultimo_movimiento.desc())
+        .first()
+    )
+
+    if not inventario:
+        raise HTTPException(status_code=404, detail="No hay movimientos registrados")
+
+    return {
+        "nombre_bebida": inventario.nombre_bebida,
+        "cantidad_actual": inventario.cantidad_disponible,
+        "unidades_agregadas": inventario.unidades_agregadas,
+        "fecha": inventario.ultimo_movimiento
+    }
