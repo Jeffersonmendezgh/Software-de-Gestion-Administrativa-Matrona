@@ -1,6 +1,17 @@
  <aside id="sidebar" class="fixed md:static w-64 bg-orange-400 text-black font-bold border-r-2 rounded-r-xl border-orange-600 shadow-2xl shadow-black/70 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300">
         <div class="p-4 flex items-center justify-center  border-b-2 border-orange-700">
-            <h1  class="text-xl font-bold mx-1"><i class="fa-solid fa-bars mr-3 ml-0 text-red-800"></i> <a href="/menu">Menu Principal</a></h1>
+            <h1 class="text-xl font-bold mx-1">
+  <i class="fa-solid fa-bars mr-3 ml-0 text-red-800"></i>
+
+    {% if user_role == 1 %}
+        <a href="/menu">Menu Principal</a>
+    {% elif user_role == 2 %}
+        <a href="/empleados/interfaz">Menu Principal</a>
+    {% elif user_role == 3 %}
+        <a href="/catalogo">Menu Principal</a>
+    {% endif %}
+
+    </h1>
         </div>
         <nav class="p-4">
             <ul class="space-y-2">
@@ -45,11 +56,7 @@
                 </li>
                 {% endif %}
                 {% if user_role == 2 %}
-                <li>
-                    <a href="/empleados/interfaz" class="flex items-center p-2 rounded hover:bg-orange-700 transition">
-                        <i class="fa-solid fa-arrows-left-right-to-line text-red-800"></i> Dashboard Principal
-                    </a>
-                </li>
+               
                 {% endif %}
                 {% if user_role == 3 %}
                 
