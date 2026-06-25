@@ -75,7 +75,7 @@
             data-id="1">
               Reservar pedido
             </button>
-            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg">
+            <button class="btn-cotizar bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg" data-id="1">
               Solicitar cotización
             </button>
           </div>
@@ -90,7 +90,27 @@
    {% include 'componentes/footer.html' %}
     </div>
     </div>
+    
+    <div id="modal-cotizacion" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+  
+  <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6 relative">
+
+    <button id="cerrar-modal" class="absolute top-2 right-3 text-gray-500 text-xl">
+      ✖
+    </button>
+
+    <h2 class="text-xl font-bold text-orange-600 mb-4">Cotización generada</h2>
+
+    <div id="contenido-cotizacion" class="space-y-2 text-gray-700">
+      <!-- espacio de cotizacion -->
+    </div>
+
+  </div>
+
+</div>
+
    <script src="/static/js/catalogo.js"></script> 
    <script src="/static/js/sidebar.js"></script>
+   <script src="/static/js/cotizaciones.js" ></script>
 </body>
 </html>

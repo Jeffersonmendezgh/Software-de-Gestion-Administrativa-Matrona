@@ -11,6 +11,7 @@ from routers.materiales_router import router as materiales_router
 from routers.contabilidad_router import router as contabilidad_router
 from routers.empleado_router import router as empleado_router
 from routers.cliente import router as cliente_router
+from routers.cotizacion_router import router as cotizacion_router
 from models import Usuario, Rol, Inventario
 from db import engine, Base
 from fastapi.staticfiles import StaticFiles
@@ -21,6 +22,7 @@ from fastapi.responses import HTMLResponse
 #from fastapi import WebSocket
 #from utils.websocket import manager
 from utils.deps import get_current_user
+from fastapi.middleware.cors import CORSMiddleware
 
 
 
@@ -124,6 +126,18 @@ async def control_pedidos(request: Request, current_user: Usuario = Depends(get_
 async def pagina_error(request: Request):
     return templates.TemplateResponse("error.html", {"request": request})
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://127.0.0.1:3000",
+        "http://localhost:3000",
+        "http://127.0.0.1:8000",
+        "http://localhost:8000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.include_router(usuario_router)
 app.include_router(inventario_router)
 app.include_router(catalogo_router)
@@ -136,3 +150,4 @@ app.include_router(materiales_router)
 app.include_router(contabilidad_router)
 app.include_router(empleado_router)
 app.include_router(cliente_router)
+app.include_router(cotizacion_router)

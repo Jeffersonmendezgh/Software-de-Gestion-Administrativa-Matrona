@@ -18,3 +18,4 @@ class Catalogo(Base):
     # relación con inventario
     inventario = relationship("Inventario", back_populates="catalogo")
     detalles = relationship("DetallePedido", back_populates="catalogo")#relacion con pedidos
+    cotizaciones = relationship("Cotizaciones", back_populates="catalogo")
