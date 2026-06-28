@@ -123,8 +123,14 @@ async def control_pedidos(request: Request, current_user: Usuario = Depends(get_
 
 #error interfaz
 @app.get("/error")
-async def pagina_error(request: Request):
-    return templates.TemplateResponse("error.html", {"request": request})
+async def pagina_error(request: Request, message: str | None = None):
+    return templates.TemplateResponse(
+        "error.html",
+        {
+            "request": request,
+            "message": message or "Verifica tus datos e intenta nuevamente",
+        },
+    )
 
 app.add_middleware(
     CORSMiddleware,

@@ -96,22 +96,57 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Registrar evento del botón para enviar el formulario
-  btnAgregar.addEventListener("click", () => {
-    formularioProveedor.requestSubmit();
+  // Registrar evento del botón para validar y enviar el formulario
+  btnAgregar.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    const camposRequeridos = [
+      document.getElementById("nombreProveedor"),
+      document.getElementById("materialQueProvee"),
+      document.getElementById("cantidadM"),
+      document.getElementById("frecuenciaEntrega"),
+      document.getElementById("telefonoProveedor"),
+      document.getElementById("direccionProveedor")
+    ];
+
+    const hayVacios = camposRequeridos.some((campo) => campo.value.trim() === "");
+
+    if (hayVacios) {
+      mostrarMensaje("Completa todos los campos antes de guardar.", "error");
+      return;
+    }
+
+    formularioProveedor.dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
   });
 
   // Envío del formulario (POST)
   formularioProveedor.addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    const camposRequeridos = [
+      document.getElementById("nombreProveedor"),
+      document.getElementById("materialQueProvee"),
+      document.getElementById("cantidadM"),
+      document.getElementById("frecuenciaEntrega"),
+      document.getElementById("telefonoProveedor"),
+      document.getElementById("direccionProveedor")
+    ];
+
+    const hayVacios = camposRequeridos.some((campo) => campo.value.trim() === "");
+
+    if (hayVacios) {
+      mostrarMensaje("Completa todos los campos antes de guardar.", "error");
+      formularioProveedor.reportValidity();
+      return;
+    }
+
     const data = {
-      nombre_proveedor: document.getElementById("nombreProveedor").value,
-      material_que_provee: document.getElementById("materialQueProvee").value,
+      nombre_proveedor: document.getElementById("nombreProveedor").value.trim(),
+      material_que_provee: document.getElementById("materialQueProvee").value.trim(),
       cantidadM: document.getElementById("cantidadM").value,
       telefono: document.getElementById("telefonoProveedor").value,
-      direccion_proveedor: document.getElementById("direccionProveedor").value,
-      frecuencia_entrega: document.getElementById("frecuenciaEntrega").value
+      direccion_proveedor: document.getElementById("direccionProveedor").value.trim(),
+      frecuencia_entrega: document.getElementById("frecuenciaEntrega").value.trim()
     };
 
     try {

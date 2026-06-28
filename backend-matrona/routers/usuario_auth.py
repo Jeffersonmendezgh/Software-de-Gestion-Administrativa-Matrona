@@ -12,7 +12,7 @@ from utils.auth import get_password_hash, verify_password, create_access_token
 from utils.deps import get_current_user, require_role
 from datetime import timedelta
 from fastapi.responses import RedirectResponse
-
+from urllib.parse import quote
 
 
 router = APIRouter(prefix="/auth", tags=["Usuarios"])
@@ -80,7 +80,7 @@ def login(
 ):
     user = db.query(Usuario).filter(Usuario.correo == correo).first()
     if not user or not verify_password(contrasena, user.contrasena):
-        raise HTTPException(status_code=401, detail="Credenciales inválidas, verifica e intenta de nuevo")
+        return RedirectResponse(url="/error", status_code=303)
 
     token_data = {"sub": str(user.id_usuarios), "role": str(user.id_rol)}
     access_token = create_access_token(token_data, expires_delta=timedelta(minutes=30))

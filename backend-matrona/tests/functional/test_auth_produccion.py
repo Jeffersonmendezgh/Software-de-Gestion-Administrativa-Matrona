@@ -14,7 +14,7 @@ def test_login_usuario_existente():
         #  Esperar formulario de login
         wait.until(EC.presence_of_element_located((By.TAG_NAME, "form")))
 
-        # 3. Ingresar credenciales (usa el mismo usuario que registraste)
+        # 3. Ingresar credenciales 
         driver.find_element(By.NAME, "correo").send_keys("jefferson18.estudios@gmail.com")  # cámbialo si usaste dinámico
         driver.find_element(By.NAME, "contrasena").send_keys("12345")
 

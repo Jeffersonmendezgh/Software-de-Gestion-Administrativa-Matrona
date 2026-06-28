@@ -18,7 +18,13 @@
       <p class="text-base font-semibold text-red-600">Error</p>
        <!-- Título --> 
         <h1 class="mt-4 text-5xl font-semibold text-gray-900 sm:text-7xl"> Servicio no disponible </h1>
-         <!-- Mensaje --> <p class="mt-6 text-lg font-medium text-gray-500 sm:text-xl"> Por favor inténtalo de nuevo más tarde </p> 
+         <!-- Mensaje --> <p class="mt-6 text-lg font-medium text-gray-500 sm:text-xl">
+            {% if message %}
+                {{ message }}
+            {% else %}
+                Por favor inténtalo de nuevo más tarde
+            {% endif %}
+        </p>
           <!-- Botones --> <div class="mt-10 flex items-center justify-center gap-x-4"> 
             <button onclick="history.back()" class="rounded-md bg-gray-200 px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-300">
                <i class="fas fa-arrow-left mr-1"></i> Volver </button>

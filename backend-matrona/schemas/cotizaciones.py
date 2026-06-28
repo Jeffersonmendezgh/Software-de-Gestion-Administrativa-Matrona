@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from pydantic import BaseModel
 from datetime import datetime
 from decimal import Decimal
@@ -15,8 +15,7 @@ class CatalogoInfo(BaseModel):
     precio_caja: Optional[Decimal]
     
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class CotizacionResponse(BaseModel):
@@ -27,8 +26,7 @@ class CotizacionResponse(BaseModel):
 
     catalogo: CatalogoInfo
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CotizacionCreate(BaseModel):
     id_catalogo: int

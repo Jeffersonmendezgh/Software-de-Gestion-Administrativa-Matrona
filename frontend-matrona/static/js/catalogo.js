@@ -56,7 +56,7 @@ function formatearPrecio(valor){
                     <button class="btn-reservar bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg">
                       Reservar pedido
                     </button>
-                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg">
+                    <button class="btn-cotizar bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg">
                       Solicitar cotización
                     </button>
                   </div>
